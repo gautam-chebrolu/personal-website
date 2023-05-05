@@ -1,5 +1,7 @@
 .container {
-  padding: 0 2rem;
+  max-width: 1200px;
+  margin: auto auto;
+  padding: 0 0;
 }
 
 .main {
@@ -10,6 +12,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  font-size: large;
+}
+
+.center {
+  text-align: center;
 }
 
 .footer {
