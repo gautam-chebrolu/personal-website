@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Website</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://unpkg.com/htmx.org"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Fullscreen p5.js Canvas -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav>
+      <a href="about.html" hx-get="about.html" hx-target="#content" hx-swap="innerHTML">About</a>
+      <a href="projects.html" hx-get="projects.html" hx-target="#content" hx-swap="innerHTML">Projects</a>
+      <a href="contact.html" hx-get="contact.html" hx-target="#content" hx-swap="innerHTML">Varad</a>
+    </nav>
+
+    <div class="content-wrapper">
+        <!-- Left Column -->
+        <div class="left-column">
+            <div id="sketch-container" class="fade-out"></div>
+            <img id="hover-image" src="https://images.squarespace-cdn.com/content/v1/63efc1f4bd6acb12fcc9432b/d472f1c3-edc2-4397-a679-76f496811adf/image.png" alt="Default Image">
+        </div>
+        
+        <!-- Right Column -->
+        <div class="right-column">
+            <h1>Gautam Chebrolu</h1>
+            <ul class="link-list">
+            <li><a href="work.html" data-sketch= "sketches/work_sketch.js" data-image="assets/floatinghead.png">Work</a></li>
+            <li><a href="#" data-sketch= "sketches/projects_sketch.js" data-image="assets/floatinghead.png">Projects</a></li>
+            <li><a href="visuals.html" data-sketch= "sketches/visuals_sketch.js" data-image="assets/floatinghead.png">Visuals</a></li>
+            <li id="grades"><a href="grades.html" data-sketch= "sketches/hottakes_sketch.js" data-image="assets/floatinghead.png">Grades</a></li>
+            <li><a href="#" data-sketch= "sketches/hottakes_sketch.js" data-image="assets/floatinghead.png">Hot Takes</a></li>
+            <li><a href="#" data-sketch= "sketches/hottakes_sketch.js" data-image="assets/floatinghead.png">Quotes</a></li>
+            </ul>
+        </div>
+
+        <!-- <div class="current-work">
+            <h3>Current Work</h3>
+        </div> -->
+    </div>
+
+  </div>
+
+  <!-- JS Files -->
+  <script src="p5-canvas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

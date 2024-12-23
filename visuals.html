@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="container">
+    <nav>
+        <a href="about.html" hx-get="about.html" hx-target="#content" hx-swap="innerHTML">About</a>
+        <a href="projects.html" hx-get="projects.html" hx-target="#content" hx-swap="innerHTML">Projects</a>
+        <a href="contact.html" hx-get="contact.html" hx-target="#content" hx-swap="innerHTML">Varad</a>
+    </nav>
+    <!-- Top Section -->
+    <div class="top-section">
+      <!-- Highlighted Media -->
+      <div class="display-container" id="display-container">
+          <img id="highlighted-media" src="" onclick="openModal()">
+      </div>
+      <!-- Description Panel -->
+      <div id="description-panel" class="description-panel">
+        <h3 id="media-title" style="margin-bottom: 2px;"></h3>
+        <b id="media-location" style="font-size: 1em; margin-bottom: 0;"></b>
+        <p id="media-year" style="font-style: italic; font-size: 1em; margin: 2px 0;"></p>
+        <p id="media-description" style="font-size: .75em; margin-top: 2px;"></p>
+      </div>
+    </div>
+
+    <!-- Bottom Half: Scrollable Gallery -->
+    <div id="gallery" class="gallery"></div>
+  </div>
+
+  <!-- Modal for Fullscreen View -->
+  <div id="modal" class="modal" onclick="closeModal()">
+    <span class="close">&times;</span>
+    <img id="modal-image" class="modal-content">
+  </div>
+
+  <script>
+    // Update Highlighted Media and Description
+    function updateMedia(src, title, location, year, description) {
+        const highlightedMedia = document.getElementById('highlighted-media');
+        const mediaTitle = document.getElementById('media-title');
+        const mediaYear = document.getElementById('media-year');
+        const mediaLocation = document.getElementById('media-location')
+        const mediaDescription = document.getElementById('media-description');
+        
+        highlightedMedia.src = src; // Update image or video
+        mediaTitle.textContent = title;
+        mediaYear.textContent = year;
+        mediaLocation.textContent = location;
+        mediaDescription.textContent = decodeURIComponent(description); // Decode when displaying
+    }
+
+    // Open Modal
+    function openModal() {
+        const modal = document.getElementById('modal');
+        const modalImage = document.getElementById('modal-image');
+        const highlightedMedia = document.getElementById('highlighted-media');
+
+        modal.style.display = "flex"; // Show modal
+        modalImage.src = highlightedMedia.src; // Copy image source to modal
+    }
+
+    // Close Modal
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = "none"; // Hide modal
+    }
+
+    // Close modal if ESC key is pressed
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Load Data from Google Sheet
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQAUDd1-782iIhp_Boe-Y8rWs8W8gh8zCPSXh3btDZQHX2Wi1uAGtIKRWvWe03C6KInGUrgzYZM3-nL/pub?gid=1616100824&single=true&output=tsv';
+
+    fetch(sheetURL)
+      .then(response => response.text())
+      .then(tsvText => {
+        const rows = tsvText.split('\n');
+        rows.shift(); // Remove header row
+
+        const gallery = document.getElementById('gallery');
+        const highlightMedia = document.getElementById('highlighted-media');
+
+        rows.forEach((row, index) => {
+          const columns = row.split('\t');
+          const type = columns[0];           // Media Type (image or video)
+          const link = columns[1];           // Media URL
+          const thumbnail = columns[2];      // Thumbnail URL
+          const title = columns[3];
+          const location = columns[4];
+          const year = columns[5];
+          const description = columns[6];    // Description
+
+          const galleryItem = document.createElement('div');
+          galleryItem.classList.add('gallery-item');
+
+          // Create clickable thumbnail
+          if (type === 'image') {
+            galleryItem.innerHTML = `<div class="thumbnail" onclick="updateMedia('${link}', '${title}', '${location}', '${year}', '${encodeURIComponent(description)}')"><img src="${thumbnail}" alt="${description}"> </div>`;
+          } else if (type === 'video') {
+            galleryItem.innerHTML = `<div class="thumbnail" onclick="updateMedia('${link}', '${description}')"><video src="${thumbnail}" muted></video></div>`;
+          }
+
+          gallery.appendChild(galleryItem);
+
+          // Set first item as default highlight
+          if (index === 0) {
+            if (type === 'image') {
+              highlightMedia.src = link;
+            } else if (type === 'video') {
+              highlightMedia.outerHTML = `<video src="${link}" controls autoplay></video>`;
+            }
+          }
+        });
+      })
+      .catch(error => console.error('Error loading data:', error));
+  </script>
+</body>
+</html>
+
