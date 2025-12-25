@@ -1,363 +1,242 @@
-body, html {
+:root {
+    --bg-color: #f1f1f1;
+    --text-color: #242424;
+    --secondary-text: #666666;
+    --grid-gap: 1rem;
+    
+    /* Font Stacks */
+    --font-serif: "Newsreader", serif;
+    --font-sans: "Albert Sans", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Lora", sans-serif;
-    background: transparent;
-    color: #333333;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;    /* Center vertically */
-    height: 100%;          /* Full viewport height */
-    overflow: auto;
-  }
+}
 
-  .content-wrapper {
-    display: grid;
-    grid-template-rows: auto auto auto; /* Create three rows */
-    grid-template-columns: 1fr 1fr; /* Maintain two columns */
-    gap: 20px; 
-    justify-items: center;
-    align-items: center;
-    height: 100vh;
-    min-width: 50%;
-    max-width: 800px;
-    margin-top: 200px;
-    margin-bottom: 200px;
-    overflow: auto; 
-    
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans); /* Default body text remains clean sans-serif */
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
 
-    @media (max-width: 768px) {
-        grid-template-columns: 1fr; 
-        grid-template-rows: auto auto auto; /* Maintain three rows on mobile */
-        align-items: center;
-        text-align: center;
-    }
-  }
-  
-  .left-column {
-    /* Remove previous styling */
-    display: block;
-    height: auto;
-    overflow: hidden;
-    width: 75%;
-    max-width: 500px;
-    min-height: 200px;
-    grid-row: 1 / 3;
-  }
+/* Layout */
+.container {
+    max-width: 900px; /* Wider container to accommodate the grid */
+    margin: 0 auto;
+    padding: 8rem 1.5rem;
+}
 
-  .right-column {
-    display: block;
-    height: auto;
-    overflow: hidden;
-    width: 100%;
-    max-width: 500px;
-    grid-row: 1 / 3;
-  }
+/* Typography Overrides */
+h1, h2, h3, .logo {
+    font-family: var(--font-serif); /* Applying Newsreader to headings */
+}
 
-  .current-work {
-    grid-row: 3 / 4;
-    grid-column: 1 / 3;
-  }
+/* Header */
+header {
+    margin-bottom: 5rem;
+    max-width: 800px; /* Keep the intro text narrow for readability */
+}
 
-  .current-work h3 {
-    text-align: center; 
-    color: #888888
-  }
-  
-  .left-column img {
-    width: 90%;
-    height: auto;
-    transition: opacity 0.5s ease-in-out;
-    opacity: 0;
-    border-radius: 10px;
-    filter: grayscale(0%) opacity(1);
-  }
-
-  .left-column img.fade-in {
-    opacity: 1;
-  }
-  
-  .right-column h1 {
-    white-space: nowrap; /* Prevent wrapping of the text */
-    overflow: hidden; /* Hide overflow if the text is too long */
-    text-overflow: ellipsis; /* Add ellipsis if the text overflows */
-  }
-  
-  .link-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .link-list li {
-    margin: 10px 0;
-  }
-  
-  .link-list a {
-    text-decoration: none;
+.logo {
+    font-weight: 400;
+    font-size: 1.5rem;
     color: #888888;
-    font-size: 1.2rem;
-  }
-  
-  .link-list a:hover {
+}
+
+h1 {
+    font-size: 2rem; /* Larger for impact */
+    font-weight: 500; /* Newsreader looks great at lighter weights */
+    line-height: 1.1;
+    color: #202020;
+    margin-bottom: .5rem;
+}
+
+h2 {
+    font-size: 1.5rem; /* Larger for impact */
+    font-weight: 400; /* Newsreader looks great at lighter weights */
+    margin-bottom: 1.5rem;
+    line-height: 1;
+    color: #888888;
+}
+
+h3 {
+    font-size: 1rem; /* Larger for impact */
+    font-weight: 200; /* Newsreader looks great at lighter weights */
+    line-height: 1;
+    color: #202020;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    color: var(--secondary-text);
+}
+
+/* Section Label */
+.section-label {
+    font-size: 1rem;
+    font-family: var(--font-sans); /* Keep labels simple/clean */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary-text);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.section-label.list-view {
+    margin-bottom: .5rem;
+}
+
+/* GRID LAYOUT */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--grid-gap);
+    margin-bottom: 5rem;
+}
+
+/* Card Styling */
+.card {
     text-decoration: none;
-    color: #444444;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  #canvas-container {
-    position: absolute; /* Position the canvas container absolutely */
-    top: 0;
-    left: 0;
-    width: 100vw; /* Full width of the viewport */
-    height: 100vh; /* Full height of the viewport */
-    z-index: -1; /* Send it behind all content initially */
-  }
-  
-  canvas {
-    position: absolute; /* Ensure the canvas itself is absolutely positioned */
-    top: 0;
-    left: 0;
-    z-index: -1; /* Send the canvas behind other elements */
-  }
-
-  h1 {
-    color: #222222; /* Primary heading color */
-  }
-  
-  p {
-    color: #444444; /* Paragraph text color */
-  }
-  
-  nav {
-    position: fixed; /* Ensures the nav bar stays at the bottom */
-    bottom: 0;       /* Positions it at the bottom of the viewport */
-    left: 0;         /* Aligns it to the left edge */
-    width: 100%;     /* Spans the full width of the screen */
-    background: #f1f1f1; /* Background color for contrast */
-    padding: 1rem;
-    display: flex;   /* Flexbox for aligning nav links */
-    justify-content: center; /* Centers the links horizontally */
-    z-index: 10;
-  }
-  
-  nav a {
-    color: #aaaaaa;
-    margin: 0 1rem;
-    text-decoration: none;
-    font-size: 1.2rem;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
-  }
-
-body.work-page {
-    background-color: #FAFAFF;
+    color: inherit;
+    display: block;
+    group: hover; /* For hover effects */
 }
 
-.work-list, .work-item {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.card-image {
+    width: 100%;
+    aspect-ratio: 3 / 2; /* Ensures all boxes are the same shape */
+    background-color: #e8e8e8;
+    overflow: hidden;
+    border-radius: 4px; /* Slight rounded corners */
+    margin-bottom: 1rem;
+    position: relative;
 }
 
-/* Style for each work item */
-.work-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #FCFCFF;
-  border-radius: 8px;
-}
-
-/* Company logo styling */
-.company-logo {
-  width: 100px;
-  margin-right: 15px;
-  filter: grayscale(100%) opacity(0.5);
-  mix-blend-mode: multiply;
-  transition: all 0.3s ease;
-}
-
-.company-logo:hover {
-  filter: grayscale(0%) opacity(1); /* Revert to color when hovered */
-  mix-blend-mode: multiply;
-}
-
-/* Work details section styling */
-.work-entry {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* Text styling within work item */
-.work-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.work-details h2 {
-  margin: 0;
-  font-size: 1.2em;
-}
-
-.work-details p {
-  margin: 2px 0;
-  color: #555;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-/* .display-container img {
-  max-width: 60vw;
-  max-height: 50vh; 
-  object-fit: contain; 
-  width: auto;
-  height: auto;
-  display: block; 
-  margin: 0 auto; 
-  margin-top: 2vh;
-} */
-
-.top-section {
-  display: flex;
-  flex-direction: row;
-  height: 50vh; 
-  border-bottom: .25rem solid #eeeeee; 
-  overflow: hidden;
-  padding: 2vh;
-}
-
-.display-container {
-  display: flex;
-  flex-grow: 1; /* Allow the container to grow and fill available space */
-  justify-content: center; 
-  align-items: center;
-  height: 100%; 
-  position: relative;
-  top: 0; 
-  background: white; 
-  z-index: 10;
-  overflow: hidden;
-}
-
-.display-container img, .display-container video {
-  max-width: 100%; /* Allow image to fill container width */
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain; /* Prevent overflow and maintain aspect ratio */
-  cursor: pointer;
-}
-
-.description-panel {
-  width: 20%; /* Fix width to 20% on desktop */
-  max-width: 200px; /* Set a maximum width for responsiveness */
-  height: 100%;
-  max-height: 40vh;
-  margin-left: 1vh;
-  padding-left: 1vh;
-  border-left: .25rem solid #f9f9f9; 
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  text-align: left;
-}
-
-/* Media Queries for Responsiveness */
-@media screen and (max-width: 768px) {
-  .top-section {
-    flex-direction: column; /* Stack elements vertically */
-    height: auto; /* Let the height adjust dynamically */
-  }
-
-  .display-container {
-    height: auto; /* Allow container to adjust to content size */
-  }
-
-  .description-panel {
-    width: 100%; /* Take up full width */
-    max-width: none; /* Remove max-width constraint */
-    height: auto; /* Adjust height dynamically */
-    padding: 10px;
+.card-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Crops image to fill the box without distortion */
+    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
     
-    border-left: none; /* Remove border on the left */
-    border-top: .25 rem solid #f9f9f9; /* Add a border on top for separation */
-    justify-content: left;
-    text-align: center;
-  }
+    /* 2. THE MAGIC: This blends the image with the gray background */
+    mix-blend-mode: multiply; 
+    
+    /* Optional: Lowers contrast slightly to make it even softer */
+    opacity: 0.9; 
+    
+    /* Optional: Many designers also use grayscale for a true "printed" look. 
+       Remove this line if you want to keep the colors! */
+    filter: grayscale(100%);
 }
 
-
-/* Bottom Half: Scrollable Gallery */
-.gallery {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); /* Flexible grid */
-  gap: .5vw;
-  padding: .25vw;
-  overflow-y: auto; /* Scrollable if too many thumbnails */
-  height: 40vh;
-  width: 90vw;
-  max-width: 1000px;
+.card:hover .card-image img {
+    transform: scale(1.05); /* Subtle zoom effect on hover */
+    mix-blend-mode: normal; /* Turn off the blending */
+    opacity: 1;             /* Full brightness */
+    filter: grayscale(0%);
 }
 
-.gallery-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+.card-info h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
 }
 
-/* Thumbnail Images */
-.thumbnail img, .thumbnail video {
-  width: 100%; /* Fill grid cell */
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-  opacity: 25%;
-  border-radius: 2px;
+.card-info .role {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--secondary-text);
 }
 
-.thumbnail img:hover, .thumbnail video:hover {
-  transform: scale(1.1); /* Zoom effect on hover */
-  opacity: 100%;
+.text-list {
+    margin-bottom: 2rem;
 }
 
-/* Modal */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
-  justify-content: center;
-  align-items: center;
+.text-list a{
+    color: var(--secondary-text);
+    text-decoration: none;
+    font-weight: 400;
+    font-family: var(--font-sans)
 }
 
-.modal-content {
-  max-width: 90vw;
-  max-height: 90vh;
-  object-fit: contain;
+.text-list a:visited {
+    color: var(--secondary-text);
 }
 
-.close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
+.text-list a:hover {
+    color: #888888;
+}
+
+/* Footer */
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-family: var(--font-sans);
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+/* Filter Menu Styling */
+.filter-menu {
+    font-family: var(--font-serif); /* Newsreader */
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: #ccc; /* Default color for pipes | */
+    cursor: default;
+}
+
+.filter-btn {
+    color: var(--text-color); /* Black text for words */
+    cursor: pointer;
+    opacity: 0.2;
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.filter-btn:hover {
+    opacity: 0.6; /* Slight feedback when hovering the word itself */
+}
+
+/* Active State for the Filter Button (when clicked) */
+.filter-btn.active {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Project Card Transitions */
+.card {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* 1. The "Dimmed" State (Used during Hover) */
+.card.dimmed {
+    opacity: 0.2; /* Fades out non-matching projects */
+}
+
+/* 2. The "Hidden" State (Used during Click/Filter) */
+.card.hidden {
+    display: none; /* Completely removes it from grid flow */
+}
+
+hr {
+    display: block;
+    height: 1px;
+    width: 80%;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }

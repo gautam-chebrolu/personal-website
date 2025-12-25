@@ -1,55 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Website</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-  <script src="https://unpkg.com/htmx.org"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-  <div class="container">
-    <!-- Fullscreen p5.js Canvas -->
-    <div id="canvas-container"></div>
 
-    <!-- Navigation -->
-    <nav>
-      <a href="about.html" hx-get="about.html" hx-target="#content" hx-swap="innerHTML">About</a>
-      <a href="projects.html" hx-get="projects.html" hx-target="#content" hx-swap="innerHTML">Projects</a>
-      <a href="https://www.linkedin.com/in/varad-dabke-2019/" target="_blank">Varad</a>
-    </nav>
+    <div class="container">
 
-    <div class="content-wrapper">
-        <!-- Left Column -->
-        <div class="left-column">
-            <div id="sketch-container" class="fade-out"></div>
-            <img id="hover-image" src="https://images.squarespace-cdn.com/content/v1/63efc1f4bd6acb12fcc9432b/d472f1c3-edc2-4397-a679-76f496811adf/image.png" alt="Default Image">
-        </div>
-        
-        <!-- Right Column -->
-        <div class="right-column">
-            <h1>Gautam Chebrolu</h1>
-            <ul class="link-list">
-            <li><a href="work.html" data-sketch= "sketches/work_sketch.js" data-image="assets/floatinghead.png">Work</a></li>
-            <li><a href="#" data-sketch= "sketches/projects_sketch.js" data-image="assets/floatinghead.png">Projects</a></li>
-            <li><a href="visuals.html" data-sketch= "sketches/visuals_sketch.js" data-image="assets/floatinghead.png">Visuals</a></li>
-            <li id="grades"><a href="grades.html" data-sketch= "sketches/hottakes_sketch.js" data-image="assets/floatinghead.png">Grades</a></li>
-            <li><a href="#" data-sketch= "sketches/hottakes_sketch.js" data-image="assets/floatinghead.png">Hot Takes</a></li>
-            <li><a href="#" data-sketch= "sketches/hottakes_sketch.js" data-image="assets/floatinghead.png">Quotes</a></li>
-            </ul>
-        </div>
+        <header>
+            <div class="logo">Gautam Chebrolu</div>
+            
+            <h1 class="filter-menu">
+                <span class="filter-btn" data-filter="design">Design</span> / 
+                <span class="filter-btn" data-filter="hardware">Hardware</span> / 
+                <span class="filter-btn" data-filter="software">Software</span> / 
+                <span class="filter-btn" data-filter="visuals">Visuals</span> /
+                <span class="filter-btn" data-filter="visuals">Games</span>
 
-        <!-- <div class="current-work">
-            <h3>Current Work</h3>
-        </div> -->
+            </h1>
+
+            <p class="intro-text">
+                Creating digital solutions with a focus on simplicity and performance. 
+                Diving into the details, zooming out for the big picture.
+            </p>
+            <!-- <hr> -->
+        </header>
+
+
+        <main>
+            <h2 class="section-label">Select Work</h2>
+
+            <div class="grid" id="project-grid"></div>
+
+            <h2 class="section-label list-view">Takes</h2>
+            <div class="text-list">
+                <a href="">The US Healthcare system is unethical</a> <br>
+                <a href="">Chasing credit card rewards is pointless</a>
+            </div>
+            <h2 class="section-label list-view">Publications</h2>
+            <div class="text-list">
+                <a href="https://patents.google.com/patent/US10940094B2/en?q=(pilleve)&oq=pilleve">Pill Dispensing Assembly | U.S. Patent #10940094 B2</a> <br>
+                <a href="https://religionnews.com/2019/04/23/kanye-west-at-coachella-was-a-substitute-easter-for-sinner-saints/">Statements on Kanye's Sunday Service</a> <br>
+                <a href="https://docs.google.com/document/d/1AgCYFu4QFjnwWKCaUISI9qITP-TZWpBpUxv_Ks1Oipc/edit?usp=sharing">Memo to FCC on Deceptive Video + Audio Edits</a>
+            </div>
+
+            <h2 class="section-label list-view">Recognitions</h2>
+            <div class="text-list">
+                <a href="https://www.forbes.com/pictures/5be36fd131358e5b4335d7f1/yossuf-albanawi-25-and-ga/">Forbes Under 30</a> / 
+                <a href="https://arc.net/l/quote/qxpfpdfm">DC Inno 25 Under 25</a> / 
+                <a href="https://www.mddionline.com/digital-health/medical-design-excellence-awards-2022-finalists-digital-health-products-and-mobile-medical-apps">Medical Device Excellence Awards</a> / 
+                <a href="https://futurecaucus.org/feature-young-amp-the-guest-list-2020/">DC Young and the Guest List</a> / 
+            </div>
+        </main>
+
+        <footer>
+            <h2 class="section-label">Contact</h2>
+            <div class="social-links">
+                <a href="mailto:varpra1@gmail.com">varpra1@gmail.com &nearr;</a>
+                <!-- <a href="#">Twitter &nearr;</a> -->
+                <a href="https://www.linkedin.com/in/gchebrolu">LinkedIn &nearr;</a>
+            </div>
+        </footer>
+
     </div>
 
-  </div>
+    <script src="projects.js"></script>
 
-  <!-- JS Files -->
-  <script src="p5-canvas.js"></script>
-  <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gridContainer = document.getElementById('project-grid');
+
+            // --- PART A: GENERATE CONTENT ---
+            // Loop through the data and create HTML for each project
+            projectsData.forEach(project => {
+                const cardHTML = `
+                    <a href="${project.link}" class="card" data-category="${project.category}">
+                        <div class="card-image">
+                            <img src="${project.image}" alt="${project.title}">
+                        </div>
+                        <div class="card-info">
+                            <h3>${project.title}</h3>
+                            <p class="role">${project.role} / ${project.year}</p>
+                        </div>
+                    </a>
+                `;
+                // Append the new card to the grid
+                gridContainer.innerHTML += cardHTML;
+            });
+
+            // --- PART B: INITIALIZE FILTERS ---
+            // (This is the same logic as before, but runs after content is generated)
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
+            let activeFilter = null;
+
+            filterBtns.forEach(btn => {
+                const filterValue = btn.getAttribute('data-filter');
+
+                // HOVER
+                btn.addEventListener('mouseenter', () => {
+                    if (!activeFilter) {
+                        cards.forEach(card => {
+                            const categories = card.getAttribute('data-category');
+                            if (!categories.includes(filterValue)) {
+                                card.classList.add('dimmed');
+                            }
+                        });
+                    }
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    if (!activeFilter) {
+                        cards.forEach(card => card.classList.remove('dimmed'));
+                    }
+                });
+
+                // CLICK
+                btn.addEventListener('click', () => {
+                    if (activeFilter === filterValue) {
+                        // Reset
+                        activeFilter = null;
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        cards.forEach(card => {
+                            card.classList.remove('hidden');
+                            card.classList.remove('dimmed');
+                        });
+                    } else {
+                        // Activate
+                        activeFilter = filterValue;
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        cards.forEach(card => {
+                            const categories = card.getAttribute('data-category');
+                            card.classList.remove('dimmed');
+                            
+                            if (categories.includes(filterValue)) {
+                                card.classList.remove('hidden');
+                            } else {
+                                card.classList.add('hidden');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
