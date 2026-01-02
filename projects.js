@@ -50,35 +50,35 @@ const projectsData = [
         link: "/internal-page.html"
     },
         {
-        title: "Pro Headshots",
-        role: "Photographer",
-        year: "2019 - Present",
-        category: "visuals",
-        image: "images/project3.jpg",
+        title: "The Amethyst System",
+        role: "Designer",
+        year: "2022",
+        category: "design hardware software visuals",
+        image: "assets/amethyst_system.png",
         link: "/internal-page.html"
     },
-    {
-        title: "The Kelloggian",
-        role: "Puzzle Master",
-        year: "2026",
-        category: "design software", 
-        image: "",
-        link: "https://gauta.me"
-    },
-    {
-        title: "Concert Photography",
-        role: "Photographer",
-        year: "2024 - Present",
-        category: "visuals",
-        image: "images/project2.jpg",
-        link: "https://external-site.com/project2"
-    },
-    {
-        title: "Event Photography",
-        role: "Photographer",
-        year: "2015 - Present",
-        category: "visuals",
-        image: "images/project3.jpg",
-        link: "/internal-page.html"
-    },
+    // {
+    //     title: "The Kelloggian",
+    //     role: "Puzzle Master",
+    //     year: "2026",
+    //     category: "design software", 
+    //     image: "",
+    //     link: "https://gauta.me"
+    // },
+    // {
+    //     title: "Concert Photography",
+    //     role: "Photographer",
+    //     year: "2024 - Present",
+    //     category: "visuals",
+    //     image: "images/project2.jpg",
+    //     link: "https://external-site.com/project2"
+    // },
+    // {
+    //     title: "Event Photography",
+    //     role: "Photographer",
+    //     year: "2015 - Present",
+    //     category: "visuals",
+    //     image: "images/project3.jpg",
+    //     link: "/internal-page.html"
+    // },
 ];
