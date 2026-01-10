@@ -130,14 +130,15 @@ h3 {
     
     /* Optional: Many designers also use grayscale for a true "printed" look. 
        Remove this line if you want to keep the colors! */
-    filter: grayscale(100%);
+    filter: grayscale(80%);
 }
 
 .card:hover .card-image img {
-    transform: scale(1.05); /* Subtle zoom effect on hover */
+    transform: scale(1.01); /* Subtle zoom effect on hover */
     mix-blend-mode: normal; /* Turn off the blending */
     opacity: 1;             /* Full brightness */
     filter: grayscale(0%);
+    background-color: #ffffff;
 }
 
 .card-info h3 {

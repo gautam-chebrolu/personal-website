@@ -9,12 +9,20 @@ const projectsData = [
         link: "https://gauta.me"
     },
     {
+        title: "The Amethyst System",
+        role: "CEO",
+        year: "2022",
+        category: "design hardware software visuals",
+        image: "assets/amethyst_system.png",
+        link: "https://gauta.me"
+    },
+    {
         title: "SPARQ AI",
         role: "Hardware Engineer",
         year: "2024",
         // Space-separated categories: design, hardware, software, visuals
-        category: "design software", 
-        image: "https://i.kickstarter.com/assets/041/516/682/e5c0cb5bbfcfb086a9180cdec7443e07_original.png?anim=false&fit=cover&gravity=auto&height=873&origin=ugc&q=92&v=1688574831&width=1552&sig=YuOxgLELbFtboI%2FaoPSzSTqG1RdY%2F967EFyYxIzNwPY%3D",
+        category: "design software hardware", 
+        image: "assets/sparq_photo.png",
         link: "https://gauta.me"
     },
     {
@@ -22,15 +30,15 @@ const projectsData = [
         role: "Photographer",
         year: "2019 - Present",
         category: "visuals",
-        image: "images/project3.jpg",
-        link: "/internal-page.html"
+        image: "assets/headshot_photo.png",
+        link: "https://gauta.me"
     },
     {
         title: "The Kelloggian",
         role: "Puzzle Master",
         year: "2026",
-        category: "design software", 
-        image: "",
+        category: "design software games", 
+        image: "assets/kelloggian_crossword.png",
         link: "https://gauta.me"
     },
     {
@@ -38,25 +46,18 @@ const projectsData = [
         role: "Photographer",
         year: "2024 - Present",
         category: "visuals",
-        image: "images/project2.jpg",
-        link: "https://external-site.com/project2"
+        image: "assets/concert_photo.png",
+        link: "https://gauta.me"
     },
     {
         title: "Event Photography",
         role: "Photographer",
         year: "2015 - Present",
         category: "visuals",
-        image: "images/project3.jpg",
-        link: "/internal-page.html"
+        image: "assets/event_photo.png",
+        link: "https://gauta.me"
     },
-        {
-        title: "The Amethyst System",
-        role: "Designer",
-        year: "2022",
-        category: "design hardware software visuals",
-        image: "assets/amethyst_system.png",
-        link: "/internal-page.html"
-    },
+
     // {
     //     title: "The Kelloggian",
     //     role: "Puzzle Master",
