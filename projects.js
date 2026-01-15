@@ -9,7 +9,7 @@ const projectsData = [
         link: "https://gauta.me"
     },
     {
-        title: "The Amethyst System",
+        title: "Amethyst",
         role: "CEO",
         year: "2022",
         category: "design hardware software visuals",
@@ -26,9 +26,9 @@ const projectsData = [
         link: "https://gauta.me"
     },
     {
-        title: "Pro Headshots",
+        title: "Headshots",
         role: "Photographer",
-        year: "2019 - Present",
+        year: "2019 - ",
         category: "visuals",
         image: "assets/headshot_photo.png",
         link: "https://gauta.me"
@@ -44,7 +44,7 @@ const projectsData = [
     {
         title: "Concert Photography",
         role: "Photographer",
-        year: "2024 - Present",
+        year: "2024 - ",
         category: "visuals",
         image: "assets/concert_photo.png",
         link: "https://gauta.me"
@@ -52,7 +52,7 @@ const projectsData = [
     {
         title: "Event Photography",
         role: "Photographer",
-        year: "2015 - Present",
+        year: "2015 - ",
         category: "visuals",
         image: "assets/event_photo.png",
         link: "https://gauta.me"

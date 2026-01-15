@@ -64,7 +64,7 @@ h2 {
 }
 
 h3 {
-    font-size: 1rem; /* Larger for impact */
+    font-size: .75rem; /* Larger for impact */
     font-weight: 200; /* Newsreader looks great at lighter weights */
     line-height: 1;
     color: #202020;
@@ -103,6 +103,7 @@ h3 {
     text-decoration: none;
     color: inherit;
     display: block;
+    margin-bottom: 1rem;
     group: hover; /* For hover effects */
 }
 
