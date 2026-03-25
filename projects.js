@@ -39,7 +39,7 @@ const projectsData = [
         year: "2026",
         category: "design software games", 
         image: "assets/kelloggian_crossword.png",
-        link: "https://gauta.me"
+        link: "https://www.thekelloggian.com/games/"
     },
     {
         title: "Concert Photography",
@@ -57,7 +57,46 @@ const projectsData = [
         image: "assets/event_photo.png",
         link: "https://gauta.me"
     },
-
+    {
+        title: "The Catan Clash",
+        role: "Developer",
+        year: "2021 - ",
+        category: "visuals games software",
+        image: "assets/catan_clash.png",
+        link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/"
+    },
+    {
+        title: "Bluetooth Hacking",
+        role: "Developer",
+        year: "2019 - ",
+        category: "hardware software",
+        image: "assets/bluetooth_button.png",
+        link: "https://gauta.me"
+    },
+    {
+        title: "Creative Code",
+        role: "Instructor, GWU",
+        year: "2022-2023",
+        category: "design software teaching visuals",
+        image: "assets/rps_creative_code.png",
+        link: "https://just-hotel-402.notion.site/CIXD-2111-6014-Creative-Code-24b0fbc0f8b148d590c8c73c7df80245?source=copy_link"
+    },
+    {
+        title: "Who Knows",
+        role: "Director, Cinematographer",
+        year: "2017",
+        category: "visuals",
+        image: "assets/who_knows.png",
+        link: "https://www.youtube.com/watch?v=6CfHv17Ycek"
+    },
+    {
+        title: "Kanye 101",
+        role: "Creator, Duke",
+        year: "2017",
+        category: "teaching",
+        image: "assets/kanye_101.png",
+        link: "https://docs.google.com/document/d/1rx50q7oKfnLhmz2bUFMA9IPnIueRHebEnlrZT6iCYRY/edit?usp=sharing"
+    },
     // {
     //     title: "The Kelloggian",
     //     role: "Puzzle Master",

@@ -27,7 +27,7 @@ body {
 .container {
     max-width: 900px; /* Wider container to accommodate the grid */
     margin: 0 auto;
-    padding: 8rem 1.5rem;
+    padding: 5rem 1.5rem;
 }
 
 /* Typography Overrides */
@@ -193,7 +193,7 @@ h3 {
 /* Filter Menu Styling */
 .filter-menu {
     font-family: var(--font-serif); /* Newsreader */
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 1.5rem;
     line-height: 1.2;
