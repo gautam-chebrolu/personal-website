@@ -4,40 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gautam Chebrolu</title>
-    
+    <meta name="description" content="Gautam Chebrolu — Bridging digital and physical experiences through design, hardware, software, and visual work.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
-    <div class="container">
+    <!-- ═══ Navigation ═══ -->
+    <nav class="site-nav" id="site-nav">
+        <div class="nav-inner">
+            <a href="#work" class="logo">Gautam Chebrolu</a>
+            <div class="nav-links">
+                <a href="#work" class="nav-link" data-view="work">Work</a>
+                <a href="#visuals" class="nav-link" data-view="visuals">Visuals</a>
+            </div>
+        </div>
+    </nav>
 
-        <header>
-            <div class="logo">Gautam Chebrolu</div>
-            
-            <h1 class="filter-menu">
-                <span class="filter-btn" data-filter="design">Design</span> / 
-                <span class="filter-btn" data-filter="hardware">Hardware</span> / 
-                <span class="filter-btn" data-filter="software">Software</span> / 
-                <span class="filter-btn" data-filter="visuals">Visuals</span> /
-                <span class="filter-btn" data-filter="games">Games</span> /
-                <span class="filter-btn" data-filter="teaching">Teaching</span>
+    <!-- ═══ WORK VIEW ═══ -->
+    <section id="view-work" class="view">
+        <div class="container">
+            <header>
+                <h1 class="filter-menu" id="work-filter-menu">
+                    <span class="filter-btn" data-filter="design">Design</span> / 
+                    <span class="filter-btn" data-filter="hardware">Hardware</span> / 
+                    <span class="filter-btn" data-filter="software">Software</span> / 
+                    <span class="filter-btn" data-filter="visuals">Visuals</span> /
+                    <span class="filter-btn" data-filter="games">Games</span> /
+                    <span class="filter-btn" data-filter="teaching">Teaching</span>
+                </h1>
+                <p class="intro-text">Bridging digital and physical experiences.</p>
+            </header>
 
-            </h1>
-
-            <p class="intro-text">
-                Bridging digital and physical experiences.
-            </p>
-            <!-- <hr> -->
-        </header>
-
-
-        <main>
             <h2 class="section-label">Select Work</h2>
-
             <div class="grid" id="project-grid"></div>
 
             <h2 class="section-label list-view">Takes</h2>
@@ -61,101 +63,53 @@
                 <a href="https://www.facebook.com/photo.php?fbid=2508860149354485&id=1665039500403225&set=a.1720747038165804">Keys to Kismat (Sony TV USA)</a> / 
                 <a href="https://arc.net/l/quote/fidtmyut">Charles Rowe Vail Memorial Teaching Award</a>
             </div>
-        </main>
+        </div>
+    </section>
 
-        <footer>
+    <!-- ═══ VISUALS VIEW ═══ -->
+    <section id="view-visuals" class="view">
+        <div class="container container--wide">
+            <header>
+                <h1 class="filter-menu" id="visuals-filter-menu">
+                    <span class="filter-btn" data-filter="concert">Concert</span> / 
+                    <span class="filter-btn" data-filter="headshots">Headshots</span> / 
+                    <span class="filter-btn" data-filter="event">Event</span> / 
+                    <span class="filter-btn" data-filter="grad">Grad</span> /
+                    <span class="filter-btn" data-filter="graphic-design">Graphic Design</span> /
+                    <span class="filter-btn" data-filter="video">Video</span>
+                </h1>
+            </header>
+            <div class="masonry-grid" id="visuals-grid"></div>
+        </div>
+    </section>
+
+    <!-- ═══ PROJECT DETAIL VIEW ═══ -->
+    <section id="view-project" class="view">
+        <div class="container">
+            <div id="project-detail"></div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    </div>
+
+    <!-- ═══ Footer ═══ -->
+    <footer id="site-footer">
+        <div class="container">
             <h2 class="section-label">Contact</h2>
             <div class="social-links">
                 <a href="mailto:varpra1@gmail.com">varpra1@gmail.com &nearr;</a>
                 <!-- <a href="#">Twitter &nearr;</a> -->
                 <a href="https://www.linkedin.com/in/gchebrolu">LinkedIn &nearr;</a>
             </div>
-        </footer>
-
-    </div>
+        </div>
+    </footer>
 
     <script src="projects.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const gridContainer = document.getElementById('project-grid');
-
-            // --- PART A: GENERATE CONTENT ---
-            // Loop through the data and create HTML for each project
-            projectsData.forEach(project => {
-                const cardHTML = `
-                    <a href="${project.link}" class="card" data-category="${project.category}">
-                        <div class="card-image">
-                            <img src="${project.image}" alt="${project.title}">
-                        </div>
-                        <div class="card-info">
-                            <h3>${project.title}</h3>
-                            <p class="role">${project.role} / ${project.year}</p>
-                        </div>
-                    </a>
-                `;
-                // Append the new card to the grid
-                gridContainer.innerHTML += cardHTML;
-            });
-
-            // --- PART B: INITIALIZE FILTERS ---
-            // (This is the same logic as before, but runs after content is generated)
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const cards = document.querySelectorAll('.card');
-            let activeFilter = null;
-
-            filterBtns.forEach(btn => {
-                const filterValue = btn.getAttribute('data-filter');
-
-                // HOVER
-                btn.addEventListener('mouseenter', () => {
-                    if (!activeFilter) {
-                        cards.forEach(card => {
-                            const categories = card.getAttribute('data-category');
-                            if (!categories.includes(filterValue)) {
-                                card.classList.add('dimmed');
-                            }
-                        });
-                    }
-                });
-
-                btn.addEventListener('mouseleave', () => {
-                    if (!activeFilter) {
-                        cards.forEach(card => card.classList.remove('dimmed'));
-                    }
-                });
-
-                // CLICK
-                btn.addEventListener('click', () => {
-                    if (activeFilter === filterValue) {
-                        // Reset
-                        activeFilter = null;
-                        filterBtns.forEach(b => b.classList.remove('active'));
-                        cards.forEach(card => {
-                            card.classList.remove('hidden');
-                            card.classList.remove('dimmed');
-                        });
-                    } else {
-                        // Activate
-                        activeFilter = filterValue;
-                        filterBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-
-                        cards.forEach(card => {
-                            const categories = card.getAttribute('data-category');
-                            card.classList.remove('dimmed');
-                            
-                            if (categories.includes(filterValue)) {
-                                card.classList.remove('hidden');
-                            } else {
-                                card.classList.add('hidden');
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-
+    <script src="visuals.js"></script>
+    <script src="router.js"></script>
 </body>
 </html>
