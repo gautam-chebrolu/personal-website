@@ -99,19 +99,31 @@ const projectsData = [
                 },
                 {
                     type: "text",
-                    content: "Kellogg Mini Crossword (kelloggian.com/games): a mini crossword puzzle with clues based on Kellogg terms."
+                    content: "<a href='thekelloggian.com/games'>Kellogg Mini Crossword</a>: a mini crossword puzzle with clues based on Kellogg terms."
                 },
                 {
                     type: "text",
-                    content: "Kellogg Bid Trivia (kelloggbidpoints.com): place classes based on the correct bid points on a growing timeline."
+                    content: "<a href='kelloggbidpoints.com'>Kellogg Bid Trivia</a>: place classes based on the correct bid points on a growing timeline."
+                },
+                {
+                    type: "embed",
+                    src: "https://kelloggbidpoints.com"
                 },
                 {
                     type: "text",
-                    content: "Kelloggle (kelloggle.com): Wordle for Kellogg professors."
+                    content: "<a href='kelloggle.com'>Kelloggle</a>: Wordle for Kellogg professors."
                 },
-                                {
+                {
+                    type: "embed",
+                    src: "https://kelloggle.com"
+                },
+                {
                     type: "text",
-                    content: "KelloggGeoGuessr: I provide a picture from around the Global Hub and the team has to guess the location."
+                    content: "<a href=''>KelloggGeoGuessr</a>: I provide a picture from around the Global Hub and the team has to guess the location."
+                },
+                {
+                    type: "text",
+                    content: "I also built a special tournament version that allowed me to provide virtual links to each team track their scores in Firebase."
                 },
                 {
                     type: "text",
@@ -119,7 +131,7 @@ const projectsData = [
                 }
             ],
             metadata: {
-                tools: "Google Antigravity, JavaScript"
+                tools: "Google Antigravity, Firebase, JavaScript"
             }
         }
     },

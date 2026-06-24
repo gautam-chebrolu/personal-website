@@ -162,6 +162,17 @@
                             <iframe src="${s.src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>`;
                         break;
+                    case 'embed':
+                        const height = s.height || '500px';
+                        sections += `<div class="detail-section detail-embed reveal" ${delay}>
+                            <iframe src="${s.src}" style="width: 100%; height: ${height}; border: 1px solid var(--surface); border-radius: 4px;" allowfullscreen></iframe>
+                        </div>`;
+                        break;
+                    case 'link':
+                        sections += `<div class="detail-section detail-link reveal" ${delay}>
+                            <a href="${s.url}" class="project-ext-link" target="_blank" rel="noopener">${s.text} ↗</a>
+                        </div>`;
+                        break;
                 }
             });
         }
