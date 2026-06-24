@@ -12,19 +12,23 @@ const projectsData = [
         image: "https://lh3.googleusercontent.com/pw/AP1GczP7sm87uNlGUrSIu34LuyAAbLs9vMDv7-uPy7KagAmR31N-AbgOpd-PCEALK4vdZWnheXy9wWhFFEd8ea_grqEMoTJxg0_oNZrS69pWfgYVhpf2Fn0aqs2gQPCes73VK-sC4WvaMqmXFtkqeto5gDVv=w2542-h1680-s-no-gm?authuser=1",
         link: "",
         detail: {
-            summary: "A smart pill dispensing device designed to improve medication adherence for elderly patients and caregivers.",
+            summary: "A smart pill dispenser designed to improve monitor usage of controlled substances, such as opioids.",
             sections: [
                 {
                     type: "text",
-                    content: "Pilleve began as a student project at Duke University and evolved into a patented medical device. As CTO, I led the full hardware and software development cycle — from initial prototyping through FDA-class considerations to manufacturing-ready designs."
+                    content: "I joined Yossuf Albanawi as a cofounder and CTO of Pilleve, where it was our mission to prevent substance abuse and addiction. Our pill dispenser was our flagship device and our first product. It was a tool born out of multiple conversations with doctors, patients, pharmacists, and any other stakeholder we could talk to. This device received a Medical Device Excellence Award and was used by the Department of Veterans Affairs, Johns Hopkins, and other institutions."
                 },
                 {
                     type: "text",
-                    content: "The system combines a custom-designed electromechanical dispenser with a companion mobile app, enabling caregivers to remotely monitor medication adherence in real time."
+                    content: "I was responsible for making the device a reality. We went through 70+ iterations of the device using a host of sensors and decided that dispensing was the best balance of accuracy and accessibility. Our goal was never to lock patients out, but rather track. We even made it relatively easy to break into the device if necessary because no technology is 100% foolproof, and instead had tamper sensors."
+                },
+                {
+                    type: "text",
+                    content: "First editions of the device were built using the BBC micro:bit and hand-assembled and 3D-printed with a Form 2 SLA printer. We moved production to China in 2019."
                 }
             ],
             metadata: {
-                tools: "SolidWorks, Arduino, React Native"
+                tools: "Bluetooth / nRF52, Robotics, Custom PCB + Firmware, Flutter, Firebase, SolidWorks"
             }
         }
     },
@@ -37,19 +41,19 @@ const projectsData = [
         image: "assets/amethyst_system.png",
         link: "",
         detail: {
-            summary: "A connected product system bridging hardware design and digital experiences.",
+            summary: "A connected product system bridging monitoring tools and clinical care support.",
             sections: [
                 {
                     type: "text",
-                    content: "As CEO, I led the product vision, industrial design, and go-to-market strategy for the Amethyst system. The project spanned hardware engineering, embedded software, and companion app development."
+                    content: "As CEO of Pilleve, I led the product vision, design, and go-to-market strategy for the Amethyst System. We shifted our focus from just a physical device to providing care services as well and the Amethyst System was how we branded it."
                 },
                 {
                     type: "text",
-                    content: "Add more details about the Amethyst project here — the challenge, your approach, and the outcome."
+                    content: "In Greek mythology, Amethyst is associated with sobriety and clarity of mind. A user that holds the Amethyst stone is believed to be protected from intoxication and to have a clear mind. Similiarly, we hope to protect users of the Amethyst System from misusing their medications."
                 }
             ],
             metadata: {
-                tools: "Figma, SolidWorks, PCB Design"
+                tools: "Clinical Care Model + Billing, Behaviorial Health Integration"
             }
         }
     },
@@ -62,19 +66,60 @@ const projectsData = [
         image: "assets/sparq_photo.png",
         link: "",
         detail: {
-            summary: "Hardware engineering for an AI-powered product platform.",
+            summary: "Hardware engineering for an AI-powered OBDII car sensor.",
             sections: [
                 {
                     type: "text",
-                    content: "At SPARQ AI, I worked as a hardware engineer contributing to the physical design and prototyping of AI-integrated products. The role spanned PCB layout, mechanical design, and firmware development."
+                    content: "At SPARQ AI, I worked as the first hardware engineer contributing to building out their flagship product. I sourced components and manufacturers in China, hacked Bluetooth devices to reverse engineer their protocols, and built the JS bridge to connect the sensor to the app."
                 },
                 {
                     type: "text",
-                    content: "Add specific details about your contributions, technical challenges, and results."
+                    content: "I also contributed some product photography and market research"
                 }
             ],
             metadata: {
-                tools: "Altium, KiCad, Firmware"
+                tools: "Bluetooth, OBDII, React Native"
+            }
+        }
+    },
+    {
+        title: "Kellogg Mini Games",
+        slug: "kellogg-mini-games",
+        role: "Puzzle Master",
+        year: "2026",
+        category: "design software visuals games",
+        image: "assets/kellogg_bidpoints.png",
+        link: "",
+        detail: {
+            summary: "I designed and developed mini games for the Kellogg School of Management.",
+            sections: [
+                {
+                    type: "text",
+                    content: "In my last two weeks of my MBA, I built and designed a mini-game tournament based on some popular web games."
+                },
+                {
+                    type: "text",
+                    content: "Kellogg Mini Crossword (kelloggian.com/games): a mini crossword puzzle with clues based on Kellogg terms."
+                },
+                {
+                    type: "text",
+                    content: "Kellogg Bid Trivia (kelloggbidpoints.com): place classes based on the correct bid points on a growing timeline."
+                },
+                {
+                    type: "text",
+                    content: "Kelloggle (kelloggle.com): Wordle for Kellogg professors."
+                },
+                                {
+                    type: "text",
+                    content: "KelloggGeoGuessr: I provide a picture from around the Global Hub and the team has to guess the location."
+                },
+                {
+                    type: "text",
+                    content: "Side note that's interesting is the notion of meta-knowledge and how necessary it is for every environment that you're in, but how useless it is outside of those contexts. There's a lot of things, such as where locations are around the Global Hub or how the bidding system works for classes that might be important to current students but are immediately not needed after graduating."
+                }
+            ],
+            metadata: {
+                tools: "Google Antigravity, JavaScript"
             }
         }
     },
@@ -91,11 +136,15 @@ const projectsData = [
             sections: [
                 {
                     type: "text",
-                    content: "An ongoing headshot photography practice focused on capturing authentic, professional portraits. Each session is tailored to the subject's personality and intended use — from LinkedIn profiles to editorial features."
+                    content: "I've completed 400+ headshots, including 300+ for first-years at Northwestern University's Kellogg School of Management."
+                },
+                {
+                    type: "video",
+                    src: "https://youtu.be/wFGYLfPMXbw"
                 }
             ],
             metadata: {
-                tools: "Canon, Adobe Lightroom"
+                tools: "Nikon, Lightroom Classic"
             }
         }
     },
@@ -113,10 +162,14 @@ const projectsData = [
                 {
                     type: "text",
                     content: "As Puzzle Master for The Kelloggian, I design and develop interactive crossword puzzles and word games for the student community. Each puzzle is crafted around campus culture, current events, and Kellogg inside jokes."
+                },
+                {
+                    type: "text",
+                    content: "I also implemented a design refresh and of the publication's website and was the VP of Photography."
                 }
             ],
             metadata: {
-                tools: "JavaScript, Custom Puzzle Engine"
+                tools: "JavaScript, Puzzles"
             }
         }
     },
@@ -124,7 +177,7 @@ const projectsData = [
         title: "Concert Photography",
         slug: "concert-photography",
         role: "Photographer",
-        year: "2024–",
+        year: "2025–",
         category: "visuals",
         image: "assets/concert_photo.png",
         link: "",
@@ -133,35 +186,35 @@ const projectsData = [
             sections: [
                 {
                     type: "text",
-                    content: "Concert photography focused on capturing the raw energy of live performances. Working in challenging lighting conditions, each shot aims to freeze a moment of connection between artist and audience."
+                    content: "I shot bands in various venues around Chicago."
                 }
             ],
             metadata: {
-                tools: "Sony, Adobe Lightroom"
+                tools: "Nikon, Lightroom Classic"
             }
         }
     },
-    {
-        title: "Event Photography",
-        slug: "event-photography",
-        role: "Photographer",
-        year: "2015–",
-        category: "visuals",
-        image: "assets/event_photo.png",
-        link: "",
-        detail: {
-            summary: "Documentary-style event photography spanning conferences, galas, and community gatherings.",
-            sections: [
-                {
-                    type: "text",
-                    content: "Over a decade of event photography work covering a wide range of events — from intimate community gatherings to large-scale conferences and galas. The work emphasizes candid moments and the atmosphere of each event."
-                }
-            ],
-            metadata: {
-                tools: "Canon, Adobe Lightroom"
-            }
-        }
-    },
+    // {
+    //     title: "Event Photography",
+    //     slug: "event-photography",
+    //     role: "Photographer",
+    //     year: "2015–",
+    //     category: "visuals",
+    //     image: "assets/event_photo.png",
+    //     link: "",
+    //     detail: {
+    //         summary: "Event photography spanning conferences, galas, and community gatherings.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "Over a decade of event photography work covering a wide range of events — from intimate community gatherings to large-scale conferences and galas. I was the only student contracted with the Kellogg School of Management for event photography."
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "Nikon, Lightroom Classic"
+    //         }
+    //     }
+    // },
     {
         title: "The Catan Clash",
         slug: "the-catan-clash",
@@ -171,19 +224,19 @@ const projectsData = [
         image: "assets/catan_clash.png",
         link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/",
         detail: {
-            summary: "A web platform for organizing and tracking competitive Settlers of Catan tournaments.",
+            summary: "A fun side project for the 500th game of Settlers of Catan with my friends.",
             sections: [
                 {
                     type: "text",
-                    content: "The Catan Clash is a web application for managing competitive Settlers of Catan tournaments. Built with a focus on clean design and intuitive user experience, the platform handles player registration, matchmaking, score tracking, and leaderboards."
+                    content: "Robert Hines, Varad Dabke, and I started playing Settlers of Catan together virtually during the pandemic and I randomly started keeping track of our stats. On May 31st, 2024, we played our 500th game and I built a website to commemorate the occasion."
                 },
                 {
                     type: "text",
-                    content: "The project combines web development with visual branding — creating a cohesive identity for the tournament series."
+                    content: "I built a live poll using a Google Sheet as a live database and shared the live stats that we are still updating to this day."
                 }
             ],
             metadata: {
-                tools: "JavaScript, Vercel"
+                tools: "JavaScript, p5.js, Google Sheets database, Vercel"
             }
         }
     },
@@ -196,19 +249,15 @@ const projectsData = [
         image: "assets/bluetooth_button.png",
         link: "",
         detail: {
-            summary: "Exploring Bluetooth Low Energy for creative hardware interfaces and IoT prototyping.",
+            summary: "Exploring BLE for creative hardware interfaces and IoT prototyping.",
             sections: [
                 {
                     type: "text",
-                    content: "A series of experiments and projects exploring Bluetooth Low Energy (BLE) as a medium for creative hardware interactions. Projects range from custom wireless buttons to sensor networks and IoT prototypes."
+                    content: "I've hacked a number of Bluetooth devices to build my own custom functions such as custom buttons and data trackers."
                 },
-                {
-                    type: "text",
-                    content: "The work demonstrates how accessible wireless protocols can enable rapid prototyping of connected physical experiences."
-                }
             ],
             metadata: {
-                tools: "Arduino, Python, BLE"
+                tools: "Zephyr, nRF, Arduino,Python, BLE"
             }
         }
     },
@@ -225,15 +274,15 @@ const projectsData = [
             sections: [
                 {
                     type: "text",
-                    content: "As an instructor at GWU's Corcoran School of the Arts & Design, I taught Creative Code — a course bridging programming fundamentals with visual arts and interaction design. Students learned to use code as a creative medium through projects in generative art, data visualization, and interactive installations."
+                    content: "As an instructor at GWU's Corcoran School of the Arts & Design, I taught Creative Code — a course bridging programming fundamentals with visual arts and interaction design. Students learned to use code as a creative medium through projects in generative art, data visualization, and interactive art."
                 },
                 {
                     type: "text",
-                    content: "The curriculum emphasized hands-on experimentation, iterative design thinking, and the creative potential of computational tools."
+                    content: "This course is a requirement for undergraduate and graduate Interaction Design majors. I taught both sections in the Fall of 2023 and would have continued teaching if I did not move for business school."
                 }
             ],
             metadata: {
-                tools: "p5.js, Processing, Arduino"
+                tools: "p5.js, Art x Tech, JavaScript"
             }
         }
     },
@@ -250,7 +299,7 @@ const projectsData = [
             sections: [
                 {
                     type: "text",
-                    content: "\"Who Knows\" is a short film I directed and shot, exploring themes of identity and uncertainty. The project involved end-to-end production — from concept and scripting through cinematography and post-production."
+                    content: "\"Who Knows\" is a short film I directed and shot with Film Team 6 (Ashwin Prakash, Jack McDermott, Mary Zhang, Sabriyya Pate, Vivek Sriram), exploring themes of identity and uncertainty. The project involved end-to-end production — from concept and scripting through cinematography and post-production."
                 },
                 {
                     type: "video",
@@ -258,7 +307,7 @@ const projectsData = [
                 }
             ],
             metadata: {
-                tools: "Final Cut Pro, Canon"
+                tools: "Nikon, Canon, Premiere Pro"
             }
         }
     },
@@ -271,19 +320,19 @@ const projectsData = [
         image: "assets/kanye_101.png",
         link: "https://docs.google.com/document/d/1rx50q7oKfnLhmz2bUFMA9IPnIueRHebEnlrZT6iCYRY/edit?usp=sharing",
         detail: {
-            summary: "A student-led course at Duke University examining Kanye West's cultural impact through music, fashion, and design.",
+            summary: "A student-led course at Duke University examining ourselves through teh lens of Kanye West.",
             sections: [
                 {
                     type: "text",
-                    content: "Kanye 101 was a student-led course I created at Duke University that examined the cultural significance of Kanye West's work across music, fashion, architecture, and design. The course attracted over 100 applicants and became one of the most talked-about student initiatives on campus."
+                    content: "Kanye 101 was a student-led course I created with Sabriyya Pate at Duke University that examined our own identities and experiences through the lens of Kanye West's work. The course filled up within 1 second of registration. "
                 },
                 {
                     type: "text",
-                    content: "The curriculum covered topics from production techniques and sampling to brand building and the intersection of art and commerce."
+                    content: "For example, one class was about impression management because our words and thoughts go through multiple filters before being understood by others. This is complicated more media and other people editing and telling our stories."
                 }
             ],
             metadata: {
-                tools: "Curriculum Design, Lecture"
+                tools: "Curriculum Design, Lecture, Kanye West"
             }
         }
     },
