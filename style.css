@@ -597,6 +597,25 @@ header {
     cursor: default;
 }
 
+.lightbox-video {
+    display: none;
+    width: 90vw;
+    height: 50.625vw; /* 16:9 aspect ratio */
+    max-height: 90vh;
+    max-width: 160vh; /* 16:9 aspect ratio */
+    border: none;
+    border-radius: 4px;
+    background-color: #000;
+}
+
+.lightbox.video-mode .lightbox-img {
+    display: none;
+}
+
+.lightbox.video-mode .lightbox-video {
+    display: block;
+}
+
 .lightbox-close {
     position: absolute;
     top: 1.5rem;

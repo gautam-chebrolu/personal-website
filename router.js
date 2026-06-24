@@ -113,7 +113,7 @@
         if (!grid) return;
 
         grid.innerHTML = visualsData.map(v => `
-            <div class="visual-item" data-category="${v.category}" data-size="${v.size || 'standard'}">
+            <div class="visual-item" data-category="${v.category}" data-size="${v.size || 'standard'}" data-highres="${v.highRes || ''}" data-video="${v.videoUrl || ''}">
                 <img src="${v.image}" alt="${v.title}" loading="lazy">
                 <div class="visual-overlay">
                     <span class="visual-title">${v.title}</span>
@@ -125,7 +125,9 @@
         grid.querySelectorAll('.visual-item').forEach(item => {
             item.addEventListener('click', () => {
                 const img = item.querySelector('img');
-                openLightbox(img.src, img.alt);
+                const highResUrl = item.dataset.highres;
+                const videoUrl = item.dataset.video;
+                openLightbox(highResUrl || img.src, img.alt, videoUrl);
             });
         });
     }
@@ -251,17 +253,30 @@
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
     }
 
-    function openLightbox(src, alt) {
+    function openLightbox(src, alt, videoUrl) {
         const lb = document.getElementById('lightbox');
         const img = document.getElementById('lightbox-img');
-        img.src = src;
-        img.alt = alt || '';
+        const video = document.getElementById('lightbox-video');
+        
+        if (videoUrl) {
+            lb.classList.add('video-mode');
+            video.src = videoUrl + "?autoplay=1";
+            img.src = "";
+        } else {
+            lb.classList.remove('video-mode');
+            img.src = src;
+            img.alt = alt || '';
+            video.src = "";
+        }
+        
         lb.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
         document.getElementById('lightbox').classList.remove('active');
+        document.getElementById('lightbox-img').src = "";
+        document.getElementById('lightbox-video').src = "";
         document.body.style.overflow = '';
     }
 

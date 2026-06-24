@@ -1,12 +1,22 @@
 // visuals.js — Gallery data for the Visuals page
 // Replace images with your actual photos/designs/videos.
 // size: "standard" (1×1), "tall" (1×2 rows), "wide" (2×1 columns)
+//
+// 💡 CLOUDINARY USAGE:
+// For performance, use a compressed version for the masonry grid and a high-res version for the lightbox.
+// image: "https://res.cloudinary.com/.../image/upload/c_scale,w_600,q_auto/v1234/my_photo.jpg" 
+// highRes: "https://res.cloudinary.com/.../image/upload/q_auto/v1234/my_photo.jpg"
+//
+// 💡 YOUTUBE VIDEO USAGE:
+// Add a 'videoUrl' property to play a YouTube video in the lightbox. Make sure to use the 'embed' link.
+// videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
 
 const visualsData = [
     {
         title: "Live at Metro",
         category: "concert",
         image: "assets/concert_photo.png",
+        highRes: "", // Add the high resolution Cloudinary link here
         size: "wide"
     },
     {
@@ -31,6 +41,7 @@ const visualsData = [
         title: "Who Knows — Film Still",
         category: "video",
         image: "assets/who_knows.png",
+        videoUrl: "https://www.youtube.com/embed/6CfHv17Ycek",
         size: "wide"
     },
     {
