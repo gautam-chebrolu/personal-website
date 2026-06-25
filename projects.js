@@ -136,11 +136,40 @@ const projectsData = [
         }
     },
     {
+        title: "TDoP",
+        slug: "design-of-pablo",
+        role: "Developer, Designer",
+        year: "2019–",
+        category: "visuals",
+        image: "assets/design_of_pablo.png",
+        link: "",
+        detail: {
+            summary: "Figma plugin that allows you to automatically update your file's design system based on a photo you take.",
+            sections: [
+                {
+                    type: "text",
+                    content: "I created a Figma plugin that is sets up a websocket and then connects to a web app that allows users to take a photo of a design system and then automatically update their Figma file with the colors, fonts, and other design elements from the photo. The plugin uses the Google Vision API to analyze the image and extract the design elements."
+                },
+                {
+                    type: "text",
+                    content: "This project won 2nd place at the Kellogg AI Showcase"
+                },
+                {
+                    type: "video",
+                    src: "https://youtu.be/Q_SZmAQtw4o"
+                }
+            ],
+            metadata: {
+                tools: "Figma Plugin, Websockets, JavaScript, Render, Google Vision API"
+            }
+        }
+    },
+    {
         title: "Headshots",
         slug: "headshots",
         role: "Photographer",
-        year: "2019–",
-        category: "visuals",
+        year: "2026",
+        category: "design software",
         image: "assets/headshot_photo.png",
         link: "",
         detail: {
