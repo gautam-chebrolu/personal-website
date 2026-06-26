@@ -148,9 +148,18 @@
             const size = escapeHTML(v.size || 'standard');
             const videoUrl = escapeHTML(v.videoUrl || '');
             const rows = metaFields(v.meta || {});
+            const embedUrl = v.videoUrl ? getYouTubeEmbedUrl(v.videoUrl) : '';
             const videoLink = v.videoUrl
-                ? `<a class="expand-video-link" href="${videoUrl}" target="_blank" rel="noopener">Watch video ↗</a>`
+                ? `<a class="expand-video-link" href="${videoUrl}" target="_blank" rel="noopener">Watch on YouTube ↗</a>`
                 : '';
+
+            const mediaContent = v.videoUrl
+                ? `<div class="expand-image-wrap expand-video-wrap">
+                       <div class="expand-video-container" data-src="${embedUrl}"></div>
+                   </div>`
+                : `<div class="expand-image-wrap">
+                       <img src="${highRes}" alt="${title}" loading="lazy">
+                   </div>`;
 
             return `
                 <article class="visual-item" role="button" tabindex="0" aria-expanded="false" aria-label="Expand ${title}" data-index="${index}" data-category="${category}" data-size="${size}" data-highres="${highRes}" data-video="${videoUrl}">
@@ -161,9 +170,7 @@
                         </div>
                     </div>
                     <div class="visual-expanded-panel" aria-hidden="true">
-                        <div class="expand-image-wrap">
-                            <img src="${highRes}" alt="${title}" loading="lazy">
-                        </div>
+                        ${mediaContent}
                         <div class="expand-meta">
                             <h2>${title}</h2>
                             ${rows ? `<dl>${rows}</dl>` : '<p class="expand-empty-meta">Selected visual work.</p>'}
@@ -180,6 +187,11 @@
         function closeExpanded() {
             if (!expandedItem) return;
 
+            const videoContainer = expandedItem.querySelector('.expand-video-container');
+            if (videoContainer) {
+                videoContainer.innerHTML = '';
+            }
+
             expandedItem.classList.remove('expanded');
             expandedItem.setAttribute('aria-expanded', 'false');
             expandedItem.querySelector('.visual-expanded-panel')?.setAttribute('aria-hidden', 'true');
@@ -194,6 +206,13 @@
             item.classList.add('expanded');
             item.setAttribute('aria-expanded', 'true');
             item.querySelector('.visual-expanded-panel')?.setAttribute('aria-hidden', 'false');
+
+            const videoContainer = item.querySelector('.expand-video-container');
+            if (videoContainer) {
+                const src = videoContainer.getAttribute('data-src');
+                videoContainer.innerHTML = `<iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            }
+
             expandedItem = item;
             grid.classList.add('has-expanded');
 
