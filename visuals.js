@@ -12,13 +12,20 @@
 // videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
 
 const visualsData = [
-    {
-        title: "Live at Metro",
-        category: "concert",
-        image: "assets/concert_photo.png",
-        highRes: "", // Add the high resolution Cloudinary link here
-        size: "wide"
-    },
+{
+    title: "Live at Metro",
+    category: "concert",
+    image: "assets/concert_photo.png",
+    highRes: "",
+    size: "wide",
+    meta: {
+        camera: "Sony A7 IV",
+        aperture: "f/1.8",
+        focalLength: "50mm",
+        location: "Metro, Chicago",
+        date: "Oct 2024"
+    }
+},
     {
         title: "Headshot Series I",
         category: "headshots",

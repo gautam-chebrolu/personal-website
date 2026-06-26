@@ -21,7 +21,6 @@
             () => workFilter, v => { workFilter = v; });
         initFilters('#visuals-filter-menu', '#visuals-grid .visual-item',
             () => visualsFilter, v => { visualsFilter = v; });
-        initLightbox();
 
         window.addEventListener('hashchange', handleRoute);
         handleRoute();
@@ -112,24 +111,131 @@
         const grid = document.getElementById('visuals-grid');
         if (!grid) return;
 
-        grid.innerHTML = visualsData.map(v => `
-            <div class="visual-item" data-category="${v.category}" data-size="${v.size || 'standard'}" data-highres="${v.highRes || ''}" data-video="${v.videoUrl || ''}">
-                <img src="${v.image}" alt="${v.title}" loading="lazy">
-                <div class="visual-overlay">
-                    <span class="visual-title">${v.title}</span>
-                </div>
-            </div>
-        `).join('');
+        const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[char]));
 
-        // Click → lightbox
-        grid.querySelectorAll('.visual-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const img = item.querySelector('img');
-                const highResUrl = item.dataset.highres;
-                const videoUrl = item.dataset.video;
-                openLightbox(highResUrl || img.src, img.alt, videoUrl);
+        const metaFields = meta => [
+            ['Camera',       meta?.camera],
+            ['Aperture',     meta?.aperture],
+            ['Focal Length', meta?.focalLength],
+            ['Location',     meta?.location],
+            ['Date',         meta?.date],
+        ]
+            .filter(([, val]) => val)
+            .map(([label, val]) => `<dt>${escapeHTML(label)}</dt><dd>${escapeHTML(val)}</dd>`)
+            .join('');
+
+        grid.innerHTML = visualsData.map((v, index) => {
+            const title = escapeHTML(v.title);
+            const image = escapeHTML(v.image);
+            const highRes = escapeHTML(v.highRes || v.image);
+            const category = escapeHTML(v.category);
+            const size = escapeHTML(v.size || 'standard');
+            const videoUrl = escapeHTML(v.videoUrl || '');
+            const rows = metaFields(v.meta || {});
+            const videoLink = v.videoUrl
+                ? `<a class="expand-video-link" href="${videoUrl}" target="_blank" rel="noopener">Watch video ↗</a>`
+                : '';
+
+            return `
+                <article class="visual-item" role="button" tabindex="0" aria-expanded="false" aria-label="Expand ${title}" data-index="${index}" data-category="${category}" data-size="${size}" data-highres="${highRes}" data-video="${videoUrl}">
+                    <div class="visual-thumb">
+                        <img src="${image}" alt="${title}" loading="lazy">
+                        <div class="visual-overlay">
+                            <span class="visual-title">${title}</span>
+                        </div>
+                    </div>
+                    <div class="visual-expanded-panel" aria-hidden="true">
+                        <div class="expand-image-wrap">
+                            <img src="${highRes}" alt="${title}" loading="lazy">
+                        </div>
+                        <div class="expand-meta">
+                            <h2>${title}</h2>
+                            ${rows ? `<dl>${rows}</dl>` : '<p class="expand-empty-meta">Selected visual work.</p>'}
+                            ${videoLink}
+                            <button type="button" class="expand-close" aria-label="Close expanded visual">Close ✕</button>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }).join('');
+
+        let expandedItem = null;
+
+        function closeExpanded() {
+            if (!expandedItem) return;
+
+            expandedItem.classList.remove('expanded');
+            expandedItem.setAttribute('aria-expanded', 'false');
+            expandedItem.querySelector('.visual-expanded-panel')?.setAttribute('aria-hidden', 'true');
+            expandedItem = null;
+            grid.classList.remove('has-expanded');
+        }
+
+        function openItem(item) {
+            if (!item || item === expandedItem) return;
+
+            closeExpanded();
+            item.classList.add('expanded');
+            item.setAttribute('aria-expanded', 'true');
+            item.querySelector('.visual-expanded-panel')?.setAttribute('aria-hidden', 'false');
+            expandedItem = item;
+            grid.classList.add('has-expanded');
+
+            requestAnimationFrame(() => {
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             });
+        }
+
+        function toggleItem(item) {
+            if (item === expandedItem) {
+                closeExpanded();
+            } else {
+                openItem(item);
+            }
+        }
+
+        grid.addEventListener('click', e => {
+            if (e.target.closest('.expand-close')) {
+                e.stopPropagation();
+                closeExpanded();
+                return;
+            }
+
+            if (e.target.closest('a')) return;
+
+            const item = e.target.closest('.visual-item');
+            if (!item || !grid.contains(item)) return;
+            toggleItem(item);
         });
+
+        grid.addEventListener('keydown', e => {
+            const item = e.target.closest('.visual-item');
+            if (!item || !grid.contains(item)) return;
+
+            if (e.target.closest('button, a') && e.key !== 'Escape') return;
+
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleItem(item);
+            }
+
+            if (e.key === 'Escape') {
+                closeExpanded();
+                item.focus({ preventScroll: true });
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeExpanded();
+        });
+
+        grid.addEventListener('visuals:closeExpanded', closeExpanded);
     }
 
     // ─── Render: Project Detail ─────────────────────────────
@@ -162,12 +268,13 @@
                             <iframe src="${s.src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>`;
                         break;
-                    case 'embed':
+                    case 'embed': {
                         const height = s.height || '500px';
                         sections += `<div class="detail-section detail-embed reveal" ${delay}>
                             <iframe src="${s.src}" style="width: 100%; height: ${height}; border: 1px solid var(--surface); border-radius: 4px;" allowfullscreen></iframe>
                         </div>`;
                         break;
+                     }
                     case 'link':
                         sections += `<div class="detail-section detail-link reveal" ${delay}>
                             <a href="${s.url}" class="project-ext-link" target="_blank" rel="noopener">${s.text} ↗</a>
@@ -231,6 +338,10 @@
 
             // Click — toggle filter
             btn.addEventListener('click', () => {
+                if (menuSelector === '#visuals-filter-menu') {
+                    document.getElementById('visuals-grid')?.dispatchEvent(new CustomEvent('visuals:closeExpanded'));
+                }
+
                 if (getState() === val) {
                     setState(null);
                     btns.forEach(b => b.classList.remove('active'));
@@ -252,43 +363,6 @@
                 }
             });
         });
-    }
-
-    // ─── Lightbox ───────────────────────────────────────────
-    function initLightbox() {
-        const lb = document.getElementById('lightbox');
-        if (!lb) return;
-
-        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-        lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-    }
-
-    function openLightbox(src, alt, videoUrl) {
-        const lb = document.getElementById('lightbox');
-        const img = document.getElementById('lightbox-img');
-        const video = document.getElementById('lightbox-video');
-        
-        if (videoUrl) {
-            lb.classList.add('video-mode');
-            video.src = videoUrl + "?autoplay=1";
-            img.src = "";
-        } else {
-            lb.classList.remove('video-mode');
-            img.src = src;
-            img.alt = alt || '';
-            video.src = "";
-        }
-        
-        lb.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        document.getElementById('lightbox').classList.remove('active');
-        document.getElementById('lightbox-img').src = "";
-        document.getElementById('lightbox-video').src = "";
-        document.body.style.overflow = '';
     }
 
     // ─── Animations ─────────────────────────────────────────
