@@ -156,7 +156,7 @@ const projectsData = [
                 },
                 {
                     type: "video",
-                    src: "https://youtu.be/Q_SZmAQtw4o"
+                    src: "https://www.youtube.com/embed/Q_SZmAQtw4o"
                 }
             ],
             metadata: {
@@ -181,7 +181,7 @@ const projectsData = [
     //             },
     //             {
     //                 type: "video",
-    //                 src: "https://youtu.be/wFGYLfPMXbw"
+    //                 src: "https://www.youtube.com/embed/wFGYLfPMXbw"
     //             }
     //         ],
     //         metadata: {

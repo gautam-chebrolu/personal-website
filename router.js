@@ -88,6 +88,16 @@
         });
     }
 
+    function getYouTubeEmbedUrl(url) {
+        if (!url) return '';
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        if (match && match[2].length === 11) {
+            return `https://www.youtube.com/embed/${match[2]}`;
+        }
+        return url;
+    }
+
     // ─── Render: Project Grid ───────────────────────────────
     function renderProjectGrid() {
         const grid = document.getElementById('project-grid');
@@ -120,11 +130,11 @@
         }[char]));
 
         const metaFields = meta => [
-            ['Camera',       meta?.camera],
-            ['Aperture',     meta?.aperture],
+            ['Camera', meta?.camera],
+            ['Aperture', meta?.aperture],
             ['Focal Length', meta?.focalLength],
-            ['Location',     meta?.location],
-            ['Date',         meta?.date],
+            ['Location', meta?.location],
+            ['Date', meta?.date],
         ]
             .filter(([, val]) => val)
             .map(([label, val]) => `<dt>${escapeHTML(label)}</dt><dd>${escapeHTML(val)}</dd>`)
@@ -263,18 +273,20 @@
                             ${s.caption ? `<p class="detail-caption">${s.caption}</p>` : ''}
                         </div>`;
                         break;
-                    case 'video':
+                    case 'video': {
+                        const embedUrl = getYouTubeEmbedUrl(s.src);
                         sections += `<div class="detail-section detail-video reveal" ${delay}>
-                            <iframe src="${s.src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>`;
                         break;
+                    }
                     case 'embed': {
                         const height = s.height || '500px';
                         sections += `<div class="detail-section detail-embed reveal" ${delay}>
                             <iframe src="${s.src}" style="width: 100%; height: ${height}; border: 1px solid var(--surface); border-radius: 4px;" allowfullscreen></iframe>
                         </div>`;
                         break;
-                     }
+                    }
                     case 'link':
                         sections += `<div class="detail-section detail-link reveal" ${delay}>
                             <a href="${s.url}" class="project-ext-link" target="_blank" rel="noopener">${s.text} ↗</a>
