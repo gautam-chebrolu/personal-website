@@ -10,7 +10,7 @@ const projectsData = [
         year: "2017–2023",
         category: "hardware design software visuals",
         image: "https://lh3.googleusercontent.com/pw/AP1GczP7sm87uNlGUrSIu34LuyAAbLs9vMDv7-uPy7KagAmR31N-AbgOpd-PCEALK4vdZWnheXy9wWhFFEd8ea_grqEMoTJxg0_oNZrS69pWfgYVhpf2Fn0aqs2gQPCes73VK-sC4WvaMqmXFtkqeto5gDVv=w2542-h1680-s-no-gm?authuser=1",
-        link: "",
+        link: "www.pilleve.com",
         detail: {
             summary: "A smart pill dispenser designed to improve monitor usage of controlled substances, such as opioids.",
             sections: [
@@ -39,7 +39,7 @@ const projectsData = [
         year: "2022",
         category: "design hardware software visuals",
         image: "assets/amethyst_system.png",
-        link: "",
+        link: "www.pilleve.com",
         detail: {
             summary: "A connected product system bridging monitoring tools and clinical care support.",
             sections: [
@@ -64,7 +64,7 @@ const projectsData = [
         year: "2024",
         category: "design software hardware",
         image: "assets/sparq_photo.png",
-        link: "",
+        link: "joinsparq.com",
         detail: {
             summary: "Hardware engineering for an AI-powered OBDII car sensor.",
             sections: [
@@ -139,7 +139,7 @@ const projectsData = [
         title: "TDoP",
         slug: "design-of-pablo",
         role: "Developer, Designer",
-        year: "2019–",
+        year: "2026",
         category: "visuals",
         image: "assets/design_of_pablo.png",
         link: "",
@@ -161,6 +161,31 @@ const projectsData = [
             ],
             metadata: {
                 tools: "Figma Plugin, Websockets, JavaScript, Render, Google Vision API"
+            }
+        }
+    },
+    {
+        title: "Wedding Website",
+        slug: "wedding-website",
+        role: "Developer, Designer",
+        year: "2026",
+        category: "visuals design software",
+        image: "assets/wedding_website.png",
+        link: "priyagautam.com",
+        detail: {
+            summary: "Wedding website with custom RSVP + guest functionality.",
+            sections: [
+                {
+                    type: "text",
+                    content: "I built a fully custom wedding website for my wedding in Nov 2026. I designed it then used mostly Claude Opus + Sonnet to build it out."
+                },
+                {
+                    type: "text",
+                    content: "Functionality: animated invitation, RSVP form that live updates a Google Sheet, automated e-mails and calendar invitations, tracking dashboard for responses"
+                },
+            ],
+            metadata: {
+                tools: "JavaScript, Google Sheets Database"
             }
         }
     },

@@ -399,7 +399,7 @@ header {
 
 .visual-item:hover .visual-thumb img,
 .visual-item:focus-visible .visual-thumb img {
-    transform: scale(1.03);
+    transform: scale(1.01);
     mix-blend-mode: normal;
     filter: grayscale(0%);
     opacity: 1;
