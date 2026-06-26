@@ -164,31 +164,31 @@ const projectsData = [
             }
         }
     },
-    {
-        title: "Headshots",
-        slug: "headshots",
-        role: "Photographer",
-        year: "2026",
-        category: "design software",
-        image: "assets/headshot_photo.png",
-        link: "",
-        detail: {
-            summary: "Professional headshot photography for individuals and teams.",
-            sections: [
-                {
-                    type: "text",
-                    content: "I've completed 400+ headshots, including 300+ for first-years at Northwestern University's Kellogg School of Management."
-                },
-                {
-                    type: "video",
-                    src: "https://youtu.be/wFGYLfPMXbw"
-                }
-            ],
-            metadata: {
-                tools: "Nikon, Lightroom Classic"
-            }
-        }
-    },
+    // {
+    //     title: "Headshots",
+    //     slug: "headshots",
+    //     role: "Photographer",
+    //     year: "2026",
+    //     category: "design software",
+    //     image: "assets/headshot_photo.png",
+    //     link: "",
+    //     detail: {
+    //         summary: "Professional headshot photography for individuals and teams.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "I've completed 400+ headshots, including 300+ for first-years at Northwestern University's Kellogg School of Management."
+    //             },
+    //             {
+    //                 type: "video",
+    //                 src: "https://youtu.be/wFGYLfPMXbw"
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "Nikon, Lightroom Classic"
+    //         }
+    //     }
+    // },
     {
         title: "The Kelloggian",
         slug: "the-kelloggian",
@@ -214,27 +214,27 @@ const projectsData = [
             }
         }
     },
-    {
-        title: "Concert Photography",
-        slug: "concert-photography",
-        role: "Photographer",
-        year: "2025–",
-        category: "visuals",
-        image: "assets/concert_photo.png",
-        link: "",
-        detail: {
-            summary: "Live music photography capturing energy and emotion from the pit.",
-            sections: [
-                {
-                    type: "text",
-                    content: "I shot bands in various venues around Chicago."
-                }
-            ],
-            metadata: {
-                tools: "Nikon, Lightroom Classic"
-            }
-        }
-    },
+    // {
+    //     title: "Concert Photography",
+    //     slug: "concert-photography",
+    //     role: "Photographer",
+    //     year: "2025–",
+    //     category: "visuals",
+    //     image: "assets/concert_photo.png",
+    //     link: "",
+    //     detail: {
+    //         summary: "Live music photography capturing energy and emotion from the pit.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "I shot bands in various venues around Chicago."
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "Nikon, Lightroom Classic"
+    //         }
+    //     }
+    // },
     // {
     //     title: "Event Photography",
     //     slug: "event-photography",
@@ -302,56 +302,56 @@ const projectsData = [
             }
         }
     },
-    {
-        title: "Creative Code",
-        slug: "creative-code",
-        role: "Instructor, GWU",
-        year: "2022–2023",
-        category: "design software teaching visuals",
-        image: "assets/rps_creative_code.png",
-        link: "https://just-hotel-402.notion.site/CIXD-2111-6014-Creative-Code-24b0fbc0f8b148d590c8c73c7df80245?source=copy_link",
-        detail: {
-            summary: "Teaching creative coding and computational design at George Washington University.",
-            sections: [
-                {
-                    type: "text",
-                    content: "As an instructor at GWU's Corcoran School of the Arts & Design, I taught Creative Code — a course bridging programming fundamentals with visual arts and interaction design. Students learned to use code as a creative medium through projects in generative art, data visualization, and interactive art."
-                },
-                {
-                    type: "text",
-                    content: "This course is a requirement for undergraduate and graduate Interaction Design majors. I taught both sections in the Fall of 2023 and would have continued teaching if I did not move for business school."
-                }
-            ],
-            metadata: {
-                tools: "p5.js, Art x Tech, JavaScript"
-            }
-        }
-    },
-    {
-        title: "Who Knows",
-        slug: "who-knows",
-        role: "Director, Cinematographer",
-        year: "2017",
-        category: "visuals",
-        image: "assets/who_knows.png",
-        link: "https://www.youtube.com/watch?v=6CfHv17Ycek",
-        detail: {
-            summary: "A short film exploring identity, uncertainty, and the spaces between.",
-            sections: [
-                {
-                    type: "text",
-                    content: "\"Who Knows\" is a short film I directed and shot with Film Team 6 (Ashwin Prakash, Jack McDermott, Mary Zhang, Sabriyya Pate, Vivek Sriram), exploring themes of identity and uncertainty. The project involved end-to-end production — from concept and scripting through cinematography and post-production."
-                },
-                {
-                    type: "video",
-                    src: "https://www.youtube.com/embed/6CfHv17Ycek"
-                }
-            ],
-            metadata: {
-                tools: "Nikon, Canon, Premiere Pro"
-            }
-        }
-    },
+    // {
+    //     title: "Creative Code",
+    //     slug: "creative-code",
+    //     role: "Instructor, GWU",
+    //     year: "2022–2023",
+    //     category: "design software teaching visuals",
+    //     image: "assets/rps_creative_code.png",
+    //     link: "https://just-hotel-402.notion.site/CIXD-2111-6014-Creative-Code-24b0fbc0f8b148d590c8c73c7df80245?source=copy_link",
+    //     detail: {
+    //         summary: "Teaching creative coding and computational design at George Washington University.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "As an instructor at GWU's Corcoran School of the Arts & Design, I taught Creative Code — a course bridging programming fundamentals with visual arts and interaction design. Students learned to use code as a creative medium through projects in generative art, data visualization, and interactive art."
+    //             },
+    //             {
+    //                 type: "text",
+    //                 content: "This course is a requirement for undergraduate and graduate Interaction Design majors. I taught both sections in the Fall of 2023 and would have continued teaching if I did not move for business school."
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "p5.js, Art x Tech, JavaScript"
+    //         }
+    //     }
+    // },
+    // {
+    //     title: "Who Knows",
+    //     slug: "who-knows",
+    //     role: "Director, Cinematographer",
+    //     year: "2017",
+    //     category: "visuals",
+    //     image: "assets/who_knows.png",
+    //     link: "https://www.youtube.com/watch?v=6CfHv17Ycek",
+    //     detail: {
+    //         summary: "A short film exploring identity, uncertainty, and the spaces between.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "\"Who Knows\" is a short film I directed and shot with Film Team 6 (Ashwin Prakash, Jack McDermott, Mary Zhang, Sabriyya Pate, Vivek Sriram), exploring themes of identity and uncertainty. The project involved end-to-end production — from concept and scripting through cinematography and post-production."
+    //             },
+    //             {
+    //                 type: "video",
+    //                 src: "https://www.youtube.com/embed/6CfHv17Ycek"
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "Nikon, Canon, Premiere Pro"
+    //         }
+    //     }
+    // },
     {
         title: "Kanye 101",
         slug: "kanye-101",
