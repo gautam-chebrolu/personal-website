@@ -48,7 +48,10 @@ body {
 }
 
 /* ─── Typography ─────────────────────────────────────────── */
-h1, h2, h3, .logo {
+h1,
+h2,
+h3,
+.logo {
     font-family: var(--font-serif);
 }
 
@@ -172,13 +175,27 @@ h3 {
 }
 
 @keyframes viewIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes viewOut {
-    from { opacity: 1; transform: translateY(0); }
-    to   { opacity: 0; transform: translateY(-8px); }
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
 }
 
 
@@ -444,7 +461,8 @@ header {
 
 .expand-video-container {
     position: relative;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 56.25%;
+    /* 16:9 Aspect Ratio */
     height: 0;
     width: 100%;
     border-radius: 4px;
@@ -697,7 +715,8 @@ header {
 
 .detail-video {
     position: relative;
-    padding-top: 56.25%; /* 16:9 */
+    padding-top: 56.25%;
+    /* 16:9 */
     border-radius: 4px;
     overflow: hidden;
     background-color: var(--surface);
