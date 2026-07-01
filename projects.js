@@ -189,56 +189,56 @@ const projectsData = [
             }
         }
     },
-    // {
-    //     title: "Headshots",
-    //     slug: "headshots",
-    //     role: "Photographer",
-    //     year: "2026",
-    //     category: "design software",
-    //     image: "assets/headshot_photo.png",
-    //     link: "",
-    //     detail: {
-    //         summary: "Professional headshot photography for individuals and teams.",
-    //         sections: [
-    //             {
-    //                 type: "text",
-    //                 content: "I've completed 400+ headshots, including 300+ for first-years at Northwestern University's Kellogg School of Management."
-    //             },
-    //             {
-    //                 type: "video",
-    //                 src: "https://www.youtube.com/embed/wFGYLfPMXbw"
-    //             }
-    //         ],
-    //         metadata: {
-    //             tools: "Nikon, Lightroom Classic"
-    //         }
-    //     }
-    // },
     {
-        title: "The Kelloggian",
-        slug: "the-kelloggian",
-        role: "Puzzle Master",
+        title: "Headshots",
+        slug: "headshots",
+        role: "Photographer",
         year: "2026",
-        category: "design software games",
-        image: "assets/kelloggian_crossword.png",
-        link: "https://www.thekelloggian.com/games/",
+        category: "design software",
+        image: "assets/headshot_photo.png",
+        link: "",
         detail: {
-            summary: "Crossword puzzles and games for The Kelloggian student publication.",
+            summary: "Professional headshot photography for individuals and teams.",
             sections: [
                 {
                     type: "text",
-                    content: "As Puzzle Master for The Kelloggian, I design and develop interactive crossword puzzles and word games for the student community. Each puzzle is crafted around campus culture, current events, and Kellogg inside jokes."
+                    content: "I've completed 400+ headshots, including 300+ for first-years at Northwestern University's Kellogg School of Management."
                 },
                 {
-                    type: "text",
-                    content: "I also implemented a design refresh and of the publication's website and was the VP of Photography."
+                    type: "video",
+                    src: "https://www.youtube.com/embed/wFGYLfPMXbw"
                 }
             ],
             metadata: {
-                tools: "JavaScript, Puzzles"
+                tools: "Nikon, Lightroom Classic"
             }
         }
     },
+    // {
+    //     title: "The Kelloggian",
+    //     slug: "the-kelloggian",
+    //     role: "Puzzle Master",
+    //     year: "2026",
+    //     category: "design software games",
+    //     image: "assets/kelloggian_crossword.png",
+    //     link: "https://www.thekelloggian.com/games/",
+    //     detail: {
+    //         summary: "Crossword puzzles and games for The Kelloggian student publication.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "As Puzzle Master for The Kelloggian, I design and develop interactive crossword puzzles and word games for the student community. Each puzzle is crafted around campus culture, current events, and Kellogg inside jokes."
+    //             },
+    //             {
+    //                 type: "text",
+    //                 content: "I also implemented a design refresh and of the publication's website and was the VP of Photography."
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "JavaScript, Puzzles"
+    //         }
+    //     }
+    // },
     // {
     //     title: "Concert Photography",
     //     slug: "concert-photography",
@@ -285,7 +285,7 @@ const projectsData = [
         title: "The Catan Clash",
         slug: "the-catan-clash",
         role: "Developer",
-        year: "2021–",
+        year: "2024",
         category: "visuals games software",
         image: "assets/catan_clash.png",
         link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/",
