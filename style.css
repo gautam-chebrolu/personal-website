@@ -3,6 +3,101 @@
    Design tokens · Layout · Typography · Components · Animations
    ═══════════════════════════════════════════════════════════ */
 
+
+/* ═══════════════════════════════════════════════════════════
+   INTRO ANIMATION
+   ═══════════════════════════════════════════════════════════ */
+
+/* Prevent FOUC during animation */
+body.intro-animating {
+    overflow: hidden;
+}
+
+/* Nav: logo hidden during intro, then draws in */
+.logo.intro-hidden {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+}
+
+.logo.intro-reveal {
+    animation: introLogoReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes introLogoReveal {
+    0%   { opacity: 1; clip-path: inset(0 100% 0 0); }
+    100% { opacity: 1; clip-path: inset(0 0%   0 0); }
+}
+
+/* Grid Wrapper Expansion */
+.project-grid-wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-grid-wrapper.intro-collapsed {
+    grid-template-rows: 0fr;
+}
+
+.project-grid-inner {
+    overflow: hidden;
+}
+
+/* Initial state for cards before they fade in */
+#project-grid.intro-cards-hidden .card {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#project-grid .card.intro-reveal {
+    animation: introContentIn 0.6s var(--ease) both;
+}
+
+/* Work nav link */
+.nav-link[data-view="work"].intro-hidden {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+
+.nav-link[data-view="work"].intro-reveal {
+    animation: introSlideDown 0.45s var(--ease) both;
+}
+
+/* Visuals nav link — slightly later */
+.nav-link[data-view="visuals"].intro-hidden {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+
+.nav-link[data-view="visuals"].intro-reveal {
+    animation: introSlideDown 0.45s var(--ease) 0.08s both;
+}
+
+@keyframes introFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes introSlideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Work view content stagger — each child fades up in sequence */
+.intro-content-item {
+    opacity: 0;
+    transform: translateY(14px);
+}
+
+.intro-content-item.intro-reveal {
+    animation: introContentIn 0.55s var(--ease) both;
+}
+
+@keyframes introContentIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── Design Tokens ──────────────────────────────────────── */
 :root {
     --bg: #f8f8f8;

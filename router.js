@@ -23,7 +23,15 @@
             () => visualsFilter, v => { visualsFilter = v; });
 
         window.addEventListener('hashchange', handleRoute);
-        handleRoute();
+
+        // Only animate on first visit per session
+        if (!sessionStorage.getItem('introPlayed')) {
+            runIntroAnimation();
+        } else {
+            // Skip animation — show everything immediately
+            skipIntroAnimation();
+            handleRoute();
+        }
     }
 
     // ─── Routing ────────────────────────────────────────────
@@ -393,6 +401,102 @@
                     });
                 }
             });
+        });
+    }
+
+    // ─── Intro Animation ────────────────────────────────────────
+    function runIntroAnimation() {
+        const logo      = document.getElementById('nav-logo');
+        const workLink  = document.querySelector('.nav-link[data-view="work"]');
+        const visualsLink = document.querySelector('.nav-link[data-view="visuals"]');
+        const contentItems = document.querySelectorAll('#view-work .intro-content-item');
+
+        // Lock scroll briefly
+        document.body.classList.add('intro-animating');
+
+        // === Phase 1: Logo writes in in-place ===
+        const LOGO_START = 100;
+        setTimeout(() => {
+            logo.classList.remove('intro-hidden');
+            logo.classList.add('intro-reveal');
+        }, LOGO_START);
+
+        // === Phase 2: "Work" nav link animates in ===
+        // Start towards the end of the logo drawing
+        const WORK_START = LOGO_START + 600;
+        setTimeout(() => {
+            workLink.classList.remove('intro-hidden');
+            workLink.classList.add('intro-reveal');
+        }, WORK_START);
+
+        // === Phase 3: Work view content staggers in ===
+        // Start route so the view becomes active first
+        handleRoute();
+
+        const CONTENT_START = WORK_START + 80;
+        const STAGGER_STEP  = 60; // ms between each content block
+
+        contentItems.forEach((item, i) => {
+            setTimeout(() => {
+                item.classList.add('intro-reveal');
+            }, CONTENT_START + i * STAGGER_STEP);
+        });
+
+        // === Phase 4: "Visuals" nav link fades in last (with a longer pause) ===
+        const CONTENT_TOTAL = CONTENT_START + contentItems.length * STAGGER_STEP;
+        const VISUALS_DELAY = Math.max(CONTENT_TOTAL, WORK_START + 1200);
+
+        setTimeout(() => {
+            visualsLink.classList.remove('intro-hidden');
+            visualsLink.classList.add('intro-reveal');
+        }, VISUALS_DELAY);
+
+        // === Phase 5: Grid expands and cards stagger in ===
+        const GRID_EXPAND_DELAY = VISUALS_DELAY + 400; // Pause after 'Visuals'
+
+        setTimeout(() => {
+            const gridWrapper = document.getElementById('project-grid-wrapper');
+            if (gridWrapper) {
+                gridWrapper.classList.remove('intro-collapsed');
+            }
+
+            // Stagger the project cards fading in
+            const grid = document.getElementById('project-grid');
+            const cards = document.querySelectorAll('#project-grid .card');
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.add('intro-reveal');
+                }, i * 60 + 300); // 300ms delay to let it start expanding first
+            });
+
+            // Unlock scroll and remove animation classes so hover effects work
+            setTimeout(() => {
+                document.body.classList.remove('intro-animating');
+                if (grid) grid.classList.remove('intro-cards-hidden');
+                cards.forEach(card => card.classList.remove('intro-reveal'));
+            }, 2000);
+        }, GRID_EXPAND_DELAY);
+
+        // Mark as played for this session
+        sessionStorage.setItem('introPlayed', '1');
+    }
+
+    function skipIntroAnimation() {
+        document.getElementById('nav-logo')?.classList.remove('intro-hidden');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('intro-hidden'));
+        document.querySelectorAll('.intro-content-item').forEach(el => {
+            el.classList.add('intro-reveal');
+        });
+
+        // Skip grid animation
+        const gridWrapper = document.getElementById('project-grid-wrapper');
+        const grid = document.getElementById('project-grid');
+        if (gridWrapper) gridWrapper.classList.remove('intro-collapsed');
+        if (grid) grid.classList.remove('intro-cards-hidden');
+        
+        // No need to add intro-reveal to cards if intro-cards-hidden is removed
+        document.querySelectorAll('#project-grid .card').forEach(card => {
+            card.classList.remove('intro-reveal');
         });
     }
 

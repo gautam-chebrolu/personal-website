@@ -22,13 +22,15 @@
 
 <body>
 
+
+
     <!-- ═══ Navigation ═══ -->
     <nav class="site-nav" id="site-nav">
         <div class="nav-inner">
-            <a href="#work" class="logo">Gautam Chebrolu</a>
+            <a href="#work" class="logo intro-hidden" id="nav-logo">Gautam Chebrolu</a>
             <div class="nav-links">
-                <a href="#work" class="nav-link" data-view="work">Work</a>
-                <a href="#visuals" class="nav-link" data-view="visuals">Visuals</a>
+                <a href="#work" class="nav-link intro-hidden" data-view="work">Work</a>
+                <a href="#visuals" class="nav-link intro-hidden" data-view="visuals">Visuals</a>
             </div>
         </div>
     </nav>
@@ -36,7 +38,7 @@
     <!-- ═══ WORK VIEW ═══ -->
     <section id="view-work" class="view">
         <div class="container container--wide">
-            <header>
+            <header class="intro-content-item" id="work-header">
                 <h1 class="filter-menu" id="work-filter-menu">
                     <span class="filter-btn" data-filter="design">Design</span> /
                     <span class="filter-btn" data-filter="hardware">Hardware</span> /
@@ -48,16 +50,21 @@
                 <p class="intro-text">Bridging digital and physical experiences.</p>
             </header>
 
-            <h2 class="section-label">Select Work</h2>
-            <div class="grid" id="project-grid"></div>
+            <h2 class="section-label intro-content-item" id="work-select-label">Select Work</h2>
+            
+            <div class="project-grid-wrapper intro-collapsed" id="project-grid-wrapper">
+                <div class="project-grid-inner">
+                    <div class="grid intro-cards-hidden" id="project-grid"></div>
+                </div>
+            </div>
 
-            <h2 class="section-label list-view">Takes</h2>
-            <div class="text-list">
+            <h2 class="section-label list-view intro-content-item" id="work-takes-label">Takes</h2>
+            <div class="text-list intro-content-item" id="work-takes">
                 <a href="">The US Healthcare system is unethical</a> <br>
                 <a href="">Chasing credit card rewards is pointless</a>
             </div>
-            <h2 class="section-label list-view">Publications</h2>
-            <div class="text-list">
+            <h2 class="section-label list-view intro-content-item" id="work-pubs-label">Publications</h2>
+            <div class="text-list intro-content-item" id="work-pubs">
                 <a href="https://patents.google.com/patent/US10940094B2/en?q=(pilleve)&oq=pilleve">Pill Dispensing
                     Assembly | U.S. Patent #10940094 B2</a> <br>
                 <a
@@ -68,8 +75,8 @@
                     to FCC on Deceptive Video + Audio Edits</a>
             </div>
 
-            <h2 class="section-label list-view">Past Roles</h2>
-            <div class="text-list">
+            <h2 class="section-label list-view intro-content-item" id="work-roles-label">Past Roles</h2>
+            <div class="text-list intro-content-item" id="work-roles">
                 Due diligence at <a href="https://koruequity.com">Koru Equity Partners</a> <br>
                 Ex-officio board member at <a href="https://cantv.org">CAN TV</a> <br>
                 Consulting at <a href="https://www.bain.com">Bain & Co.</a> <br>
@@ -79,8 +86,8 @@
                 Cofounder of <a href="https://www.pilleve.com">Pilleve</a> <br>
             </div>
 
-            <h2 class="section-label list-view">Recognitions</h2>
-            <div class="text-list">
+            <h2 class="section-label list-view intro-content-item" id="work-recog-label">Recognitions</h2>
+            <div class="text-list intro-content-item" id="work-recog">
                 <a href="https://www.forbes.com/pictures/5be36fd131358e5b4335d7f1/yossuf-albanawi-25-and-ga/">Forbes
                     Under 30</a> /
                 <a href="https://arc.net/l/quote/qxpfpdfm">DC Inno 25 Under 25</a> /
