@@ -171,7 +171,7 @@ const projectsData = [
         year: "2026",
         category: "visuals design software",
         image: "assets/wedding_website.png",
-        link: "priyagautam.com",
+        link: "https://www.priyagautam.com",
         detail: {
             summary: "Wedding website with custom RSVP + guest functionality.",
             sections: [
