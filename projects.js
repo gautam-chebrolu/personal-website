@@ -377,6 +377,35 @@ const projectsData = [
     //         }
     //     }
     // },
+        {
+        title: "Lighting Design",
+        slug: "lighting-design",
+        role: "Designer",
+        year: "2024 - 2026",
+        category: "design visuals",
+        image: "assets/lighting_design.png",
+        link: "",
+        detail: {
+            summary: "I was the lighting designer for various productions.",
+            sections: [
+                {
+                    type: "text",
+                    content: "I worked with students part of Special K! and Groupwerk to design and man the lighting for their respective shows. I also <a href='https://just-hotel-402.notion.site/Norris-Lighting-Notes-1d270c7eaa43801fbcf5d03f78c4e683' target='_blank'>created tutorials</a> for the next set of students"
+                },
+                {
+                    type: "text",
+                    content: "Here is an example from the Groupwerk Showcase"
+                },
+                {
+                    type: "video",
+                    src: "https://www.youtube.com/embed/jz2-SGgSr7w?si=ns8R79Cvr_Hy5WOn"
+                }
+            ],
+            metadata: {
+                tools: "Lighting Design, EOS Console"
+            }
+        }
+    },
     {
         title: "Kanye 101",
         slug: "kanye-101",
