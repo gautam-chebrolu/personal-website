@@ -97,6 +97,10 @@
     }
 
     function getYouTubeEmbedUrl(url) {
+        // Delegate to shared utility if available (see utils.js)
+        if (typeof window !== 'undefined' && window.__utils && window.__utils.getYouTubeEmbedUrl) {
+            return window.__utils.getYouTubeEmbedUrl(url);
+        }
         if (!url) return '';
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
