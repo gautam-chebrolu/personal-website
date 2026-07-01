@@ -456,9 +456,7 @@
 
         setTimeout(() => {
             const gridWrapper = document.getElementById('project-grid-wrapper');
-            if (gridWrapper) {
-                gridWrapper.classList.remove('intro-collapsed');
-            }
+            if (gridWrapper) gridWrapper.classList.remove('intro-collapsed');
 
             // Stagger the project cards fading in
             const grid = document.getElementById('project-grid');
@@ -466,15 +464,42 @@
             cards.forEach((card, i) => {
                 setTimeout(() => {
                     card.classList.add('intro-reveal');
-                }, i * 60 + 300); // 300ms delay to let it start expanding first
+                }, i * 60 + 300);
             });
 
-            // Unlock scroll and remove animation classes so hover effects work
+            // After grid is done, expand each text section and reveal lines
+            const TEXT_SECTIONS = [
+                'work-takes-wrapper',
+                'work-pubs-wrapper',
+                'work-roles-wrapper',
+                'work-recog-wrapper',
+            ];
+            const SECTION_GAP = 400; // ms between each text section opening
+
+            TEXT_SECTIONS.forEach((wrapperId, si) => {
+                const sectionDelay = cards.length * 60 + 500 + si * SECTION_GAP;
+
+                setTimeout(() => {
+                    const wrapper = document.getElementById(wrapperId);
+                    if (wrapper) wrapper.classList.remove('intro-collapsed');
+
+                    // Stagger the lines inside
+                    const lines = wrapper ? wrapper.querySelectorAll('.text-line') : [];
+                    lines.forEach((line, li) => {
+                        setTimeout(() => {
+                            line.classList.add('line-revealed');
+                        }, 200 + li * 80); // small delay after wrapper starts opening
+                    });
+                }, sectionDelay);
+            });
+
+            // Unlock scroll and clean up card animation classes
+            const totalTextDelay = cards.length * 60 + 500 + TEXT_SECTIONS.length * SECTION_GAP + 800;
             setTimeout(() => {
                 document.body.classList.remove('intro-animating');
                 if (grid) grid.classList.remove('intro-cards-hidden');
                 cards.forEach(card => card.classList.remove('intro-reveal'));
-            }, 2000);
+            }, totalTextDelay);
         }, GRID_EXPAND_DELAY);
 
         // Mark as played for this session
@@ -497,6 +522,15 @@
         // No need to add intro-reveal to cards if intro-cards-hidden is removed
         document.querySelectorAll('#project-grid .card').forEach(card => {
             card.classList.remove('intro-reveal');
+        });
+
+        // Skip text section animations
+        ['work-takes-wrapper', 'work-pubs-wrapper', 'work-roles-wrapper', 'work-recog-wrapper'].forEach(id => {
+            const wrapper = document.getElementById(id);
+            if (wrapper) {
+                wrapper.classList.remove('intro-collapsed');
+                wrapper.querySelectorAll('.text-line').forEach(line => line.classList.add('line-revealed'));
+            }
         });
     }
 

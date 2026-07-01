@@ -53,6 +53,35 @@ body.intro-animating {
     animation: introContentIn 0.6s var(--ease) both;
 }
 
+/* Text List Wrapper Expansion — same grid trick */
+.text-list-wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    margin-bottom: 2rem;
+}
+
+.text-list-wrapper.intro-collapsed {
+    grid-template-rows: 0fr;
+}
+
+.text-list-inner {
+    overflow: hidden;
+}
+
+/* Per-line fade-in */
+.text-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.text-line.line-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Work nav link */
 .nav-link[data-view="work"].intro-hidden {
     opacity: 0;
