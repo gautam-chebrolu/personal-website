@@ -356,7 +356,9 @@
         btns.forEach(btn => {
             const val = btn.dataset.filter;
 
-            // Hover — dim non-matching
+            // Hover — dim non-matching + color-code the button and matching cards
+            const viewEl = document.querySelector(menuSelector)?.closest('.view');
+
             btn.addEventListener('mouseenter', () => {
                 if (!getState()) {
                     document.querySelectorAll(itemSelector).forEach(item => {
@@ -364,6 +366,7 @@
                             item.classList.add('dimmed');
                         }
                     });
+                    if (viewEl) viewEl.classList.add(`hovering-${val}`);
                 }
             });
 
@@ -372,6 +375,7 @@
                     document.querySelectorAll(itemSelector).forEach(item => {
                         item.classList.remove('dimmed');
                     });
+                    if (viewEl) viewEl.className = viewEl.className.replace(/\bhovering-\S+/g, '').trim();
                 }
             });
 

@@ -24,8 +24,15 @@ body.intro-animating {
 }
 
 @keyframes introLogoReveal {
-    0%   { opacity: 1; clip-path: inset(0 100% 0 0); }
-    100% { opacity: 1; clip-path: inset(0 0%   0 0); }
+    0% {
+        opacity: 1;
+        clip-path: inset(0 100% 0 0);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0 0% 0 0);
+    }
 }
 
 /* Grid Wrapper Expansion */
@@ -103,13 +110,25 @@ body.intro-animating {
 }
 
 @keyframes introFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes introSlideDown {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Work view content stagger — each child fades up in sequence */
@@ -123,8 +142,15 @@ body.intro-animating {
 }
 
 @keyframes introContentIn {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ─── Design Tokens ──────────────────────────────────────── */
@@ -407,6 +433,7 @@ header {
     border-radius: 4px;
     margin-bottom: 1rem;
     position: relative;
+    transition: box-shadow 0.35s ease;
 }
 
 .card-image img {
@@ -445,6 +472,48 @@ header {
 
 .card.hidden {
     display: none;
+}
+
+/* ─── Filter hover: colour-coded buttons + card shadows ─────────────── */
+
+/* Design — muted purple */
+#view-work.hovering-design .filter-btn[data-filter="design"] {
+    color: #8b6bbf;
+    opacity: 1;
+}
+
+#view-work.hovering-design .card:not(.dimmed) .card-image {
+    box-shadow: 0 0px 48px rgba(139, 107, 191, 0.15);
+}
+
+/* Hardware — muted blue */
+#view-work.hovering-hardware .filter-btn[data-filter="hardware"] {
+    color: #4e7ec0;
+    opacity: 1;
+}
+
+#view-work.hovering-hardware .card:not(.dimmed) .card-image {
+    box-shadow: 0 0px 48px rgba(78, 126, 192, 0.15);
+}
+
+/* Software — teal */
+#view-work.hovering-software .filter-btn[data-filter="software"] {
+    color: #3a9e9e;
+    opacity: 1;
+}
+
+#view-work.hovering-software .card:not(.dimmed) .card-image {
+    box-shadow: 0 0px 48px rgba(58, 158, 158, 0.15);
+}
+
+/* Games — muted green */
+#view-work.hovering-games .filter-btn[data-filter="games"] {
+    color: #4a9e6a;
+    opacity: 1;
+}
+
+#view-work.hovering-games .card:not(.dimmed) .card-image {
+    box-shadow: 0 0px 48px rgba(74, 158, 106, 0.15);
 }
 
 
