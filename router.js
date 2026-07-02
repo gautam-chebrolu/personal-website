@@ -1,5 +1,5 @@
 // router.js — Main application controller
-// Routing · Rendering · Filtering · Lightbox · Animations
+// Routing · Rendering · Filtering · Modal · Animations
 
 (function () {
     'use strict';
@@ -78,6 +78,9 @@
             outgoing.classList.remove('active');
         }
 
+        // Close modal if switching away from visuals
+        closeVisualsModal();
+
         transitionTimer = setTimeout(() => {
             allViews.forEach(v => v.classList.remove('active', 'exiting'));
             target.classList.add('active');
@@ -124,6 +127,34 @@
         `).join('');
     }
 
+    // ─── Shuffle (Fisher-Yates) with session seed ────────────
+    function seededShuffle(arr) {
+        // Get or create a stable session seed
+        let seed = parseInt(sessionStorage.getItem('visualsSeed') || '0', 10);
+        if (!seed) {
+            seed = Math.floor(Math.random() * 1e9) + 1;
+            sessionStorage.setItem('visualsSeed', seed);
+        }
+
+        // Simple seeded pseudo-random using mulberry32
+        function mulberry32(s) {
+            return function () {
+                s |= 0; s = s + 0x6D2B79F5 | 0;
+                let t = Math.imul(s ^ s >>> 15, 1 | s);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+        const rand = mulberry32(seed);
+
+        const result = arr.slice();
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(rand() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    }
+
     // ─── Render: Visuals Grid ───────────────────────────────
     function renderVisualsGrid() {
         const grid = document.getElementById('visuals-grid');
@@ -137,142 +168,339 @@
             "'": '&#39;'
         }[char]));
 
-        const metaFields = meta => [
-            ['Camera', meta?.camera],
-            ['Aperture', meta?.aperture],
-            ['Focal Length', meta?.focalLength],
-            ['Location', meta?.location],
-            ['Date', meta?.date],
-        ]
-            .filter(([, val]) => val)
-            .map(([label, val]) => `<dt>${escapeHTML(label)}</dt><dd>${escapeHTML(val)}</dd>`)
-            .join('');
+        // Build compact meta values string (no labels)
+        const metaValues = meta => {
+            if (!meta) return '';
+            return [meta.aperture, meta.focalLength, meta.camera, meta.location, meta.date]
+                .filter(Boolean)
+                .join(' · ');
+        };
 
-        grid.innerHTML = visualsData.map((v, index) => {
+        // Separate featured from non-featured, then shuffle non-featured
+        const featured = visualsData.filter(v => v.featured);
+        const rest = seededShuffle(visualsData.filter(v => !v.featured));
+        const ordered = [...featured, ...rest];
+
+        grid.innerHTML = ordered.map((v, index) => {
             const title = escapeHTML(v.title);
             const image = escapeHTML(v.image);
-            const highRes = escapeHTML(v.highRes || v.image);
             const category = escapeHTML(v.category);
             const size = escapeHTML(v.size || 'standard');
-            const videoUrl = escapeHTML(v.videoUrl || '');
-            const rows = metaFields(v.meta || {});
-            const embedUrl = v.videoUrl ? getYouTubeEmbedUrl(v.videoUrl) : '';
-            const videoLink = v.videoUrl
-                ? `<a class="expand-video-link" href="${videoUrl}" target="_blank" rel="noopener">Watch on YouTube ↗</a>`
-                : '';
+            const type = v.type || 'single';
 
-            const mediaContent = v.videoUrl
-                ? `<div class="expand-image-wrap expand-video-wrap">
-                       <div class="expand-video-container" data-src="${embedUrl}"></div>
-                   </div>`
-                : `<div class="expand-image-wrap">
-                       <img src="${highRes}" alt="${title}" loading="lazy">
-                   </div>`;
+            // Badge for collection or deck
+            let badge = '';
+            if (type === 'collection') {
+                badge = `<span class="visual-collection-badge">Collection</span>`;
+            } else if (type === 'deck') {
+                badge = `<span class="visual-deck-badge">Deck · ${(v.slides || []).length} slides</span>`;
+            }
 
             return `
-                <article class="visual-item" role="button" tabindex="0" aria-expanded="false" aria-label="Expand ${title}" data-index="${index}" data-category="${category}" data-size="${size}" data-highres="${highRes}" data-video="${videoUrl}">
+                <article class="visual-item" role="button" tabindex="0"
+                    aria-expanded="false" aria-label="Expand ${title}"
+                    data-index="${index}" data-category="${category}" data-size="${size}">
                     <div class="visual-thumb">
                         <img src="${image}" alt="${title}" loading="lazy">
                         <div class="visual-overlay">
                             <span class="visual-title">${title}</span>
                         </div>
-                    </div>
-                    <div class="visual-expanded-panel" aria-hidden="true">
-                        ${mediaContent}
-                        <div class="expand-meta">
-                            <h2>${title}</h2>
-                            ${rows ? `<dl>${rows}</dl>` : '<p class="expand-empty-meta">Selected visual work.</p>'}
-                            ${videoLink}
-                            <button type="button" class="expand-close" aria-label="Close expanded visual">Close ✕</button>
-                        </div>
+                        ${badge}
                     </div>
                 </article>
             `;
         }).join('');
 
-        let expandedItem = null;
+        // Store ordered data on grid for modal access
+        grid._orderedData = ordered;
 
-        function closeExpanded() {
-            if (!expandedItem) return;
+        // ── Modal wiring ────────────────────────────────────
+        initVisualsModal(grid);
+    }
 
-            const videoContainer = expandedItem.querySelector('.expand-video-container');
-            if (videoContainer) {
-                videoContainer.innerHTML = '';
-            }
+    // ─── Visuals Modal ───────────────────────────────────────
+    let activeModalIndex = null;
 
-            expandedItem.classList.remove('expanded');
-            expandedItem.setAttribute('aria-expanded', 'false');
-            expandedItem.querySelector('.visual-expanded-panel')?.setAttribute('aria-hidden', 'true');
-            expandedItem = null;
-            grid.classList.remove('has-expanded');
-        }
+    function initVisualsModal(grid) {
+        const modal = document.getElementById('visuals-modal');
+        const backdrop = document.getElementById('visuals-modal-backdrop');
+        const closeBtn = document.getElementById('visuals-modal-close');
+        const body = document.getElementById('visuals-modal-body');
+        if (!modal) return;
 
-        function openItem(item) {
-            if (!item || item === expandedItem) return;
-
-            closeExpanded();
-            item.classList.add('expanded');
-            item.setAttribute('aria-expanded', 'true');
-            item.querySelector('.visual-expanded-panel')?.setAttribute('aria-hidden', 'false');
-
-            const videoContainer = item.querySelector('.expand-video-container');
-            if (videoContainer) {
-                const src = videoContainer.getAttribute('data-src');
-                videoContainer.innerHTML = `<iframe src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            }
-
-            expandedItem = item;
-            grid.classList.add('has-expanded');
-
-            requestAnimationFrame(() => {
-                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            });
-        }
-
-        function toggleItem(item) {
-            if (item === expandedItem) {
-                closeExpanded();
-            } else {
-                openItem(item);
-            }
-        }
-
+        // Open on grid item click
         grid.addEventListener('click', e => {
-            if (e.target.closest('.expand-close')) {
-                e.stopPropagation();
-                closeExpanded();
-                return;
-            }
-
             if (e.target.closest('a')) return;
-
             const item = e.target.closest('.visual-item');
-            if (!item || !grid.contains(item)) return;
-            toggleItem(item);
+            if (!item) return;
+            const index = parseInt(item.dataset.index, 10);
+            openVisualsModal(index, grid._orderedData, item);
         });
 
         grid.addEventListener('keydown', e => {
             const item = e.target.closest('.visual-item');
-            if (!item || !grid.contains(item)) return;
-
-            if (e.target.closest('button, a') && e.key !== 'Escape') return;
-
+            if (!item) return;
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                toggleItem(item);
-            }
-
-            if (e.key === 'Escape') {
-                closeExpanded();
-                item.focus({ preventScroll: true });
+                const index = parseInt(item.dataset.index, 10);
+                openVisualsModal(index, grid._orderedData, item);
             }
         });
 
+        // Close handlers
+        backdrop.addEventListener('click', closeVisualsModal);
+        closeBtn.addEventListener('click', closeVisualsModal);
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeExpanded();
+            if (e.key === 'Escape') closeVisualsModal();
         });
 
-        grid.addEventListener('visuals:closeExpanded', closeExpanded);
+        // Filter close
+        grid.addEventListener('visuals:closeExpanded', closeVisualsModal);
+    }
+
+    function openVisualsModal(index, data, sourceEl) {
+        const modal = document.getElementById('visuals-modal');
+        const panel = document.getElementById('visuals-modal-panel');
+        const body = document.getElementById('visuals-modal-body');
+        if (!modal || !body || !panel) return;
+
+        const item = data[index];
+        if (!item) return;
+        activeModalIndex = index;
+
+        body.innerHTML = buildModalContent(item);
+
+        // Wire up carousel / deck nav if needed
+        const type = item.type || 'single';
+        if (type === 'collection') {
+            initCarousel(body, item);
+        } else if (type === 'deck') {
+            initDeck(body, item);
+        } else if (item.videoUrl) {
+            const vc = body.querySelector('.modal-video-container');
+            if (vc) {
+                const embedUrl = getYouTubeEmbedUrl(item.videoUrl);
+                vc.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            }
+        }
+
+        // ── Calculate transform-origin from the thumbnail's position ──
+        // The panel is centered on screen. We compute where the thumbnail's
+        // center falls in panel-local coordinates so the scale animation
+        // appears to "grow" from the thumbnail's location.
+        if (sourceEl) {
+            const thumb = sourceEl.querySelector('.visual-thumb') || sourceEl;
+            const thumbRect = thumb.getBoundingClientRect();
+            const thumbCX = thumbRect.left + thumbRect.width / 2;
+            const thumbCY = thumbRect.top + thumbRect.height / 2;
+
+            // Panel sits centered: top = (vh - panelH) / 2, left = (vw - panelW) / 2
+            const panelW = panel.offsetWidth;
+            const panelH = panel.offsetHeight;
+            const panelLeft = (window.innerWidth  - panelW) / 2;
+            const panelTop  = (window.innerHeight - panelH) / 2;
+
+            // Clamp origin within the panel so it never looks odd
+            const ox = Math.max(0, Math.min(panelW, thumbCX - panelLeft));
+            const oy = Math.max(0, Math.min(panelH, thumbCY - panelTop));
+
+            // Reset transition temporarily to snap origin without animating it
+            panel.style.transition = 'none';
+            panel.style.transformOrigin = `${ox}px ${oy}px`;
+            // Force reflow so the origin update takes effect before transition starts
+            panel.offsetHeight; // eslint-disable-line no-unused-expressions
+            panel.style.transition = '';
+        }
+
+        // Prevent body scroll behind modal
+        document.body.style.overflow = 'hidden';
+
+        requestAnimationFrame(() => {
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+        });
+    }
+
+    function closeVisualsModal() {
+        const modal = document.getElementById('visuals-modal');
+        const panel = document.getElementById('visuals-modal-panel');
+        const body = document.getElementById('visuals-modal-body');
+        if (!modal || !modal.classList.contains('open')) return;
+
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        activeModalIndex = null;
+
+        // Clear content and reset origin after transition completes
+        setTimeout(() => {
+            if (body) body.innerHTML = '';
+            if (panel) panel.style.transformOrigin = 'center center';
+        }, 400);
+    }
+
+    // ─── Build Modal Content HTML ────────────────────────────
+    function buildModalContent(item) {
+        const type = item.type || 'single';
+        const escapeHTML = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+        const metaValues = meta => {
+            if (!meta) return '';
+            return [meta.aperture, meta.focalLength, meta.camera, meta.location, meta.date]
+                .filter(Boolean)
+                .join(' · ');
+        };
+
+        // ── Media column ──────────────────────────────────
+        let mediaHTML = '';
+        if (type === 'collection') {
+            const firstImg = item.images[0];
+            mediaHTML = `
+                <div class="modal-media modal-carousel">
+                    <img class="modal-carousel-img"
+                         src="${escapeHTML(firstImg.highRes || firstImg.image)}"
+                         alt="${escapeHTML(firstImg.title || item.title)}"
+                         loading="eager">
+                    <div class="modal-carousel-nav">
+                        <button class="modal-carousel-btn" id="modal-prev" aria-label="Previous" disabled>&#8592;</button>
+                        <span class="modal-carousel-counter" id="modal-counter">1 / ${item.images.length}</span>
+                        <button class="modal-carousel-btn" id="modal-next" aria-label="Next" ${item.images.length <= 1 ? 'disabled' : ''}>&#8594;</button>
+                    </div>
+                </div>`;
+        } else if (type === 'deck') {
+            const slides = item.slides || [];
+            const firstSlide = slides[0] || item.image;
+            mediaHTML = `
+                <div class="modal-media modal-deck">
+                    <img class="modal-deck-img"
+                         src="${escapeHTML(firstSlide)}"
+                         alt="${escapeHTML(item.title)} — Slide 1"
+                         loading="eager">
+                    <div class="modal-deck-nav">
+                        <button class="modal-deck-btn" id="modal-deck-prev" aria-label="Previous slide" disabled>&#8592;</button>
+                        <span class="modal-deck-counter" id="modal-deck-counter">Slide 1 / ${slides.length}</span>
+                        <button class="modal-deck-btn" id="modal-deck-next" aria-label="Next slide" ${slides.length <= 1 ? 'disabled' : ''}>&#8594;</button>
+                    </div>
+                </div>`;
+        } else if (item.videoUrl) {
+            mediaHTML = `
+                <div class="modal-media">
+                    <div class="modal-video-container"></div>
+                </div>`;
+        } else {
+            const highRes = item.highRes || item.image;
+            mediaHTML = `
+                <div class="modal-media">
+                    <img class="modal-single-img"
+                         src="${escapeHTML(highRes)}"
+                         alt="${escapeHTML(item.title)}"
+                         loading="eager">
+                </div>`;
+        }
+
+        // ── Sidebar/meta column ───────────────────────────
+        const baseTitle = type === 'collection' ? item.collectionTitle || item.title : item.title;
+        const values = metaValues(item.meta);
+
+        let albumLink = '';
+        if (item.albumUrl) {
+            albumLink = `<a class="modal-meta-link" href="${escapeHTML(item.albumUrl)}" target="_blank" rel="noopener">View full album ↗</a>`;
+        } else if (item.videoUrl) {
+            const yt = getYouTubeEmbedUrl(item.videoUrl).replace('/embed/', '/watch?v=');
+            albumLink = `<a class="modal-meta-link" href="${escapeHTML(yt)}" target="_blank" rel="noopener">Watch on YouTube ↗</a>`;
+        }
+
+        const metaHTML = `
+            <div class="modal-meta">
+                <div class="modal-meta-title">${escapeHTML(baseTitle)}</div>
+                ${values ? `<div class="modal-meta-values">${escapeHTML(values)}</div>` : ''}
+                ${albumLink}
+            </div>`;
+
+        return `${mediaHTML}${metaHTML}`;
+    }
+
+    // ─── Carousel logic ──────────────────────────────────────
+    function initCarousel(body, item) {
+        const images = item.images || [];
+        let current = 0;
+
+        const img = body.querySelector('.modal-carousel-img');
+        const counter = body.querySelector('#modal-counter');
+        const prevBtn = body.querySelector('#modal-prev');
+        const nextBtn = body.querySelector('#modal-next');
+        const metaTitle = body.querySelector('.modal-meta-title');
+        const metaValues = body.querySelector('.modal-meta-values');
+
+        function updateCarousel(newIndex) {
+            if (newIndex < 0 || newIndex >= images.length) return;
+
+            img.classList.add('fading');
+            setTimeout(() => {
+                current = newIndex;
+                const pic = images[current];
+                img.src = pic.highRes || pic.image;
+                img.alt = pic.title || item.title;
+                img.classList.remove('fading');
+
+                counter.textContent = `${current + 1} / ${images.length}`;
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === images.length - 1;
+
+                // Update sidebar meta to match current image
+                if (metaTitle) metaTitle.textContent = pic.title || item.collectionTitle || item.title;
+                if (metaValues && pic.meta) {
+                    const vals = [pic.meta.aperture, pic.meta.focalLength, pic.meta.camera, pic.meta.location, pic.meta.date]
+                        .filter(Boolean).join(' · ');
+                    metaValues.textContent = vals;
+                }
+            }, 220);
+        }
+
+        prevBtn.addEventListener('click', () => updateCarousel(current - 1));
+        nextBtn.addEventListener('click', () => updateCarousel(current + 1));
+
+        // Keyboard left/right while modal is open
+        body._carouselKeyHandler = (e) => {
+            if (e.key === 'ArrowLeft') updateCarousel(current - 1);
+            if (e.key === 'ArrowRight') updateCarousel(current + 1);
+        };
+        document.addEventListener('keydown', body._carouselKeyHandler);
+    }
+
+    // ─── Deck viewer logic ───────────────────────────────────
+    function initDeck(body, item) {
+        const slides = item.slides || [];
+        if (slides.length === 0) return;
+        let current = 0;
+
+        const img = body.querySelector('.modal-deck-img');
+        const counter = body.querySelector('#modal-deck-counter');
+        const prevBtn = body.querySelector('#modal-deck-prev');
+        const nextBtn = body.querySelector('#modal-deck-next');
+
+        function updateDeck(newIndex) {
+            if (newIndex < 0 || newIndex >= slides.length) return;
+            img.classList.add('fading');
+            setTimeout(() => {
+                current = newIndex;
+                img.src = slides[current];
+                img.alt = `${item.title} — Slide ${current + 1}`;
+                img.classList.remove('fading');
+                counter.textContent = `Slide ${current + 1} / ${slides.length}`;
+                prevBtn.disabled = current === 0;
+                nextBtn.disabled = current === slides.length - 1;
+            }, 220);
+        }
+
+        prevBtn.addEventListener('click', () => updateDeck(current - 1));
+        nextBtn.addEventListener('click', () => updateDeck(current + 1));
+
+        body._deckKeyHandler = (e) => {
+            if (e.key === 'ArrowLeft') updateDeck(current - 1);
+            if (e.key === 'ArrowRight') updateDeck(current + 1);
+        };
+        document.addEventListener('keydown', body._deckKeyHandler);
     }
 
     // ─── Render: Project Detail ─────────────────────────────
@@ -426,7 +654,6 @@
         }, LOGO_START);
 
         // === Phase 2: "Work" nav link animates in ===
-        // Start towards the end of the logo drawing
         const WORK_START = LOGO_START + 600;
         setTimeout(() => {
             workLink.classList.remove('intro-hidden');
@@ -434,11 +661,10 @@
         }, WORK_START);
 
         // === Phase 3: Work view content staggers in ===
-        // Start route so the view becomes active first
         handleRoute();
 
         const CONTENT_START = WORK_START + 80;
-        const STAGGER_STEP  = 60; // ms between each content block
+        const STAGGER_STEP  = 60;
 
         contentItems.forEach((item, i) => {
             setTimeout(() => {
@@ -446,7 +672,7 @@
             }, CONTENT_START + i * STAGGER_STEP);
         });
 
-        // === Phase 4: "Visuals" nav link fades in last (with a longer pause) ===
+        // === Phase 4: "Visuals" nav link fades in last ===
         const CONTENT_TOTAL = CONTENT_START + contentItems.length * STAGGER_STEP;
         const VISUALS_DELAY = Math.max(CONTENT_TOTAL, WORK_START + 1200);
 
@@ -456,13 +682,12 @@
         }, VISUALS_DELAY);
 
         // === Phase 5: Grid expands and cards stagger in ===
-        const GRID_EXPAND_DELAY = VISUALS_DELAY + 400; // Pause after 'Visuals'
+        const GRID_EXPAND_DELAY = VISUALS_DELAY + 400;
 
         setTimeout(() => {
             const gridWrapper = document.getElementById('project-grid-wrapper');
             if (gridWrapper) gridWrapper.classList.remove('intro-collapsed');
 
-            // Stagger the project cards fading in
             const grid = document.getElementById('project-grid');
             const cards = document.querySelectorAll('#project-grid .card');
             cards.forEach((card, i) => {
@@ -471,14 +696,13 @@
                 }, i * 60 + 300);
             });
 
-            // After grid is done, expand each text section and reveal lines
             const TEXT_SECTIONS = [
                 'work-takes-wrapper',
                 'work-pubs-wrapper',
                 'work-roles-wrapper',
                 'work-recog-wrapper',
             ];
-            const SECTION_GAP = 400; // ms between each text section opening
+            const SECTION_GAP = 400;
 
             TEXT_SECTIONS.forEach((wrapperId, si) => {
                 const sectionDelay = cards.length * 60 + 500 + si * SECTION_GAP;
@@ -487,17 +711,15 @@
                     const wrapper = document.getElementById(wrapperId);
                     if (wrapper) wrapper.classList.remove('intro-collapsed');
 
-                    // Stagger the lines inside
                     const lines = wrapper ? wrapper.querySelectorAll('.text-line') : [];
                     lines.forEach((line, li) => {
                         setTimeout(() => {
                             line.classList.add('line-revealed');
-                        }, 200 + li * 80); // small delay after wrapper starts opening
+                        }, 200 + li * 80);
                     });
                 }, sectionDelay);
             });
 
-            // Unlock scroll and clean up card animation classes
             const totalTextDelay = cards.length * 60 + 500 + TEXT_SECTIONS.length * SECTION_GAP + 800;
             setTimeout(() => {
                 document.body.classList.remove('intro-animating');
@@ -506,7 +728,6 @@
             }, totalTextDelay);
         }, GRID_EXPAND_DELAY);
 
-        // Mark as played for this session
         sessionStorage.setItem('introPlayed', '1');
     }
 
@@ -517,18 +738,15 @@
             el.classList.add('intro-reveal');
         });
 
-        // Skip grid animation
         const gridWrapper = document.getElementById('project-grid-wrapper');
         const grid = document.getElementById('project-grid');
         if (gridWrapper) gridWrapper.classList.remove('intro-collapsed');
         if (grid) grid.classList.remove('intro-cards-hidden');
-        
-        // No need to add intro-reveal to cards if intro-cards-hidden is removed
+
         document.querySelectorAll('#project-grid .card').forEach(card => {
             card.classList.remove('intro-reveal');
         });
 
-        // Skip text section animations
         ['work-takes-wrapper', 'work-pubs-wrapper', 'work-roles-wrapper', 'work-recog-wrapper'].forEach(id => {
             const wrapper = document.getElementById(id);
             if (wrapper) {
@@ -544,18 +762,16 @@
 
         const items = document.querySelectorAll('.visual-item');
 
-        // Double rAF ensures the browser has rendered opacity:0 before transitioning
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 items.forEach((item, i) => {
-                    item.style.transitionDelay = `${i * 0.045}s`;
+                    item.style.transitionDelay = `${i * 0.04}s`;
                     item.classList.add('show');
                 });
 
-                // Clean up delays after stagger completes
                 setTimeout(() => {
                     items.forEach(item => { item.style.transitionDelay = ''; });
-                }, items.length * 45 + 600);
+                }, items.length * 40 + 600);
             });
         });
 
@@ -563,7 +779,6 @@
     }
 
     function initScrollReveals() {
-        // Small delay to ensure DOM is rendered
         requestAnimationFrame(() => {
             const els = document.querySelectorAll('#view-project .reveal');
             const observer = new IntersectionObserver((entries) => {
