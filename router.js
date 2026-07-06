@@ -57,7 +57,13 @@
     function switchView(viewId) {
         const target = document.getElementById('view-' + viewId);
         if (!target) return;
-        if (currentView === viewId && viewId !== 'project') return;
+        if (currentView === viewId) {
+            if (viewId === 'project') {
+                window.scrollTo(0, 0);
+                initScrollReveals();
+            }
+            return;
+        }
 
         if (transitionTimer) clearTimeout(transitionTimer);
         const allViews = document.querySelectorAll('.view');
