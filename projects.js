@@ -3,7 +3,7 @@
 // detail.sections supports types: "text", "image", "image-pair", "video"
 
 const projectsData = [
-    {
+    { type: "select",
         title: "Pilleve Dispenser",
         slug: "pilleve-dispenser",
         role: "CTO",
@@ -32,7 +32,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "select",
         title: "Amethyst",
         slug: "amethyst",
         role: "CEO",
@@ -57,7 +57,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "select",
         title: "SPARQ AI",
         slug: "sparq-ai",
         role: "Hardware Engineer",
@@ -82,7 +82,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "side",
         title: "Kellogg Mini Games",
         slug: "kellogg-mini-games",
         role: "Puzzle Master",
@@ -135,7 +135,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "select",
         title: "TDoP",
         slug: "design-of-pablo",
         role: "Developer, Designer",
@@ -164,7 +164,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "side",
         title: "Wedding Website",
         slug: "wedding-website",
         role: "Developer, Designer",
@@ -189,7 +189,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "side",
         title: "Headshots",
         slug: "headshots",
         role: "Photographer",
@@ -281,7 +281,7 @@ const projectsData = [
     //         }
     //     }
     // },
-    {
+    { type: "side",
         title: "The Catan Clash",
         slug: "the-catan-clash",
         role: "Developer",
@@ -306,7 +306,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "side",
         title: "Bluetooth Hacking",
         slug: "bluetooth-hacking",
         role: "Developer",
@@ -377,7 +377,7 @@ const projectsData = [
     //         }
     //     }
     // },
-        {
+        { type: "side",
         title: "Lighting Design",
         slug: "lighting-design",
         role: "Designer",
@@ -406,7 +406,7 @@ const projectsData = [
             }
         }
     },
-    {
+    { type: "side",
         title: "Kanye 101",
         slug: "kanye-101",
         role: "Creator, Duke",

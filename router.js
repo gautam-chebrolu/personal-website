@@ -17,7 +17,7 @@
     function init() {
         renderProjectGrid();
         renderVisualsGrid();
-        initFilters('#work-filter-menu', '#project-grid .card',
+        initFilters('#work-filter-menu', '#project-grid .card, #side-grid .card',
             () => workFilter, v => { workFilter = v; });
         initFilters('#visuals-filter-menu', '#visuals-grid .visual-item',
             () => visualsFilter, v => { visualsFilter = v; });
@@ -111,10 +111,11 @@
 
     // ─── Render: Project Grid ───────────────────────────────
     function renderProjectGrid() {
-        const grid = document.getElementById('project-grid');
-        if (!grid) return;
+        const selectGrid = document.getElementById('project-grid');
+        const sideGrid   = document.getElementById('side-grid');
+        if (!selectGrid && !sideGrid) return;
 
-        grid.innerHTML = projectsData.map(p => `
+        const makeCard = p => `
             <a href="#project/${p.slug}" class="card" data-category="${p.category}">
                 <div class="card-image">
                     <img src="${p.image}" alt="${p.title}" loading="lazy">
@@ -124,7 +125,13 @@
                     <p class="role">${p.role} / ${p.year}</p>
                 </div>
             </a>
-        `).join('');
+        `;
+
+        const selectProjects = projectsData.filter(p => p.type === 'select');
+        const sideProjects   = projectsData.filter(p => p.type === 'side');
+
+        if (selectGrid) selectGrid.innerHTML = selectProjects.map(makeCard).join('');
+        if (sideGrid)   sideGrid.innerHTML   = sideProjects.map(makeCard).join('');
     }
 
     // ─── Shuffle (Fisher-Yates) with session seed ────────────
@@ -696,37 +703,57 @@
                 }, i * 60 + 300);
             });
 
-            const TEXT_SECTIONS = [
-                'work-takes-wrapper',
-                'work-pubs-wrapper',
-                'work-roles-wrapper',
-                'work-recog-wrapper',
-            ];
-            const SECTION_GAP = 400;
-
-            TEXT_SECTIONS.forEach((wrapperId, si) => {
-                const sectionDelay = cards.length * 60 + 500 + si * SECTION_GAP;
-
-                setTimeout(() => {
-                    const wrapper = document.getElementById(wrapperId);
-                    if (wrapper) wrapper.classList.remove('intro-collapsed');
-
-                    const lines = wrapper ? wrapper.querySelectorAll('.text-line') : [];
-                    lines.forEach((line, li) => {
-                        setTimeout(() => {
-                            line.classList.add('line-revealed');
-                        }, 200 + li * 80);
-                    });
-                }, sectionDelay);
-            });
-
-            const totalTextDelay = cards.length * 60 + 500 + TEXT_SECTIONS.length * SECTION_GAP + 800;
+            // Expand side grid after main cards finish
+            const SIDE_EXPAND_DELAY = cards.length * 60 + 500;
             setTimeout(() => {
-                document.body.classList.remove('intro-animating');
-                if (grid) grid.classList.remove('intro-cards-hidden');
-                cards.forEach(card => card.classList.remove('intro-reveal'));
-            }, totalTextDelay);
+                const sideWrapper = document.getElementById('side-grid-wrapper');
+                const sideGrid = document.getElementById('side-grid');
+                if (sideWrapper) sideWrapper.classList.remove('intro-collapsed');
+
+                const sideCards = document.querySelectorAll('#side-grid .card');
+                sideCards.forEach((card, i) => {
+                    setTimeout(() => {
+                        card.classList.add('intro-reveal');
+                    }, i * 40 + 300);
+                });
+
+                // Text sections after side cards
+                const TEXT_SECTIONS = [
+                    'work-takes-wrapper',
+                    'work-pubs-wrapper',
+                    'work-roles-wrapper',
+                    'work-recog-wrapper',
+                ];
+                const SECTION_GAP = 400;
+
+                TEXT_SECTIONS.forEach((wrapperId, si) => {
+                    const sectionDelay = sideCards.length * 40 + 300 + si * SECTION_GAP;
+
+                    setTimeout(() => {
+                        const wrapper = document.getElementById(wrapperId);
+                        if (wrapper) wrapper.classList.remove('intro-collapsed');
+
+                        const lines = wrapper ? wrapper.querySelectorAll('.text-line') : [];
+                        lines.forEach((line, li) => {
+                            setTimeout(() => {
+                                line.classList.add('line-revealed');
+                            }, 200 + li * 80);
+                        });
+                    }, sectionDelay);
+                });
+
+                const totalTextDelay = sideCards.length * 40 + 300 + TEXT_SECTIONS.length * SECTION_GAP + 800;
+                setTimeout(() => {
+                    document.body.classList.remove('intro-animating');
+                    if (grid) grid.classList.remove('intro-cards-hidden');
+                    if (sideGrid) sideGrid.classList.remove('intro-cards-hidden');
+                    cards.forEach(card => card.classList.remove('intro-reveal'));
+                    sideCards.forEach(card => card.classList.remove('intro-reveal'));
+                }, totalTextDelay);
+
+            }, SIDE_EXPAND_DELAY);
         }, GRID_EXPAND_DELAY);
+
 
         sessionStorage.setItem('introPlayed', '1');
     }
@@ -739,11 +766,15 @@
         });
 
         const gridWrapper = document.getElementById('project-grid-wrapper');
+        const sideWrapper = document.getElementById('side-grid-wrapper');
         const grid = document.getElementById('project-grid');
+        const sideGrid = document.getElementById('side-grid');
         if (gridWrapper) gridWrapper.classList.remove('intro-collapsed');
+        if (sideWrapper) sideWrapper.classList.remove('intro-collapsed');
         if (grid) grid.classList.remove('intro-cards-hidden');
+        if (sideGrid) sideGrid.classList.remove('intro-cards-hidden');
 
-        document.querySelectorAll('#project-grid .card').forEach(card => {
+        document.querySelectorAll('#project-grid .card, #side-grid .card').forEach(card => {
             card.classList.remove('intro-reveal');
         });
 
