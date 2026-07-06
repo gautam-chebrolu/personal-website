@@ -89,6 +89,11 @@ body.intro-animating {
     transform: translateY(0);
 }
 
+.inline-list .text-line {
+    display: inline-block;
+    margin-right: 0.25rem;
+}
+
 /* Work nav link */
 .nav-link[data-view="work"].intro-hidden {
     opacity: 0;
