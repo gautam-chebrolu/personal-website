@@ -582,6 +582,27 @@
             ${sections}
             ${extLink}
         `;
+
+        const sidebar = document.getElementById('project-sidebar');
+        if (sidebar) {
+            const selectProjects = projectsData.filter(p => p.type === 'select');
+            const sideProjects = projectsData.filter(p => p.type === 'side');
+
+            sidebar.innerHTML = `
+                <div class="project-sidebar-group">
+                    <h3>Select Work</h3>
+                    ${selectProjects.map(p => `
+                        <a href="#project/${p.slug}" class="project-sidebar-link ${p.slug === project.slug ? 'active' : ''}">${p.title}</a>
+                    `).join('')}
+                </div>
+                <div class="project-sidebar-group">
+                    <h3>Side Projects</h3>
+                    ${sideProjects.map(p => `
+                        <a href="#project/${p.slug}" class="project-sidebar-link ${p.slug === project.slug ? 'active' : ''}">${p.title}</a>
+                    `).join('')}
+                </div>
+            `;
+        }
     }
 
     // ─── Filtering (shared logic) ───────────────────────────

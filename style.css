@@ -1017,6 +1017,71 @@ header {
    PROJECT DETAIL VIEW
    ═══════════════════════════════════════════════════════════ */
 
+/* Sidebar Layout */
+.project-sidebar {
+    display: none;
+}
+
+@media (min-width: 900px) {
+    .project-layout {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 4rem;
+        align-items: start;
+    }
+
+    .project-sidebar {
+        display: block;
+        position: sticky;
+        top: 6rem;
+        padding-top: 3rem;
+        height: calc(100vh - 6rem);
+        overflow-y: auto;
+    }
+    
+    /* Hide the scrollbar for the sidebar */
+    .project-sidebar::-webkit-scrollbar {
+        display: none;
+    }
+    .project-sidebar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
+.project-sidebar-group {
+    margin-bottom: 2rem;
+}
+
+.project-sidebar-group h3 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-sidebar-link {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 0.6rem;
+    transition: color var(--transition-fast);
+}
+
+.project-sidebar-link:hover,
+.project-sidebar-link.active {
+    color: var(--text);
+}
+
+.project-sidebar-link.active {
+    font-weight: 500;
+}
+
+
 .back-link {
     display: inline-flex;
     align-items: center;
