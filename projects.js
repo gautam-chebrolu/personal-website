@@ -3,7 +3,31 @@
 // detail.sections supports types: "text", "image", "image-pair", "video"
 
 const projectsData = [
-    { type: "select",
+    {
+        type: "select",
+        title: "The Design of Pablo",
+        slug: "design-of-pablo",
+        role: "Developer + Designer",
+        year: "2025",
+        category: "software design",
+        image: "assets/design_of_pablo.png",
+        link: "",
+        detail: {
+            summary: "Upload any photo and watch the design system update to match its aesthetic — colors, typography, and mood extracted via Gemini Vision AI.",
+            sections: [
+                {
+                    type: "embed",
+                    src: "tdop-embed.html",
+                    height: "850px"
+                }
+            ],
+            metadata: {
+                tools: "Gemini AI, Vercel Serverless, JavaScript"
+            }
+        }
+    },
+    {
+        type: "select",
         title: "Pilleve Dispenser",
         slug: "pilleve-dispenser",
         role: "CTO",
@@ -32,7 +56,8 @@ const projectsData = [
             }
         }
     },
-    { type: "select",
+    {
+        type: "select",
         title: "Amethyst",
         slug: "amethyst",
         role: "CEO",
@@ -57,7 +82,8 @@ const projectsData = [
             }
         }
     },
-    { type: "select",
+    {
+        type: "select",
         title: "SPARQ AI",
         slug: "sparq-ai",
         role: "Hardware Engineer",
@@ -82,7 +108,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Kellogg Mini Games",
         slug: "kellogg-mini-games",
         role: "Puzzle Master",
@@ -135,36 +162,37 @@ const projectsData = [
             }
         }
     },
-    { type: "select",
-        title: "TDoP",
-        slug: "design-of-pablo",
-        role: "Developer, Designer",
-        year: "2026",
-        category: "visuals",
-        image: "assets/design_of_pablo.png",
-        link: "",
-        detail: {
-            summary: "Figma plugin that allows you to automatically update your file's design system based on a photo you take.",
-            sections: [
-                {
-                    type: "text",
-                    content: "I created a Figma plugin that is sets up a websocket and then connects to a web app that allows users to take a photo of a design system and then automatically update their Figma file with the colors, fonts, and other design elements from the photo. The plugin uses the Google Vision API to analyze the image and extract the design elements."
-                },
-                {
-                    type: "text",
-                    content: "This project won 2nd place at the Kellogg AI Showcase"
-                },
-                {
-                    type: "video",
-                    src: "https://www.youtube.com/embed/Q_SZmAQtw4o"
-                }
-            ],
-            metadata: {
-                tools: "Figma Plugin, Websockets, JavaScript, Render, Google Vision API"
-            }
-        }
-    },
-    { type: "side",
+    // { type: "select",
+    //     title: "TDoP",
+    //     slug: "design-of-pablo",
+    //     role: "Developer, Designer",
+    //     year: "2026",
+    //     category: "visuals",
+    //     image: "assets/design_of_pablo.png",
+    //     link: "",
+    //     detail: {
+    //         summary: "Figma plugin that allows you to automatically update your file's design system based on a photo you take.",
+    //         sections: [
+    //             {
+    //                 type: "text",
+    //                 content: "I created a Figma plugin that is sets up a websocket and then connects to a web app that allows users to take a photo of a design system and then automatically update their Figma file with the colors, fonts, and other design elements from the photo. The plugin uses the Google Vision API to analyze the image and extract the design elements."
+    //             },
+    //             {
+    //                 type: "text",
+    //                 content: "This project won 2nd place at the Kellogg AI Showcase"
+    //             },
+    //             {
+    //                 type: "video",
+    //                 src: "https://www.youtube.com/embed/Q_SZmAQtw4o"
+    //             }
+    //         ],
+    //         metadata: {
+    //             tools: "Figma Plugin, Websockets, JavaScript, Render, Google Vision API"
+    //         }
+    //     }
+    // },
+    {
+        type: "side",
         title: "Wedding Website",
         slug: "wedding-website",
         role: "Developer, Designer",
@@ -189,7 +217,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Headshots",
         slug: "headshots",
         role: "Photographer",
@@ -281,7 +310,8 @@ const projectsData = [
     //         }
     //     }
     // },
-    { type: "side",
+    {
+        type: "side",
         title: "The Catan Clash",
         slug: "the-catan-clash",
         role: "Developer",
@@ -306,7 +336,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Bluetooth Hacking",
         slug: "bluetooth-hacking",
         role: "Developer",
@@ -377,7 +408,8 @@ const projectsData = [
     //         }
     //     }
     // },
-        { type: "side",
+    {
+        type: "side",
         title: "Lighting Design",
         slug: "lighting-design",
         role: "Designer",
@@ -406,7 +438,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Kanye 101",
         slug: "kanye-101",
         role: "Creator, Duke",

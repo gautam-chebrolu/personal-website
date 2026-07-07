@@ -165,12 +165,18 @@ body.intro-animating {
     --text-secondary: #666666;
     --text-muted: #888888;
     --surface: #e8e8e8;
+    --border: #cccccc;
+    --bg-rgb: 248, 248, 248;
     --grid-gap: 1rem;
     --font-serif: "Newsreader", serif;
     --font-sans: "Albert Sans", sans-serif;
     --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
     --transition-fast: 0.2s var(--ease);
     --transition-med: 0.35s var(--ease);
+}
+
+body.theme-transitioning, body.theme-transitioning * {
+    transition: color 0.45s ease, background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease !important;
 }
 
 /* ─── Reset ──────────────────────────────────────────────── */
@@ -214,7 +220,7 @@ h1 {
     font-size: 2rem;
     font-weight: 500;
     line-height: 1.1;
-    color: #202020;
+    color: var(--text);
     margin-bottom: 0.5rem;
 }
 
@@ -230,7 +236,7 @@ h3 {
     font-size: 0.75rem;
     font-weight: 200;
     line-height: 1;
-    color: #202020;
+    color: var(--text);
 }
 
 .intro-text {
@@ -247,7 +253,7 @@ h3 {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(248, 248, 248, 0.88);
+    background: rgba(var(--bg-rgb), 0.88);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
@@ -370,7 +376,7 @@ header {
     font-weight: 400;
     margin-bottom: 1rem;
     line-height: 1.3;
-    color: #ccc;
+    color: var(--border);
     cursor: default;
 }
 
@@ -740,7 +746,7 @@ header {
 .visuals-modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(248, 248, 248, 0.75);
+    background: rgba(var(--bg-rgb), 0.75);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: none;
@@ -1038,11 +1044,12 @@ header {
         height: calc(100vh - 6rem);
         overflow-y: auto;
     }
-    
+
     /* Hide the scrollbar for the sidebar */
     .project-sidebar::-webkit-scrollbar {
         display: none;
     }
+
     .project-sidebar {
         -ms-overflow-style: none;
         scrollbar-width: none;
@@ -1141,7 +1148,7 @@ header {
 }
 
 .meta-sep {
-    color: #ccc;
+    color: var(--border);
 }
 
 .project-summary {
@@ -1216,7 +1223,7 @@ header {
     color: var(--text);
     text-decoration: none;
     padding: 0.75rem 1.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     border-radius: 4px;
     margin-top: 1rem;
     margin-bottom: 4rem;
@@ -1293,7 +1300,7 @@ hr {
     height: 1px;
     width: 80%;
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--border);
     margin: 1em 0;
     padding: 0;
 }
