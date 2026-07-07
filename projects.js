@@ -147,6 +147,11 @@ const projectsData = [
             summary: "Figma plugin that allows you to automatically update your file's design system based on a photo you take.",
             sections: [
                 {
+                    type: "embed",
+                    src: "tdop-embed.html",
+                    height: "860px"
+                },
+                {
                     type: "text",
                     content: "I created a Figma plugin that is sets up a websocket and then connects to a web app that allows users to take a photo of a design system and then automatically update their Figma file with the colors, fonts, and other design elements from the photo. The plugin uses the Google Vision API to analyze the image and extract the design elements."
                 },
@@ -160,7 +165,7 @@ const projectsData = [
                 }
             ],
             metadata: {
-                tools: "Figma Plugin, Websockets, JavaScript, Render, Google Vision API"
+                tools: "Gemini Vision AI, Vercel Serverless, Figma Plugin, Websockets, JavaScript"
             }
         }
     },

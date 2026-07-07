@@ -165,12 +165,24 @@ body.intro-animating {
     --text-secondary: #666666;
     --text-muted: #888888;
     --surface: #e8e8e8;
+    --border: #cccccc;           /* themeable border/divider color */
+    --bg-rgb: 248, 248, 248;    /* for rgba() overlays: nav, modal backdrop */
     --grid-gap: 1rem;
     --font-serif: "Newsreader", serif;
     --font-sans: "Albert Sans", sans-serif;
     --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
     --transition-fast: 0.2s var(--ease);
     --transition-med: 0.35s var(--ease);
+}
+
+/* Smooth cross-fade when a new theme is applied */
+body.theme-transitioning,
+body.theme-transitioning * {
+    transition:
+        color 0.45s ease,
+        background-color 0.45s ease,
+        border-color 0.45s ease,
+        box-shadow 0.45s ease !important;
 }
 
 /* ─── Reset ──────────────────────────────────────────────── */
@@ -1038,11 +1050,12 @@ header {
         height: calc(100vh - 6rem);
         overflow-y: auto;
     }
-    
+
     /* Hide the scrollbar for the sidebar */
     .project-sidebar::-webkit-scrollbar {
         display: none;
     }
+
     .project-sidebar {
         -ms-overflow-style: none;
         scrollbar-width: none;
