@@ -3,15 +3,17 @@
 // detail.sections supports types: "text", "image", "image-pair", "video"
 
 const projectsData = [
-    { type: "select",
+    {
+        type: "select",
         title: "Pilleve Dispenser",
         slug: "pilleve-dispenser",
         role: "CTO",
         year: "2017–2023",
         category: "hardware design software visuals",
-        image: "https://lh3.googleusercontent.com/pw/AP1GczP7sm87uNlGUrSIu34LuyAAbLs9vMDv7-uPy7KagAmR31N-AbgOpd-PCEALK4vdZWnheXy9wWhFFEd8ea_grqEMoTJxg0_oNZrS69pWfgYVhpf2Fn0aqs2gQPCes73VK-sC4WvaMqmXFtkqeto5gDVv=w2542-h1680-s-no-gm?authuser=1",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczPw7vrBzYlmDepEo0Y7Xj5FqApNYTKBS_UzElFGwYL3YmRISCqdmKm1CtqrQ0Rnc0sIuQILB9hXcfFgY-FfwvRfcmlOEi85dhFxYAuLF80tbZ2OK-WKqOVxq5g_E48LnHTV-u11uFmCH8nMxN4vYOxb=w2450-h1634-s-no-gm",
         link: "www.pilleve.com",
         detail: {
+            heroImage: "https://lh3.googleusercontent.com/pw/AP1GczP7sm87uNlGUrSIu34LuyAAbLs9vMDv7-uPy7KagAmR31N-AbgOpd-PCEALK4vdZWnheXy9wWhFFEd8ea_grqEMoTJxg0_oNZrS69pWfgYVhpf2Fn0aqs2gQPCes73VK-sC4WvaMqmXFtkqeto5gDVv=w2542-h1680-s-no-gm",
             summary: "A smart pill dispenser designed to improve monitor usage of controlled substances, such as opioids.",
             sections: [
                 {
@@ -32,7 +34,8 @@ const projectsData = [
             }
         }
     },
-    { type: "select",
+    {
+        type: "select",
         title: "Amethyst",
         slug: "amethyst",
         role: "CEO",
@@ -41,6 +44,7 @@ const projectsData = [
         image: "assets/amethyst_system.png",
         link: "www.pilleve.com",
         detail: {
+            heroImage: "",
             summary: "A connected product system bridging monitoring tools and clinical care support.",
             sections: [
                 {
@@ -57,7 +61,8 @@ const projectsData = [
             }
         }
     },
-    { type: "select",
+    {
+        type: "select",
         title: "SPARQ AI",
         slug: "sparq-ai",
         role: "Hardware Engineer",
@@ -66,6 +71,7 @@ const projectsData = [
         image: "assets/sparq_photo.png",
         link: "joinsparq.com",
         detail: {
+            heroImage: "",
             summary: "Hardware engineering for an AI-powered OBDII car sensor.",
             sections: [
                 {
@@ -82,7 +88,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Kellogg Mini Games",
         slug: "kellogg-mini-games",
         role: "Puzzle Master",
@@ -91,6 +98,7 @@ const projectsData = [
         image: "assets/kellogg_bidpoints.png",
         link: "",
         detail: {
+            heroImage: "",
             summary: "I designed and developed mini games for the Kellogg School of Management.",
             sections: [
                 {
@@ -135,7 +143,8 @@ const projectsData = [
             }
         }
     },
-    { type: "select",
+    {
+        type: "select",
         title: "TDoP",
         slug: "design-of-pablo",
         role: "Developer, Designer",
@@ -144,6 +153,7 @@ const projectsData = [
         image: "assets/design_of_pablo.png",
         link: "",
         detail: {
+            heroImage: "",
             summary: "Figma plugin that allows you to automatically update your file's design system based on a photo you take.",
             sections: [
                 {
@@ -169,7 +179,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Wedding Website",
         slug: "wedding-website",
         role: "Developer, Designer",
@@ -178,6 +189,7 @@ const projectsData = [
         image: "assets/wedding_website.png",
         link: "https://www.priyagautam.com",
         detail: {
+            heroImage: "",
             summary: "Wedding website with custom RSVP + guest functionality.",
             sections: [
                 {
@@ -194,7 +206,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Headshots",
         slug: "headshots",
         role: "Photographer",
@@ -203,6 +216,7 @@ const projectsData = [
         image: "assets/headshot_photo.png",
         link: "",
         detail: {
+            heroImage: "",
             summary: "Professional headshot photography for individuals and teams.",
             sections: [
                 {
@@ -286,7 +300,8 @@ const projectsData = [
     //         }
     //     }
     // },
-    { type: "side",
+    {
+        type: "side",
         title: "The Catan Clash",
         slug: "the-catan-clash",
         role: "Developer",
@@ -295,6 +310,7 @@ const projectsData = [
         image: "assets/catan_clash.png",
         link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/",
         detail: {
+            heroImage: "",
             summary: "A fun side project for the 500th game of Settlers of Catan with my friends.",
             sections: [
                 {
@@ -311,7 +327,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Bluetooth Hacking",
         slug: "bluetooth-hacking",
         role: "Developer",
@@ -320,6 +337,7 @@ const projectsData = [
         image: "assets/bluetooth_button.png",
         link: "",
         detail: {
+            heroImage: "",
             summary: "Exploring BLE for creative hardware interfaces and IoT prototyping.",
             sections: [
                 {
@@ -382,7 +400,8 @@ const projectsData = [
     //         }
     //     }
     // },
-        { type: "side",
+    {
+        type: "side",
         title: "Lighting Design",
         slug: "lighting-design",
         role: "Designer",
@@ -391,6 +410,7 @@ const projectsData = [
         image: "assets/lighting_design.png",
         link: "",
         detail: {
+            heroImage: "",
             summary: "I was the lighting designer for various productions.",
             sections: [
                 {
@@ -411,7 +431,8 @@ const projectsData = [
             }
         }
     },
-    { type: "side",
+    {
+        type: "side",
         title: "Kanye 101",
         slug: "kanye-101",
         role: "Creator, Duke",
@@ -420,6 +441,7 @@ const projectsData = [
         image: "assets/kanye_101.png",
         link: "https://docs.google.com/document/d/1rx50q7oKfnLhmz2bUFMA9IPnIueRHebEnlrZT6iCYRY/edit?usp=sharing",
         detail: {
+            heroImage: "",
             summary: "A student-led course at Duke University examining ourselves through teh lens of Kanye West.",
             sections: [
                 {

@@ -165,8 +165,10 @@ body.intro-animating {
     --text-secondary: #666666;
     --text-muted: #888888;
     --surface: #e8e8e8;
-    --border: #cccccc;           /* themeable border/divider color */
-    --bg-rgb: 248, 248, 248;    /* for rgba() overlays: nav, modal backdrop */
+    --border: #cccccc;
+    /* themeable border/divider color */
+    --bg-rgb: 248, 248, 248;
+    /* for rgba() overlays: nav, modal backdrop */
     --grid-gap: 1rem;
     --font-serif: "Newsreader", serif;
     --font-sans: "Albert Sans", sans-serif;
@@ -526,7 +528,7 @@ header {
 }
 
 #view-work.hovering-design .card:not(.dimmed) .card-image {
-    box-shadow: 0 0px 48px rgba(139, 107, 191, 0.15);
+    box-shadow: 0 0px 24px rgba(139, 107, 191, 0.15);
 }
 
 /* Hardware — muted blue */
@@ -536,7 +538,7 @@ header {
 }
 
 #view-work.hovering-hardware .card:not(.dimmed) .card-image {
-    box-shadow: 0 0px 48px rgba(78, 126, 192, 0.15);
+    box-shadow: 0 0px 24px rgba(78, 126, 192, 0.15);
 }
 
 /* Software — teal */
@@ -546,7 +548,7 @@ header {
 }
 
 #view-work.hovering-software .card:not(.dimmed) .card-image {
-    box-shadow: 0 0px 48px rgba(58, 158, 158, 0.15);
+    box-shadow: 0 0px 24px rgba(58, 158, 158, 0.15);
 }
 
 /* Games — muted green */
@@ -556,7 +558,7 @@ header {
 }
 
 #view-work.hovering-games .card:not(.dimmed) .card-image {
-    box-shadow: 0 0px 48px rgba(74, 158, 106, 0.15);
+    box-shadow: 0 0px 24px rgba(74, 158, 106, 0.15);
 }
 
 
