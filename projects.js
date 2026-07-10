@@ -95,10 +95,10 @@ const projectsData = [
         role: "Puzzle Master",
         year: "2026",
         category: "design software visuals games",
-        image: "assets/kellogg_bidpoints.png",
+        image: "assets/kellogg_mini_games_cover.png",
         link: "",
         detail: {
-            heroImage: "",
+            heroImage: "assets/kellogg_bidpoints.png",
             summary: "I designed and developed mini games for the Kellogg School of Management.",
             sections: [
                 {
@@ -307,10 +307,10 @@ const projectsData = [
         role: "Developer",
         year: "2024",
         category: "visuals games software",
-        image: "assets/catan_clash.png",
+        image: "assets/catan-clash-logo.png",
         link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/",
         detail: {
-            heroImage: "",
+            heroImage: "assets/catan_clash.png",
             summary: "A fun side project for the 500th game of Settlers of Catan with my friends.",
             sections: [
                 {
@@ -334,10 +334,10 @@ const projectsData = [
         role: "Developer",
         year: "2019–",
         category: "hardware software",
-        image: "assets/bluetooth_button.png",
+        image: "assets/bluetooth_cover.png",
         link: "",
         detail: {
-            heroImage: "",
+            heroImage: "assets/bluetooth_button.png",
             summary: "Exploring BLE for creative hardware interfaces and IoT prototyping.",
             sections: [
                 {
