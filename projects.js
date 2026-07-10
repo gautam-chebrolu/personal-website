@@ -41,10 +41,10 @@ const projectsData = [
         role: "CEO",
         year: "2022",
         category: "design hardware software visuals",
-        image: "assets/amethyst_system.png",
+        image: "assets/amethyst_system_cover.png",
         link: "www.pilleve.com",
         detail: {
-            heroImage: "",
+            heroImage: "assets/amethyst_system_cover.png",
             summary: "A connected product system bridging monitoring tools and clinical care support.",
             sections: [
                 {
