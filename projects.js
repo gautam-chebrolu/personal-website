@@ -307,7 +307,7 @@ const projectsData = [
         role: "Developer",
         year: "2024",
         category: "visuals games software",
-        image: "assets/catan-clash-logo.png",
+        image: "assets/catan_clash_cover.png",
         link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/",
         detail: {
             heroImage: "assets/catan_clash.png",
@@ -438,10 +438,10 @@ const projectsData = [
         role: "Creator, Duke",
         year: "2017",
         category: "teaching",
-        image: "assets/kanye_101.png",
+        image: "assets/kanye_101_cover.png",
         link: "https://docs.google.com/document/d/1rx50q7oKfnLhmz2bUFMA9IPnIueRHebEnlrZT6iCYRY/edit?usp=sharing",
         detail: {
-            heroImage: "",
+            heroImage: "assets/kanye_101.png",
             summary: "A student-led course at Duke University examining ourselves through teh lens of Kanye West.",
             sections: [
                 {
