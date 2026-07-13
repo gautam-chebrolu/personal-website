@@ -41,10 +41,10 @@ const projectsData = [
         role: "CEO",
         year: "2022",
         category: "design hardware software visuals",
-        image: "assets/amethyst_system.png",
+        image: "assets/amethyst_system_cover.png",
         link: "www.pilleve.com",
         detail: {
-            heroImage: "",
+            heroImage: "assets/amethyst_system_cover.png",
             summary: "A connected product system bridging monitoring tools and clinical care support.",
             sections: [
                 {
@@ -95,10 +95,10 @@ const projectsData = [
         role: "Puzzle Master",
         year: "2026",
         category: "design software visuals games",
-        image: "assets/kellogg_bidpoints.png",
+        image: "assets/kellogg_mini_games_cover.png",
         link: "",
         detail: {
-            heroImage: "",
+            heroImage: "assets/kellogg_bidpoints.png",
             summary: "I designed and developed mini games for the Kellogg School of Management.",
             sections: [
                 {
@@ -307,10 +307,10 @@ const projectsData = [
         role: "Developer",
         year: "2024",
         category: "visuals games software",
-        image: "assets/catan_clash.png",
+        image: "assets/catan_clash_cover.png",
         link: "https://catan-website-git-main-gautamchebrolus-projects.vercel.app/",
         detail: {
-            heroImage: "",
+            heroImage: "assets/catan_clash.png",
             summary: "A fun side project for the 500th game of Settlers of Catan with my friends.",
             sections: [
                 {
@@ -334,10 +334,10 @@ const projectsData = [
         role: "Developer",
         year: "2019–",
         category: "hardware software",
-        image: "assets/bluetooth_button.png",
+        image: "assets/bluetooth_cover.png",
         link: "",
         detail: {
-            heroImage: "",
+            heroImage: "assets/bluetooth_button.png",
             summary: "Exploring BLE for creative hardware interfaces and IoT prototyping.",
             sections: [
                 {
@@ -438,10 +438,10 @@ const projectsData = [
         role: "Creator, Duke",
         year: "2017",
         category: "teaching",
-        image: "assets/kanye_101.png",
+        image: "assets/kanye_101_cover.png",
         link: "https://docs.google.com/document/d/1rx50q7oKfnLhmz2bUFMA9IPnIueRHebEnlrZT6iCYRY/edit?usp=sharing",
         detail: {
-            heroImage: "",
+            heroImage: "assets/kanye_101.png",
             summary: "A student-led course at Duke University examining ourselves through teh lens of Kanye West.",
             sections: [
                 {
