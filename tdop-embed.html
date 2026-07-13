@@ -643,17 +643,14 @@
           throw new Error('Could not read server response. Please try again.');
         }
 
-        // Handle non-JSON error pages (e.g. 413 HTML from Vercel/nginx)
+        // Handle non-JSON error pages (e.g. 413 or 504 HTML from Vercel/nginx)
         var data;
         try {
           data = JSON.parse(rawBody);
         } catch (_) {
           // Server returned a non-JSON body
-          if (res.status === 413) {
-            throw new Error(
-              'IMAGE_TOO_LARGE'
-            );
-          }
+          if (res.status === 413) throw new Error('IMAGE_TOO_LARGE');
+          if (res.status === 504) throw new Error('TIMEOUT');
           throw new Error(
             'Unexpected server response (HTTP ' + res.status + '). Please try again.'
           );
@@ -662,6 +659,7 @@
         if (!res.ok) {
           var serverMsg = data.error || data.message || ('Analysis failed (HTTP ' + res.status + ')');
           if (res.status === 413) throw new Error('IMAGE_TOO_LARGE');
+          if (res.status === 504) throw new Error('TIMEOUT');
           throw new Error(serverMsg);
         }
 
@@ -679,6 +677,10 @@
           userTitle  = 'Image is too large to send';
           userDetail = 'The photo exceeds the server\'s upload limit even after compression.';
           userHint   = 'Try cropping the image or choosing one with less detail.';
+        } else if (errMsg === 'TIMEOUT') {
+          userTitle  = 'The AI took a moment too long';
+          userDetail = 'The analysis request timed out on the server.';
+          userHint   = 'This is usually temporary — tap “Extract Design System” again to retry.';
         } else if (errMsg.toLowerCase().includes('failed to fetch') || errMsg.toLowerCase().includes('networkerror')) {
           userTitle  = 'Network error';
           userDetail = 'Could not reach the server. Check your internet connection.';

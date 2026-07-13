@@ -88,13 +88,21 @@ export default async function handler(req, res) {
     const base64Data = image.replace(/^data:image\/\w+;base64,/, '');
     const resolvedMime = mimeType || 'image/jpeg';
 
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+    // gemini-2.0-flash is substantially faster for vision tasks than 2.5-flash,
+    // keeping well within Vercel Hobby's 10-second function timeout.
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+
+    // Abort the Gemini request at 9 s so we can return a clean JSON error
+    // before Vercel's hard 10-second gateway kill emits an HTML 504 page.
+    const controller = new AbortController();
+    const timeoutId  = setTimeout(() => controller.abort(), 9000);
 
     let geminiRes, geminiData;
     try {
         geminiRes = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            signal: controller.signal,
             body: JSON.stringify({
                 contents: [{
                     parts: [
@@ -106,7 +114,15 @@ export default async function handler(req, res) {
         });
         geminiData = await geminiRes.json();
     } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === 'AbortError') {
+            return res.status(504).json({
+                error: 'The AI took too long to respond. Please try again — it usually works on the second attempt.'
+            });
+        }
         return res.status(502).json({ error: 'Failed to reach Gemini API', details: err.message });
+    } finally {
+        clearTimeout(timeoutId);
     }
 
     if (!geminiRes.ok) {
