@@ -115,25 +115,6 @@
         if (e.data.type === 'tdop-apply' && e.data.designSystem) {
             applyDesignSystem(e.data.designSystem);
         }
-
-        if (e.data.type === 'tdop-resize' && typeof e.data.height === 'number') {
-            // Find the iframe wherever it currently lives (slot or host)
-            var iframe = document.getElementById('tdop-embed-iframe');
-            if (!iframe) return;
-            var newH = Math.ceil(e.data.height) + 'px';
-            // Smooth transition — set once via style so it works whether or not
-            // the element has a CSS class
-            if (!iframe._resizeTransitionSet) {
-                iframe.style.transition = 'height 0.35s cubic-bezier(0.25, 1, 0.5, 1)';
-                iframe._resizeTransitionSet = true;
-            }
-            iframe.style.height = newH;
-            // Also update the slot/host wrapper so the page layout follows
-            var slot = document.getElementById('tdop-embed-slot');
-            if (slot) slot.style.height = newH;
-            var host = document.getElementById('tdop-embed-host');
-            if (host) host.style.height = newH;
-        }
     });
 
 })();

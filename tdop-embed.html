@@ -582,21 +582,11 @@
       $('#step-results')
     ];
 
-    // ── Utilities ───────────────────────────────────────────────
-    function notifyHeight() {
-      // Wait one rAF for the newly active panel to paint, then send real height
-      requestAnimationFrame(function () {
-        var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-        window.parent.postMessage({ type: 'tdop-resize', height: h }, '*');
-      });
-    }
-
     function showStep(n) {
       panels.forEach(function (p, i) {
         p.classList.toggle('active', i === n);
       });
       window.scrollTo(0, 0);
-      notifyHeight();
     }
 
     function showToast(msg) {
@@ -706,7 +696,6 @@
           $('#preview-img').src = compressed;
           $('#capture-zone').style.display = 'none';
           $('#preview-wrap').classList.add('visible');
-          notifyHeight(); // preview appeared — iframe got taller
         });
       };
       reader.onerror = function () {
@@ -728,15 +717,7 @@
       $('#preview-img').src = '';
       $('#capture-zone').style.display = '';
       $('#preview-wrap').classList.remove('visible');
-      notifyHeight(); // preview gone — iframe shorter again
     });
-
-    // Send initial height as soon as layout is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', notifyHeight);
-    } else {
-      notifyHeight();
-    }
 
     // ── Analysis ────────────────────────────────────────────────
     $('#analyze-btn').addEventListener('click', function () {
