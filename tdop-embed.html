@@ -310,6 +310,43 @@
       margin-top: 0.75rem;
     }
 
+    /* ── Compress badge ─────────────────── */
+    .compress-badge {
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: #888;
+      margin-top: 0.6rem;
+      justify-content: center;
+    }
+    .compress-badge.visible { display: flex; }
+    .compress-spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #ddd;
+      border-top-color: #888;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error banner ───────────────────── */
+    .error-banner {
+      display: none;
+      background: #fff1f0;
+      border: 1px solid #ffc9c7;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #c0392b;
+    }
+    .error-banner.visible { display: block; }
+    .error-banner strong { display: block; margin-bottom: 0.25rem; }
+    .error-banner .error-hint { color: #888; font-size: 0.8rem; margin-top: 0.4rem; }
+
     /* ── Toast ──────────────────────────── */
     .toast {
       position: fixed;
@@ -350,9 +387,18 @@
 
     <!-- Preview — shown after image is selected -->
     <div class="preview-wrap" id="preview-wrap">
+      <div class="error-banner" id="error-banner">
+        <strong id="error-title">Something went wrong</strong>
+        <span id="error-detail"></span>
+        <div class="error-hint" id="error-hint"></div>
+      </div>
       <div class="preview-img-box">
         <img id="preview-img" src="" alt="Preview">
         <button class="retake-btn" id="retake-btn" title="Retake">↺</button>
+      </div>
+      <div class="compress-badge" id="compress-badge">
+        <div class="compress-spinner"></div>
+        <span id="compress-label">Compressing image…</span>
       </div>
       <br>
       <button class="btn-analyze" id="analyze-btn">Extract Design System ✦</button>
@@ -448,16 +494,98 @@
       if (el) el.style.fontFamily = '"' + family + '"';
     }
 
+    // ── Image Compression ────────────────────────────────────────
+    // Target: max 1800px on longest edge, JPEG quality 0.82
+    // This keeps most phone photos well under 1 MB base64.
+    var MAX_PX   = 1800;
+    var JPEG_Q   = 0.82;
+    var MAX_B64_BYTES = 3 * 1024 * 1024; // 3 MB base64 hard cap (~2.25 MB image)
+
+    function compressImage(dataURL, mimeType, callback) {
+      var img = new Image();
+      img.onload = function () {
+        var w = img.naturalWidth;
+        var h = img.naturalHeight;
+
+        // Scale down if needed
+        if (w > MAX_PX || h > MAX_PX) {
+          if (w >= h) { h = Math.round(h * MAX_PX / w); w = MAX_PX; }
+          else        { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
+        }
+
+        var canvas = document.createElement('canvas');
+        canvas.width  = w;
+        canvas.height = h;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+
+        // Always output JPEG for compression; PNG inputs become JPEG
+        var compressed = canvas.toDataURL('image/jpeg', JPEG_Q);
+        callback(null, compressed, 'image/jpeg');
+      };
+      img.onerror = function () {
+        callback(new Error('Could not load the selected image.'));
+      };
+      img.src = dataURL;
+    }
+
     // ── Image Handling ──────────────────────────────────────────
+    function showErrorBanner(title, detail, hint) {
+      $('#error-title').textContent  = title  || 'Something went wrong';
+      $('#error-detail').textContent = detail || '';
+      $('#error-hint').textContent   = hint   || '';
+      $('#error-banner').classList.add('visible');
+    }
+    function hideErrorBanner() {
+      $('#error-banner').classList.remove('visible');
+    }
+
     function handleFile(file) {
       if (!file) return;
-      state.mimeType = file.type || 'image/jpeg';
+      hideErrorBanner();
+
+      // Show compress spinner
+      var badge = $('#compress-badge');
+      var label = $('#compress-label');
+      badge.classList.add('visible');
+      label.textContent = 'Compressing image…';
+      $('#analyze-btn').disabled = true;
+
       var reader = new FileReader();
       reader.onload = function (e) {
-        state.imageData = e.target.result;
-        $('#preview-img').src = state.imageData;
-        $('#capture-zone').style.display = 'none';
-        $('#preview-wrap').classList.add('visible');
+        var rawDataURL = e.target.result;
+        var rawMime    = file.type || 'image/jpeg';
+
+        compressImage(rawDataURL, rawMime, function (err, compressed, compMime) {
+          badge.classList.remove('visible');
+          $('#analyze-btn').disabled = false;
+
+          if (err) {
+            showErrorBanner('Could not read image', err.message, 'Try a different photo.');
+            return;
+          }
+
+          // Safety check: if still too big, warn user
+          if (compressed.length > MAX_B64_BYTES) {
+            showErrorBanner(
+              'Image is still too large after compression',
+              'Please choose a smaller or simpler image.',
+              'Tip: screenshots and cropped photos work best.'
+            );
+            return;
+          }
+
+          state.imageData = compressed;
+          state.mimeType  = compMime;
+          $('#preview-img').src = compressed;
+          $('#capture-zone').style.display = 'none';
+          $('#preview-wrap').classList.add('visible');
+        });
+      };
+      reader.onerror = function () {
+        badge.classList.remove('visible');
+        $('#analyze-btn').disabled = false;
+        showErrorBanner('Could not read file', 'The file may be corrupted or unsupported.', 'Try a different image format (JPG, PNG, HEIC).');
       };
       reader.readAsDataURL(file);
     }
@@ -507,8 +635,35 @@
 
         clearInterval(intv);
 
-        var data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Analysis failed');
+        // Safely read the response body as text first, then parse
+        var rawBody;
+        try {
+          rawBody = await res.text();
+        } catch (readErr) {
+          throw new Error('Could not read server response. Please try again.');
+        }
+
+        // Handle non-JSON error pages (e.g. 413 HTML from Vercel/nginx)
+        var data;
+        try {
+          data = JSON.parse(rawBody);
+        } catch (_) {
+          // Server returned a non-JSON body
+          if (res.status === 413) {
+            throw new Error(
+              'IMAGE_TOO_LARGE'
+            );
+          }
+          throw new Error(
+            'Unexpected server response (HTTP ' + res.status + '). Please try again.'
+          );
+        }
+
+        if (!res.ok) {
+          var serverMsg = data.error || data.message || ('Analysis failed (HTTP ' + res.status + ')');
+          if (res.status === 413) throw new Error('IMAGE_TOO_LARGE');
+          throw new Error(serverMsg);
+        }
 
         state.designSystem = data.designSystem;
         renderResults();
@@ -516,8 +671,33 @@
 
       } catch (err) {
         clearInterval(intv);
-        showToast('Error: ' + err.message);
+
+        var errMsg = err.message || 'Unknown error';
+        var userTitle, userDetail, userHint;
+
+        if (errMsg === 'IMAGE_TOO_LARGE') {
+          userTitle  = 'Image is too large to send';
+          userDetail = 'The photo exceeds the server\'s upload limit even after compression.';
+          userHint   = 'Try cropping the image or choosing one with less detail.';
+        } else if (errMsg.toLowerCase().includes('failed to fetch') || errMsg.toLowerCase().includes('networkerror')) {
+          userTitle  = 'Network error';
+          userDetail = 'Could not reach the server. Check your internet connection.';
+          userHint   = 'If the problem persists, try reloading the page.';
+        } else if (errMsg.toLowerCase().includes('gemini')) {
+          userTitle  = 'AI analysis failed';
+          userDetail = errMsg;
+          userHint   = 'This is a temporary issue — please try again in a moment.';
+        } else {
+          userTitle  = 'Something went wrong';
+          userDetail = errMsg;
+          userHint   = 'Please try a different image or reload the page.';
+        }
+
         showStep(0);
+        // Brief delay so the step transition completes before the banner appears
+        setTimeout(function () {
+          showErrorBanner(userTitle, userDetail, userHint);
+        }, 380);
       }
     }
 
