@@ -88,14 +88,15 @@ export default async function handler(req, res) {
     const base64Data = image.replace(/^data:image\/\w+;base64,/, '');
     const resolvedMime = mimeType || 'image/jpeg';
 
-    // gemini-2.0-flash is substantially faster for vision tasks than 2.5-flash,
-    // keeping well within Vercel Hobby's 10-second function timeout.
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+    // gemini-2.5-flash provides superior vision analysis quality.
+    // Vercel Hobby maxDuration is now set to 60 s in vercel.json, so we
+    // abort at 55 s to always return clean JSON before the hard gateway kill.
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
 
     // Abort the Gemini request at 9 s so we can return a clean JSON error
     // before Vercel's hard 10-second gateway kill emits an HTML 504 page.
     const controller = new AbortController();
-    const timeoutId  = setTimeout(() => controller.abort(), 9000);
+    const timeoutId  = setTimeout(() => controller.abort(), 55_000);
 
     let geminiRes, geminiData;
     try {

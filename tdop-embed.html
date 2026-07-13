@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>The Design of Pablo — Live Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Albert+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Albert+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
 
   <style>
     :root {
       --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: "Albert Sans", sans-serif;
@@ -29,11 +36,21 @@
       padding: 2rem 1.5rem 3rem;
       animation: slideUp 0.35s var(--ease);
     }
-    .panel.active { display: block; }
+
+    .panel.active {
+      display: block;
+    }
 
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ── Typography ─────────────────────── */
@@ -57,7 +74,7 @@
       border-radius: 12px;
       padding: 3rem 1.5rem;
       text-align: center;
-      background: rgba(0,0,0,0.02);
+      background: rgba(0, 0, 0, 0.02);
       margin-bottom: 1.5rem;
     }
 
@@ -82,7 +99,10 @@
       margin: 1.4rem 0 0.75rem;
       transition: transform 0.15s, background 0.2s;
     }
-    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
 
     .btn-secondary {
       display: block;
@@ -102,7 +122,10 @@
       text-align: center;
       margin-bottom: 1.5rem;
     }
-    .preview-wrap.visible { display: block; }
+
+    .preview-wrap.visible {
+      display: block;
+    }
 
     .preview-img-box {
       position: relative;
@@ -111,15 +134,17 @@
       overflow: hidden;
       max-width: 260px;
     }
+
     .preview-img-box img {
       width: 100%;
       display: block;
     }
+
     .retake-btn {
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
-      background: rgba(0,0,0,0.55);
+      background: rgba(0, 0, 0, 0.55);
       color: #fff;
       border: none;
       border-radius: 50%;
@@ -146,7 +171,10 @@
       margin-top: 1.2rem;
       transition: transform 0.15s;
     }
-    .btn-analyze:active { transform: scale(0.97); }
+
+    .btn-analyze:active {
+      transform: scale(0.97);
+    }
 
     /* ── Step 2: Analyzing ──────────────── */
     .analyzing-wrap {
@@ -161,24 +189,35 @@
       border-radius: 10px;
       overflow: hidden;
     }
+
     .analyzing-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .scan-line {
       position: absolute;
       left: 0;
       width: 100%;
       height: 3px;
-      background: rgba(255,255,255,0.85);
-      box-shadow: 0 0 12px rgba(255,255,255,0.5);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
       animation: scan 1.8s linear infinite;
     }
+
     @keyframes scan {
-      0%   { top: 0%; }
-      50%  { top: 100%; }
-      100% { top: 0%; }
+      0% {
+        top: 0%;
+      }
+
+      50% {
+        top: 100%;
+      }
+
+      100% {
+        top: 0%;
+      }
     }
 
     .dots {
@@ -186,6 +225,7 @@
       gap: 6px;
       margin-top: 1rem;
     }
+
     .dots span {
       width: 6px;
       height: 6px;
@@ -193,11 +233,27 @@
       background: #ccc;
       animation: pulse 1.2s ease-in-out infinite;
     }
-    .dots span:nth-child(2) { animation-delay: 0.2s; }
-    .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    .dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
     @keyframes pulse {
-      0%, 100% { opacity: 0.3; transform: scale(0.85); }
-      50%       { opacity: 1;   transform: scale(1.1); }
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(0.85);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
     }
 
     /* ── Step 3: Results ────────────────── */
@@ -220,12 +276,14 @@
       border-bottom: 1px solid #e8e8e8;
       padding-bottom: 1.5rem;
     }
+
     #res-style {
       font-family: "Newsreader", serif;
       font-size: 1.5rem;
       font-weight: 400;
       margin-bottom: 0.25rem;
     }
+
     #res-atmosphere {
       font-style: italic;
       font-size: 0.9rem;
@@ -239,30 +297,57 @@
       grid-template-columns: 1fr 1fr;
       gap: 0.75rem;
     }
+
     .color-entry {
       display: flex;
       align-items: center;
       gap: 0.65rem;
     }
+
     .swatch {
       width: 36px;
       height: 36px;
       border-radius: 6px;
       flex-shrink: 0;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
-    .swatch-meta { line-height: 1.3; }
-    .swatch-name { font-size: 0.8rem; font-weight: 500; }
-    .swatch-hex  { font-size: 0.72rem; color: #888; text-transform: uppercase; }
+
+    .swatch-meta {
+      line-height: 1.3;
+    }
+
+    .swatch-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .swatch-hex {
+      font-size: 0.72rem;
+      color: #888;
+      text-transform: uppercase;
+    }
 
     /* Typography preview */
-    .typo-block + .typo-block { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid #e8e8e8; }
-    .typo-label { font-size: 0.72rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .typo-block+.typo-block {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .typo-label {
+      font-size: 0.72rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+
     .typo-sample-h {
       font-size: 1.6rem;
       font-weight: 500;
       line-height: 1.2;
     }
+
     .typo-sample-p {
       font-size: 0.95rem;
       line-height: 1.6;
@@ -293,8 +378,14 @@
       transition: transform 0.15s, background 0.2s;
       text-align: center;
     }
-    .btn-apply:hover { transform: translateY(-2px); }
-    .btn-apply.applied { background: #3a7d55; }
+
+    .btn-apply:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-apply.applied {
+      background: #3a7d55;
+    }
 
     .btn-reset {
       display: block;
@@ -320,7 +411,11 @@
       margin-top: 0.6rem;
       justify-content: center;
     }
-    .compress-badge.visible { display: flex; }
+
+    .compress-badge.visible {
+      display: flex;
+    }
+
     .compress-spinner {
       width: 12px;
       height: 12px;
@@ -329,7 +424,12 @@
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* ── Error banner ───────────────────── */
     .error-banner {
@@ -343,9 +443,21 @@
       line-height: 1.5;
       color: #c0392b;
     }
-    .error-banner.visible { display: block; }
-    .error-banner strong { display: block; margin-bottom: 0.25rem; }
-    .error-banner .error-hint { color: #888; font-size: 0.8rem; margin-top: 0.4rem; }
+
+    .error-banner.visible {
+      display: block;
+    }
+
+    .error-banner strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .error-banner .error-hint {
+      color: #888;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
 
     /* ── Toast ──────────────────────────── */
     .toast {
@@ -362,7 +474,11 @@
       opacity: 0;
       pointer-events: none;
     }
-    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
   </style>
 </head>
 
@@ -372,7 +488,8 @@
   <div id="step-capture" class="panel active">
     <h2>Capture a Vibe</h2>
     <p class="sub" style="margin-bottom: 1.25rem;">
-      Take a photo of anything — nature, art, a room, a texture — and turn it into a live design system for this portfolio.
+      Take a photo of anything — nature, art, a room, a texture — and turn it into a live design system for this
+      portfolio.
     </p>
 
     <div class="capture-zone" id="capture-zone">
@@ -485,8 +602,8 @@
       var id = 'gf-' + family.toLowerCase().replace(/\s+/g, '-');
       if (!document.getElementById(id)) {
         var link = document.createElement('link');
-        link.id   = id;
-        link.rel  = 'stylesheet';
+        link.id = id;
+        link.rel = 'stylesheet';
         link.href = 'https://fonts.googleapis.com/css2?family='
           + encodeURIComponent(family) + ':wght@400;500;700&display=swap';
         document.head.appendChild(link);
@@ -497,8 +614,8 @@
     // ── Image Compression ────────────────────────────────────────
     // Target: max 1800px on longest edge, JPEG quality 0.82
     // This keeps most phone photos well under 1 MB base64.
-    var MAX_PX   = 1800;
-    var JPEG_Q   = 0.82;
+    var MAX_PX = 1800;
+    var JPEG_Q = 0.82;
     var MAX_B64_BYTES = 3 * 1024 * 1024; // 3 MB base64 hard cap (~2.25 MB image)
 
     function compressImage(dataURL, mimeType, callback) {
@@ -510,11 +627,11 @@
         // Scale down if needed
         if (w > MAX_PX || h > MAX_PX) {
           if (w >= h) { h = Math.round(h * MAX_PX / w); w = MAX_PX; }
-          else        { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
+          else { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
         }
 
         var canvas = document.createElement('canvas');
-        canvas.width  = w;
+        canvas.width = w;
         canvas.height = h;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, w, h);
@@ -531,9 +648,9 @@
 
     // ── Image Handling ──────────────────────────────────────────
     function showErrorBanner(title, detail, hint) {
-      $('#error-title').textContent  = title  || 'Something went wrong';
+      $('#error-title').textContent = title || 'Something went wrong';
       $('#error-detail').textContent = detail || '';
-      $('#error-hint').textContent   = hint   || '';
+      $('#error-hint').textContent = hint || '';
       $('#error-banner').classList.add('visible');
     }
     function hideErrorBanner() {
@@ -554,7 +671,7 @@
       var reader = new FileReader();
       reader.onload = function (e) {
         var rawDataURL = e.target.result;
-        var rawMime    = file.type || 'image/jpeg';
+        var rawMime = file.type || 'image/jpeg';
 
         compressImage(rawDataURL, rawMime, function (err, compressed, compMime) {
           badge.classList.remove('visible');
@@ -576,7 +693,7 @@
           }
 
           state.imageData = compressed;
-          state.mimeType  = compMime;
+          state.mimeType = compMime;
           $('#preview-img').src = compressed;
           $('#capture-zone').style.display = 'none';
           $('#preview-wrap').classList.add('visible');
@@ -591,7 +708,7 @@
     }
 
     $('#camera-input').addEventListener('change', function (e) { handleFile(e.target.files[0]); });
-    $('#file-input').addEventListener('change', function (e)  { handleFile(e.target.files[0]); });
+    $('#file-input').addEventListener('change', function (e) { handleFile(e.target.files[0]); });
     $('#gallery-trigger').addEventListener('click', function () { $('#file-input').click(); });
 
     $('#retake-btn').addEventListener('click', function () {
@@ -674,25 +791,25 @@
         var userTitle, userDetail, userHint;
 
         if (errMsg === 'IMAGE_TOO_LARGE') {
-          userTitle  = 'Image is too large to send';
+          userTitle = 'Image is too large to send';
           userDetail = 'The photo exceeds the server\'s upload limit even after compression.';
-          userHint   = 'Try cropping the image or choosing one with less detail.';
+          userHint = 'Try cropping the image or choosing one with less detail.';
         } else if (errMsg === 'TIMEOUT') {
-          userTitle  = 'The AI took a moment too long';
+          userTitle = 'The AI took a moment too long';
           userDetail = 'The analysis request timed out on the server.';
-          userHint   = 'This is usually temporary — tap “Extract Design System” again to retry.';
+          userHint = 'This is usually temporary — tap “Extract Design System” again to retry.';
         } else if (errMsg.toLowerCase().includes('failed to fetch') || errMsg.toLowerCase().includes('networkerror')) {
-          userTitle  = 'Network error';
+          userTitle = 'Network error';
           userDetail = 'Could not reach the server. Check your internet connection.';
-          userHint   = 'If the problem persists, try reloading the page.';
+          userHint = 'If the problem persists, try reloading the page.';
         } else if (errMsg.toLowerCase().includes('gemini')) {
-          userTitle  = 'AI analysis failed';
+          userTitle = 'AI analysis failed';
           userDetail = errMsg;
-          userHint   = 'This is a temporary issue — please try again in a moment.';
+          userHint = 'This is a temporary issue — please try again in a moment.';
         } else {
-          userTitle  = 'Something went wrong';
+          userTitle = 'Something went wrong';
           userDetail = errMsg;
-          userHint   = 'Please try a different image or reload the page.';
+          userHint = 'Please try a different image or reload the page.';
         }
 
         showStep(0);
@@ -707,8 +824,8 @@
     function renderResults() {
       var ds = state.designSystem;
 
-      $('#res-style').textContent     = ds.style || '—';
-      $('#res-mood').textContent      = ds.mood  || '';
+      $('#res-style').textContent = ds.style || '—';
+      $('#res-mood').textContent = ds.mood || '';
       $('#res-atmosphere').textContent = ds.atmosphere || '';
 
       // Colors
@@ -730,7 +847,7 @@
       // Typography
       var typo = (ds.typography && ds.typography.suggestedFonts) || {};
       var hFont = typo.heading || 'Newsreader';
-      var bFont = typo.body    || 'Albert Sans';
+      var bFont = typo.body || 'Albert Sans';
 
       var tWrap = $('#typo-preview');
       var hEl = document.createElement('div');
@@ -768,11 +885,11 @@
     // ── Reset ───────────────────────────────────────────────────
     $('#reset-btn').addEventListener('click', function () {
       state.imageData = null;
-      state.mimeType  = null;
+      state.mimeType = null;
       state.designSystem = null;
       $('#camera-input').value = '';
-      $('#file-input').value   = '';
-      $('#preview-img').src    = '';
+      $('#file-input').value = '';
+      $('#preview-img').src = '';
       $('#capture-zone').style.display = '';
       $('#preview-wrap').classList.remove('visible');
       showStep(0);
@@ -780,4 +897,5 @@
 
   </script>
 </body>
+
 </html>
