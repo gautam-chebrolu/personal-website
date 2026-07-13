@@ -583,11 +583,20 @@
     ];
 
     // ── Utilities ───────────────────────────────────────────────
+    function notifyHeight() {
+      // Wait one rAF for the newly active panel to paint, then send real height
+      requestAnimationFrame(function () {
+        var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        window.parent.postMessage({ type: 'tdop-resize', height: h }, '*');
+      });
+    }
+
     function showStep(n) {
       panels.forEach(function (p, i) {
         p.classList.toggle('active', i === n);
       });
       window.scrollTo(0, 0);
+      notifyHeight();
     }
 
     function showToast(msg) {
@@ -697,6 +706,7 @@
           $('#preview-img').src = compressed;
           $('#capture-zone').style.display = 'none';
           $('#preview-wrap').classList.add('visible');
+          notifyHeight(); // preview appeared — iframe got taller
         });
       };
       reader.onerror = function () {
@@ -718,7 +728,15 @@
       $('#preview-img').src = '';
       $('#capture-zone').style.display = '';
       $('#preview-wrap').classList.remove('visible');
+      notifyHeight(); // preview gone — iframe shorter again
     });
+
+    // Send initial height as soon as layout is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', notifyHeight);
+    } else {
+      notifyHeight();
+    }
 
     // ── Analysis ────────────────────────────────────────────────
     $('#analyze-btn').addEventListener('click', function () {
@@ -893,6 +911,59 @@
       $('#capture-zone').style.display = '';
       $('#preview-wrap').classList.remove('visible');
       showStep(0);
+    });
+
+    // ── Receive Theme from Parent ───────────────────────────────
+    // When the parent applies a design system to itself, it also sends it
+    // back here via { type: 'tdop-theme', designSystem: {...} } so the
+    // embed's own colors and fonts update to match.
+    window.addEventListener('message', function (e) {
+      if (!e.data || e.data.type !== 'tdop-theme' || !e.data.designSystem) return;
+      var ds = e.data.designSystem;
+      var c  = ds.colors || {};
+      var typo = (ds.typography && ds.typography.suggestedFonts) || {};
+
+      var root = document.documentElement.style;
+      if (c.background) root.setProperty('--embed-bg',   c.background);
+      if (c.text)       root.setProperty('--embed-text', c.text);
+      if (c.surface)    root.setProperty('--embed-surf', c.surface);
+      if (c.primary)    root.setProperty('--embed-pri',  c.primary);
+
+      // Apply to body background and text
+      if (c.background) document.body.style.background = c.background;
+      if (c.text)       document.body.style.color      = c.text;
+
+      // Update buttons to use primary color
+      if (c.primary) {
+        var btns = document.querySelectorAll('.btn-primary, .btn-analyze, .btn-apply');
+        btns.forEach(function (b) {
+          b.style.background = c.primary;
+        });
+      }
+
+      // Update fonts if provided
+      if (typo.heading) {
+        var id = 'gf-theme-h';
+        if (!document.getElementById(id)) {
+          var lh = document.createElement('link');
+          lh.id = id; lh.rel = 'stylesheet';
+          lh.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(typo.heading) + ':wght@400;500&display=swap';
+          document.head.appendChild(lh);
+        }
+        document.querySelectorAll('h2').forEach(function (el) {
+          el.style.fontFamily = '"' + typo.heading + '", serif';
+        });
+      }
+      if (typo.body) {
+        var id2 = 'gf-theme-b';
+        if (!document.getElementById(id2)) {
+          var lb = document.createElement('link');
+          lb.id = id2; lb.rel = 'stylesheet';
+          lb.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(typo.body) + ':wght@300;400;500&display=swap';
+          document.head.appendChild(lb);
+        }
+        document.body.style.fontFamily = '"' + typo.body + '", sans-serif';
+      }
     });
 
   </script>

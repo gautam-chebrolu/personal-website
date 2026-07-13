@@ -181,6 +181,7 @@ body.intro-animating {
     --text-muted: #888888;
     --surface: #e8e8e8;
     --border: #cccccc;
+    --secondary: #888888;
     /* themeable border/divider color */
     --bg-rgb: 248, 248, 248;
     /* for rgba() overlays: nav, modal backdrop */
@@ -276,9 +277,19 @@ h3 {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(248, 248, 248, 0.88);
+    background: rgba(var(--bg-rgb), 0.82);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid transparent;
+    transition:
+        background-color 0.45s ease,
+        border-color 0.35s ease;
+}
+
+.site-nav.scrolled {
+    border-bottom-color: rgba(var(--bg-rgb), 0.25);
+    /* slightly more opaque when scrolled so it reads clearly */
+    background: rgba(var(--bg-rgb), 0.92);
 }
 
 .nav-inner {
@@ -430,9 +441,10 @@ header {
     font-family: var(--font-sans);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-secondary);
+    color: var(--secondary);
     margin-bottom: 2rem;
     font-weight: 500;
+    transition: color 0.45s ease;
 }
 
 .section-label.list-view {

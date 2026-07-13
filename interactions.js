@@ -41,6 +41,19 @@
             : new Promise(resolve => setTimeout(resolve, 400));
     }
 
+    // ── Nav scroll frosting ────────────────────────────────────────
+    // Adds/removes .scrolled on the nav so the border fades in on scroll.
+
+    (function initNavScroll() {
+        const nav = document.getElementById('site-nav');
+        if (!nav) return;
+        const onScroll = () => {
+            nav.classList.toggle('scrolled', window.scrollY > 8);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll(); // run once on load in case page is already scrolled
+    })();
+
     // ── Core theme applier ─────────────────────────────────────────
 
     async function applyDesignSystem(ds) {
@@ -69,6 +82,8 @@
         if (c.surface)        root.setProperty('--surface',         c.surface);
         // Use primary color as the accent/border tone
         if (c.primary)        root.setProperty('--border',          c.primary);
+        // Secondary color powers section labels (Select Work, Side Projects, etc.)
+        if (c.secondary)      root.setProperty('--secondary',       c.secondary);
 
         root.setProperty('--font-serif', '"' + hFont + '", serif');
         root.setProperty('--font-sans',  '"' + bFont + '", sans-serif');
@@ -77,14 +92,47 @@
         setTimeout(function () {
             document.body.classList.remove('theme-transitioning');
         }, 500);
+
+        // 5. Forward the design system back into the embed iframe
+        //    so the embed's own UI (fonts, colors) also reflects the theme.
+        const iframe = document.querySelector('iframe[src="tdop-embed.html"]');
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage(
+                { type: 'tdop-theme', designSystem: ds },
+                '*'
+            );
+        }
     }
 
     // ── postMessage listener ───────────────────────────────────────
-    // The tdop-embed.html iframe sends: { type: 'tdop-apply', designSystem: {...} }
+    // The tdop-embed.html iframe sends:
+    //   { type: 'tdop-apply',  designSystem: {...} }  — apply theme
+    //   { type: 'tdop-resize', height: N }             — resize the iframe
 
     window.addEventListener('message', function (e) {
-        if (e.data && e.data.type === 'tdop-apply' && e.data.designSystem) {
+        if (!e.data) return;
+
+        if (e.data.type === 'tdop-apply' && e.data.designSystem) {
             applyDesignSystem(e.data.designSystem);
+        }
+
+        if (e.data.type === 'tdop-resize' && typeof e.data.height === 'number') {
+            // Find the iframe wherever it currently lives (slot or host)
+            var iframe = document.getElementById('tdop-embed-iframe');
+            if (!iframe) return;
+            var newH = Math.ceil(e.data.height) + 'px';
+            // Smooth transition — set once via style so it works whether or not
+            // the element has a CSS class
+            if (!iframe._resizeTransitionSet) {
+                iframe.style.transition = 'height 0.35s cubic-bezier(0.25, 1, 0.5, 1)';
+                iframe._resizeTransitionSet = true;
+            }
+            iframe.style.height = newH;
+            // Also update the slot/host wrapper so the page layout follows
+            var slot = document.getElementById('tdop-embed-slot');
+            if (slot) slot.style.height = newH;
+            var host = document.getElementById('tdop-embed-host');
+            if (host) host.style.height = newH;
         }
     });
 

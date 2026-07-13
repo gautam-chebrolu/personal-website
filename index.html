@@ -185,12 +185,24 @@
     </section>
 
 
+    <!-- ═══ Persistent TDoP Embed (kept alive across navigation) ═══ -->
+    <!-- The iframe is never destroyed; router.js moves it in/out of the detail view -->
+    <div id="tdop-embed-host" style="display:none; width:100%; height:360px;">
+        <iframe
+            id="tdop-embed-iframe"
+            src="tdop-embed.html"
+            style="width:100%; height:360px; border:1px solid var(--surface); border-radius:4px; transition: height 0.35s cubic-bezier(0.25, 1, 0.5, 1);"
+            allowfullscreen>
+        </iframe>
+    </div>
+
     <!-- Lightbox -->
     <!-- <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
         <img class="lightbox-img" id="lightbox-img" src="" alt="">
         <iframe class="lightbox-video" id="lightbox-video" src="" frameborder="0" allow="autoplay; fullscreen; encrypted-media" allowfullscreen></iframe>
     </div> -->
+
 
     <!-- ═══ Footer ═══ -->
     <footer id="site-footer">

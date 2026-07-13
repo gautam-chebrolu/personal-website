@@ -80,6 +80,8 @@
         // Exit current view
         const outgoing = document.getElementById('view-' + currentView);
         if (outgoing) {
+            // Before wiping the project detail innerHTML, rescue the persistent iframe
+            if (currentView === 'project') reclaimTdopIframe();
             outgoing.classList.add('exiting');
             outgoing.classList.remove('active');
         }
@@ -550,9 +552,17 @@
                     }
                     case 'embed': {
                         const height = s.height || '500px';
-                        sections += `<div class="detail-section detail-embed reveal" ${delay}>
-                            <iframe src="${s.src}" style="width: 100%; height: ${height}; border: 1px solid var(--surface); border-radius: 4px;" allowfullscreen></iframe>
-                        </div>`;
+                        // For the TDoP embed, use the persistent iframe so it never reloads.
+                        // We use a placeholder div whose ID we recognise later in postRender.
+                        if (s.src === 'tdop-embed.html') {
+                            sections += `<div class="detail-section detail-embed reveal" ${delay}>
+                                <div id="tdop-embed-slot" style="width:100%; height:${height};"></div>
+                            </div>`;
+                        } else {
+                            sections += `<div class="detail-section detail-embed reveal" ${delay}>
+                                <iframe src="${s.src}" style="width: 100%; height: ${height}; border: 1px solid var(--surface); border-radius: 4px;" allowfullscreen></iframe>
+                            </div>`;
+                        }
                         break;
                     }
                     case 'link':
@@ -609,7 +619,35 @@
                 </div>
             `;
         }
+
+        // ── Move persistent TDoP iframe into the slot (if this project has one) ──
+        const slot = document.getElementById('tdop-embed-slot');
+        if (slot) {
+            const host   = document.getElementById('tdop-embed-host');
+            const iframe = document.getElementById('tdop-embed-iframe');
+            if (host && iframe) {
+                // Resize the slot to match the iframe host dimensions
+                slot.style.height = host.style.height || '860px';
+                // Move iframe into the visible slot
+                slot.appendChild(iframe);
+                iframe.style.display = '';
+                host.style.display = 'none';
+            }
+        }
     }
+
+    // ── Return TDoP iframe to off-screen host (called when leaving project view) ──
+    function reclaimTdopIframe() {
+        const host   = document.getElementById('tdop-embed-host');
+        const iframe = document.getElementById('tdop-embed-iframe');
+        if (!host || !iframe) return;
+        // Only move it if it's currently outside the host
+        if (iframe.parentElement !== host) {
+            host.appendChild(iframe);
+            host.style.display = 'none';
+        }
+    }
+
 
     // ─── Filtering (shared logic) ───────────────────────────
     function initFilters(menuSelector, itemSelector, getState, setState) {

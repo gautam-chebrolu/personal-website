@@ -159,7 +159,7 @@ const projectsData = [
                 {
                     type: "embed",
                     src: "tdop-embed.html",
-                    height: "860px"
+                    height: "360px"   // initial size; grows dynamically via postMessage
                 },
                 {
                     type: "text",
