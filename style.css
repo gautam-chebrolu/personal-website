@@ -20,7 +20,7 @@ body.intro-animating {
 }
 
 .logo.intro-reveal {
-    animation: introLogoReveal 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    animation: introLogoReveal 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 @keyframes introLogoReveal {
@@ -33,6 +33,21 @@ body.intro-animating {
         opacity: 1;
         clip-path: inset(0 0% 0 0);
     }
+}
+
+/* Handwritten logo image */
+.logo-img {
+    display: block;
+    height: 1.6rem;  /* match nav text height */
+    width: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    opacity: 0.6; /* a bit transparent normally */
+    transition: opacity var(--transition-fast);
+}
+
+.logo:hover .logo-img {
+    opacity: 1; /* full opacity on hover */
 }
 
 /* Grid Wrapper Expansion */

@@ -694,21 +694,32 @@
             workLink.classList.add('intro-reveal');
         }, WORK_START);
 
-        // === Phase 3: Work view content staggers in ===
+        // === Phase 3a: Description ("founder and designer...") animates in first ===
         handleRoute();
 
-        const CONTENT_START = WORK_START + 80;
-        const STAGGER_STEP  = 60;
+        const DESCRIPTION_START = WORK_START + 80;
+        const descriptionEl = document.getElementById('intro-description');
+        if (descriptionEl) {
+            setTimeout(() => {
+                descriptionEl.classList.add('intro-reveal');
+            }, DESCRIPTION_START);
+        }
 
-        contentItems.forEach((item, i) => {
+        // === Phase 3b: After ~3s, rest of content items stagger in ===
+        // Filter out the description (already animated) and animate remaining items
+        const REST_CONTENT_START = DESCRIPTION_START + 3000;
+        const STAGGER_STEP = 60;
+        const restItems = Array.from(contentItems).filter(el => el.id !== 'intro-description');
+
+        restItems.forEach((item, i) => {
             setTimeout(() => {
                 item.classList.add('intro-reveal');
-            }, CONTENT_START + i * STAGGER_STEP);
+            }, REST_CONTENT_START + i * STAGGER_STEP);
         });
 
-        // === Phase 4: "Visuals" nav link fades in last ===
-        const CONTENT_TOTAL = CONTENT_START + contentItems.length * STAGGER_STEP;
-        const VISUALS_DELAY = Math.max(CONTENT_TOTAL, WORK_START + 1200);
+        // === Phase 4: "Visuals" nav link fades in after the description has appeared ===
+        const CONTENT_TOTAL = REST_CONTENT_START + restItems.length * STAGGER_STEP;
+        const VISUALS_DELAY = Math.max(CONTENT_TOTAL, REST_CONTENT_START + 400);
 
         setTimeout(() => {
             visualsLink.classList.remove('intro-hidden');
