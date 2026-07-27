@@ -11,7 +11,7 @@ const projectsData = [
         year: "2017–2023",
         category: "hardware design software visuals",
         image: "https://lh3.googleusercontent.com/pw/AP1GczPw7vrBzYlmDepEo0Y7Xj5FqApNYTKBS_UzElFGwYL3YmRISCqdmKm1CtqrQ0Rnc0sIuQILB9hXcfFgY-FfwvRfcmlOEi85dhFxYAuLF80tbZ2OK-WKqOVxq5g_E48LnHTV-u11uFmCH8nMxN4vYOxb=w2450-h1634-s-no-gm",
-        link: "www.pilleve.com",
+        link: "https://www.pilleve.com",
         detail: {
             heroImage: "https://lh3.googleusercontent.com/pw/AP1GczP7sm87uNlGUrSIu34LuyAAbLs9vMDv7-uPy7KagAmR31N-AbgOpd-PCEALK4vdZWnheXy9wWhFFEd8ea_grqEMoTJxg0_oNZrS69pWfgYVhpf2Fn0aqs2gQPCes73VK-sC4WvaMqmXFtkqeto5gDVv=w2542-h1680-s-no-gm",
             summary: "A smart pill dispenser designed to improve monitor usage of controlled substances, such as opioids.",
@@ -42,7 +42,7 @@ const projectsData = [
         year: "2022",
         category: "design hardware software visuals",
         image: "assets/amethyst_system_cover.png",
-        link: "www.pilleve.com",
+        link: "https://www.pilleve.com",
         detail: {
             heroImage: "assets/amethyst_system_cover.png",
             summary: "A connected product system bridging monitoring tools and clinical care support.",
@@ -69,7 +69,7 @@ const projectsData = [
         year: "2024",
         category: "design software hardware",
         image: "assets/sparq_photo.png",
-        link: "joinsparq.com",
+        link: "https://www.joinsparq.com",
         detail: {
             heroImage: "",
             summary: "Hardware engineering for an AI-powered OBDII car sensor.",
