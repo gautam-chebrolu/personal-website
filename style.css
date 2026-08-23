@@ -431,6 +431,80 @@ header {
     text-underline-offset: 4px;
 }
 
+/* ── Thumbnail size slider (Visuals view) ────────────────── */
+
+.size-slider {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 140px;
+    max-width: 100%;
+}
+
+.size-slider-icon {
+    flex: 0 0 auto;
+    display: block;
+    border: 1px solid var(--text-muted);
+    border-radius: 2px;
+    opacity: 0.5;
+}
+
+.size-slider-icon--sm {
+    width: 6px;
+    height: 6px;
+}
+
+.size-slider-icon--lg {
+    width: 11px;
+    height: 11px;
+}
+
+.size-slider-input {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1 1 auto;
+    height: 2px;
+    background: var(--border);
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+}
+
+.size-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--text);
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.size-slider-input::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.size-slider-input::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+    border: none;
+    border-radius: 50%;
+    background: var(--text);
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.size-slider-input::-moz-range-thumb:hover {
+    transform: scale(1.15);
+}
+
+.size-slider-input::-moz-range-track {
+    height: 2px;
+    background: var(--border);
+    border-radius: 999px;
+}
+
 
 /* ═══════════════════════════════════════════════════════════
    SECTION LABELS
@@ -594,7 +668,7 @@ header {
    ═══════════════════════════════════════════════════════════ */
 
 .masonry-grid {
-    columns: 3;
+    columns: var(--visual-cols, 3);
     column-gap: 0.75rem;
     padding-bottom: 4rem;
 }
@@ -1347,7 +1421,7 @@ hr {
 
 @media (max-width: 768px) {
     .masonry-grid {
-        columns: 2;
+        columns: var(--visual-cols, 2);
         column-gap: 0.65rem;
     }
 
@@ -1379,7 +1453,7 @@ hr {
 
 @media (max-width: 600px) {
     .masonry-grid {
-        columns: 1;
+        columns: var(--visual-cols, 1);
     }
 
     .visual-item {

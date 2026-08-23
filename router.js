@@ -21,6 +21,7 @@
             () => workFilter, v => { workFilter = v; });
         initFilters('#visuals-filter-menu', '#visuals-grid .visual-item',
             () => visualsFilter, v => { visualsFilter = v; });
+        initVisualsSizeSlider();
 
         window.addEventListener('hashchange', handleRoute);
 
@@ -231,6 +232,33 @@
 
         // ── Modal wiring ────────────────────────────────────
         initVisualsModal(grid);
+    }
+
+    // ─── Thumbnail Size Slider (Visuals view) ────────────────
+    function initVisualsSizeSlider() {
+        const slider = document.getElementById('visuals-size-slider');
+        const grid = document.getElementById('visuals-grid');
+        if (!slider || !grid) return;
+
+        const STORAGE_KEY = 'visualsCols';
+        // Slider goes small → large left to right; column count runs
+        // the opposite way (fewer columns = bigger thumbnails).
+        const applyCols = value => {
+            const cols = (Number(slider.min) + Number(slider.max)) - value;
+            grid.style.setProperty('--visual-cols', cols);
+        };
+
+        const saved = parseInt(sessionStorage.getItem(STORAGE_KEY), 10);
+        if (!isNaN(saved) && saved >= Number(slider.min) && saved <= Number(slider.max)) {
+            slider.value = saved;
+        }
+        applyCols(Number(slider.value));
+
+        slider.addEventListener('input', () => {
+            const value = Number(slider.value);
+            applyCols(value);
+            sessionStorage.setItem(STORAGE_KEY, value);
+        });
     }
 
     // ─── Visuals Modal ───────────────────────────────────────
