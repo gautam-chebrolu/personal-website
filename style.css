@@ -299,9 +299,9 @@ h3 {
 }
 
 .nav-inner {
-    max-width: 1200px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem clamp(1.5rem, 5vw, 4rem);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -1475,7 +1475,7 @@ hr {
 
 @media (max-width: 480px) {
     .nav-inner {
-        padding: 1rem;
+        padding: 1rem clamp(1.5rem, 5vw, 4rem);
     }
 
     .nav-links {
